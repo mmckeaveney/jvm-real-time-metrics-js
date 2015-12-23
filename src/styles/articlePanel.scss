@@ -1,0 +1,8 @@
+@import 'main';
+
+#article-panel-container, #maininfo-panel-container {
+  background-color: $theme-colour;
+  height:1000px;
+  overflow-y:scroll;
+  word-wrap: break-word;
+}

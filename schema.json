@@ -1,0 +1,62 @@
+// Schema representing an application in the environment
+App : {
+"_id": int,
+"name" : string,
+"timestamp" : int,
+"metrics": {
+       "key" : value,
+       "key" : value,
+       (all metrics will be included here as key value pairs)
+},
+"events" : [ Event ],
+"exceptions" : [ Exception ],
+"alerts"     : [ Alert ]
+}
+
+// Schema representing an alert that can be triggered.
+Alert : {
+"_id": int,
+"applications": [ App ],
+"metrics": [ string ],
+"condition": string,
+"criteria": string,
+"users": [ User ]
+}
+
+// Schema representing a user of the application.
+User : {
+"_id": int,
+"firstName": string,
+"lastName": string,
+"email": string,
+"phoneNumber": int
+}
+
+// Schema representing a query executed by one of the applications in the environment.
+Query : {
+"_id": int,
+"application": App,
+"class": string,
+"method": string,
+"timestamp": int,
+"executionTime": int
+}
+
+// Schema representing an event that was triggered by an app in the environment.
+Event : {
+"_id": int,
+"application": App,
+"event": string,
+"type": string,
+"timestamp": int
+}
+
+// Schema representing an exception that was triggered by an app in the environment.
+Exception : {
+"_id": int,
+"application": App,
+"type": string,
+"class": string,
+"method": string,
+"timestamp": int
+}
