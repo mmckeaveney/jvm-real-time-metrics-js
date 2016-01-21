@@ -6,20 +6,18 @@ module.exports = {
       "./src/main.js",
   ],
   output : {
-      filename: "public/bundle.js"
+      filename: "/home/mmckeaveney/Development/FinalYearProject/jvm-real-time-metrics-app/jvm-real-time-metrics-java/src/main/webapp/bundle.js"
   },
     module: {
         loaders: [
             {
                 test: /\.jsx?$/,
                 exclude: /node_modules/,
-                loader: 'babel',
-
+                loader: 'babel'
             },
             {
                 test: /\.scss$/,
                 exclude: /node_modules/,
-                //put excludes back
                 loader: 'style!css!sass?outputStyle=expanded'
             },
         ]

@@ -1,5 +1,5 @@
 import React from 'react';
-import Apps from './Applications'
+import ClientApplications from './ClientApplications'
 import Chart from './Chart';
 import $ from 'jquery';
 
@@ -9,7 +9,7 @@ require('../styles/MainDashboard.scss');
 
 
 // Component for the main home dashboard of the application.
-class EnvironmentPage extends React.Component {
+class EnvironmentDashboard extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -47,16 +47,13 @@ class EnvironmentPage extends React.Component {
         };
 
         return (
-            <div>
-
                 <div className="row-fluid">
                     <Chart chartConfig={config}/>
-                <Apps/>
+                    <ClientApplications/>
                 </div>
-            </div>
         );
     }
 }
 
-export default EnvironmentPage;
+export default EnvironmentDashboard;
 

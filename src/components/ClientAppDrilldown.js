@@ -1,21 +1,25 @@
 import React from 'react';
-import AppBar from 'material-ui/lib/app-bar';
-import IconButton from 'material-ui/lib/icon-button';
-import FlatButton from 'material-ui/lib/flat-button';
+import connectToStores from 'alt/utils/connectToStores';
 import RaisedButton from 'material-ui/lib/raised-button';
-import NavigationClose from 'material-ui/lib/svg-icons/navigation/close';
-import Tabs from 'material-ui/lib/tabs/tabs';
-import Tab from 'material-ui/lib/tabs/tab';
-import Colors from 'material-ui/lib/styles/colors';
 import Chart from './Chart';
+import ClientApplicationStore from '../stores/ClientApplicationStore';
+import _ from 'underscore';
 
-// CSS
-require('../styles/MainDashboard.scss');
-
-
-class Drilldown extends React.Component {
+@connectToStores
+class ClientAppDrilldown extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            open : false
+        }
+    }
+
+    static getStores(props) {
+        return [ClientApplicationStore];
+    }
+
+    static getPropsFromStores(props) {
+        return ClientApplicationStore.getState();
     }
 
     render() {
@@ -54,6 +58,18 @@ class Drilldown extends React.Component {
                 }
             ]
         };
+
+        var actuatorMetrics = this.props.clientApplications[this.props.params.id].actuatorMetrics;
+
+        var actuatorMarkup = _.map(actuatorMetrics, (value, key) => {
+            return (
+                <tr>
+                    <td> {key} </td>
+                    <td> {value} </td>
+                </tr>
+            )
+        });
+
         return (
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div className="panel panel-primary">
@@ -76,21 +92,6 @@ class Drilldown extends React.Component {
                                         <td>Update/Release</td>
                                         <td>1 hour ago</td>
                                     </tr>
-                                    <tr>
-                                        <td>Went down for 20 minutes. </td>
-                                        <td>Downtime</td>
-                                        <td>2 Hours ago</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Updated to version 2.1.1-SNAPSHOT</td>
-                                        <td>Update/Release</td>
-                                        <td>30 minutes ago</td>
-                                    </tr>
-                                    <tr>
-                                        <td>CPU usage exceeded 10000 </td>
-                                        <td>Metric Threshold Breach</td>
-                                        <td>20 minutes ago</td>
-                                    </tr>
                                 </table>
                             </div>
                         </div>
@@ -110,14 +111,6 @@ class Drilldown extends React.Component {
                                     <tr>
                                         <td>SQLException</td>
                                         <td>1 hour ago</td>
-                                    </tr>
-                                    <tr>
-                                        <td>NullPointerException</td>
-                                        <td>2 Hours ago</td>
-                                    </tr>
-                                    <tr>
-                                        <td>NumberFormatException</td>
-                                        <td>30 Minutes Ago</td>
                                     </tr>
                                 </table>
                             </div>
@@ -142,24 +135,6 @@ class Drilldown extends React.Component {
                                         <td>1 hour ago</td>
                                         <td><RaisedButton label="See Alert" style={{margin:"5px"}} secondary={true} /></td>
                                     </tr>
-                                    <tr>
-                                        <td>Went down for 20 minutes. </td>
-                                        <td>Downtime</td>
-                                        <td>2 Hours ago</td>
-                                        <td><RaisedButton label="See Alert" style={{margin:"5px"}} secondary={true} /></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Updated to version 2.1.1-SNAPSHOT</td>
-                                        <td>Update/Release</td>
-                                        <td>30 minutes ago</td>
-                                        <td><RaisedButton label="See Alert" style={{margin:"5px"}} secondary={true} /></td>
-                                    </tr>
-                                    <tr>
-                                        <td>CPU usage exceeded 10000 </td>
-                                        <td>Metric Threshold Breach</td>
-                                        <td>20 minutes ago</td>
-                                        <td><RaisedButton label="See Alert" style={{margin:"5px"}} secondary={true} /></td>
-                                    </tr>
                                 </table>
                             </div>
                         </div>
@@ -176,34 +151,7 @@ class Drilldown extends React.Component {
                                             <th>Key</th>
                                             <th>Value</th>
                                         </tr>
-                                        <tr>
-                                            <td>Memory </td>
-                                            <td>276480</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Memory Free </td>
-                                            <td>123798</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Processors</td>
-                                            <td>6</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Instance Uptime </td>
-                                            <td>32771</td>
-                                        </tr>
-                                        <tr>
-                                            <td>System load average </td>
-                                            <td>0.68</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Heap Used </td>
-                                            <td>152681</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Threads </td>
-                                            <td>13</td>
-                                        </tr>
+                                        {actuatorMarkup}
                                     </table>
                                 </div>
                             </div>
@@ -228,24 +176,6 @@ class Drilldown extends React.Component {
                                             <td>200ms</td>
                                             <td>10 minutes ago</td>
                                         </tr>
-                                        <tr>
-                                            <td>createNewType() </td>
-                                            <td>TypeDaoImpl</td>
-                                            <td>100ms</td>
-                                            <td>2 Hours ago</td>
-                                        </tr>
-                                        <tr>
-                                            <td>editUserCredentials()</td>
-                                            <td>UserDaoImpl</td>
-                                            <td>30ms</td>
-                                            <td>30 minutes ago</td>
-                                        </tr>
-                                        <tr>
-                                            <td>insertNewProduct()</td>
-                                            <td>ProductDaoImpl</td>
-                                            <td>200ms</td>
-                                            <td>3 hours ago</td>
-                                        </tr>
                                     </table>
                                 </div>
                             </div>
@@ -260,4 +190,4 @@ class Drilldown extends React.Component {
     }
 }
 
-export default Drilldown;
+export default ClientAppDrilldown;

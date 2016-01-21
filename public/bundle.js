@@ -31229,21 +31229,24 @@
 	        _classCallCheck(this, Applications);
 	
 	        _get(Object.getPrototypeOf(Applications.prototype), 'constructor', this).call(this, props);
+	        this.state = {
+	            json: {}
+	        };
 	    }
 	
 	    _createClass(Applications, [{
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {
-	            var websocket = new _utilsWebSocket2['default']();
-	            websocket.register({
+	            _utilsWebSocket2['default'].register([{
 	                route: '/jvmrt/metricsUpdate', callback: this.updateUi
-	            });
+	            }]);
 	        }
 	    }, {
 	        key: 'updateUi',
 	        value: function updateUi(message) {
-	            console.log("Trying websocket here.");
-	            console.log(message);
+	            this.setState({
+	                json: message.body
+	            });
 	        }
 	    }, {
 	        key: 'render',
@@ -31267,7 +31270,7 @@
 	                    _react2['default'].createElement(
 	                        'div',
 	                        { className: 'panel-body' },
-	                        _react2['default'].createElement(_ClientApp2['default'], { title: "JVClient",
+	                        _react2['default'].createElement(_ClientApp2['default'], { title: this.state.json,
 	                            content: "content",
 	                            footer: "footer" })
 	                    )
@@ -32480,7 +32483,7 @@
 	        _classCallCheck(this, WebSocket);
 	    }
 	
-	    _createClass(WebSocket, [{
+	    _createClass(WebSocket, null, [{
 	        key: 'register',
 	        value: function register(registrations) {
 	            var socket = (0, _sockjsClient2['default'])('/metricspoll');

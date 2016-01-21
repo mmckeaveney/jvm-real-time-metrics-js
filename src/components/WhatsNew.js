@@ -20,7 +20,7 @@ class WhatsNew extends React.Component {
     render() {
 
         return (
-                    <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4" id="article-panel-container" style={{marginTop:"10px"}}>
+                    <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4" id="whats-new" style={{marginTop:"10px"}}>
                         <div className="panel panel-primary">
                             <div className="panel-heading">
                                 <h3 className="panel-title">Latest</h3>

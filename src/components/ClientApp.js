@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 import AppBar from 'material-ui/lib/app-bar';
 import IconButton from 'material-ui/lib/icon-button';
 import FlatButton from 'material-ui/lib/flat-button';
@@ -16,6 +17,10 @@ require('../styles/MainDashboard.scss');
 class ClientApp extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            title : null,
+            actuatorMetrics : null
+        }
     }
 
     render() {
@@ -74,7 +79,11 @@ class ClientApp extends React.Component {
                                 <Chart chartConfig={config}/>
                             </div>
                         <div className="panel-footer">
-                            <RaisedButton label="More Details" style={{margin:"5px"}} secondary={true} />
+                            <RaisedButton label="More Details"
+                                          containerElement={<Link to={`/appdetail/${this.props.index}`}/> }
+                                          linkButton={true}
+                                          style={{margin:"5px"}}
+                                          secondary={true} />
                                 <RaisedButton label="Add to Favourites" secondary={true} /></div>
                         </div>
                 </div>

@@ -1,35 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, IndexRoute } from 'react-router';
-import createBrowserHistory from 'history/lib/createBrowserHistory'
+import createBrowserHistory from 'history/lib/createBrowserHistory';
 import App from '../components/App.js';
-import MainDashboard from '../components/MainDashboard.js'
-import EnvironmentPage from '../components/EnvironmentPage';
+import HomeDashboard from '../components/HomeDashboard';
+import EnvironmentDashboard from '../components/EnvironmentDashboard';
+import AlertsDashboard from '../components/AlertsDashboard';
+import ClientAppDrilldown from '../components/ClientAppDrilldown';
 
 let routes = (
     <Router history={createBrowserHistory()}>
         <Route path="/" component={App}>
-            <IndexRoute component={MainDashboard} />
-        </Route>
-        <Route path="/environment" component={App}>
-            <IndexRoute component={EnvironmentPage} />
-        </Route>
-        <Route path="/world" component={App}>
-            <IndexRoute component={MainDashboard} />
-        </Route>
-        <Route path="/politics" component={App}>
-            <IndexRoute component={MainDashboard} />
-        </Route>
-        <Route path="/technology" component={App}>
-            <IndexRoute component={MainDashboard} />
-        </Route>
-        <Route path="/science" component={App}>
-            <IndexRoute component={MainDashboard} />
-        </Route>
-        <Route path="/entertainment" component={App}>
-            <IndexRoute component={MainDashboard} />
+            <IndexRoute component={HomeDashboard} />
+            <Route path="/environment" component={EnvironmentDashboard}/>
+            <Route path="/appdetail/:id" component={ClientAppDrilldown}/>
+            <Route path="/alerts" component={AlertsDashboard}/>
         </Route>
     </Router>
 );
 
-ReactDOM.render(routes, document.getElementById('main-container'));
+ReactDOM.render(routes, document.getElementById('app-container'));

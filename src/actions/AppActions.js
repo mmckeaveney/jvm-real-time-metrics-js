@@ -4,6 +4,7 @@ import $ from 'jquery';
 class AppActions {
 
     constructor() {
+        this.generateActions('updateLatestApplicationMetadata');
     }
 
 }

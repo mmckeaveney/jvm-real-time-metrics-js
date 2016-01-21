@@ -3,7 +3,7 @@ var Stomp = require('stompjs/lib/stomp');
 
 class WebSocket {
 
-    register(registrations) {
+    static register(registrations) {
         var socket = SockJS('/metricspoll');
         var stompClient = Stomp.Stomp.over(socket);
         stompClient.connect({}, (frame) => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Router } from 'react-router';
+import { Router, Link } from 'react-router';
 import Tabs from 'material-ui/lib/tabs/tabs';
 import Tab from 'material-ui/lib/tabs/tab';
 import AppBar from 'material-ui/lib/app-bar';
@@ -22,15 +22,16 @@ class App extends React.Component {
     render() {
         var myTabs = (
             <Tabs>
-                <Tab label="HOME"/>
-                <Tab label="ENVIRONMENT"/>
-                <Tab label="ALERTS"/>
-                <Tab label="SETTINGS"/>
+                <Tab label={<Link to="/">HOME</Link>} />
+                <Tab label={<Link to="/environment">ENVIRONMENT</Link>} />
+                <Tab label={<Link to="/alerts">ALERTS</Link>} />
+                <Tab label={<Link to="/settings">SETTINGS</Link>} />
                 <Tab label={<span className="glyphicon glyphicon-user" aria-hidden="true"></span>}/>
             </Tabs>
         );
 
-        return (<div className="container-fluid">
+        return (
+        <div className="container-fluid">
             <AppBar
                 title={<span>JVM Real Time Metrics System</span>}
                 iconElementRight={myTabs}

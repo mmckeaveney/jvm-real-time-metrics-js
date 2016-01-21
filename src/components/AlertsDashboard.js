@@ -13,7 +13,7 @@ import Chart from './Chart';
 require('../styles/MainDashboard.scss');
 
 
-class Alerts extends React.Component {
+class AlertsDashboard extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -125,4 +125,4 @@ class Alerts extends React.Component {
     }
 }
 
-export default Alerts;
+export default AlertsDashboard;
