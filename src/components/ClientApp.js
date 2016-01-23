@@ -65,6 +65,7 @@ class ClientApp extends React.Component {
                             <div className="panel-heading">{this.props.title}</div>
                             <div className="panel-body">
                                 <table className="table" >
+                                    <tbody>
                                     <tr>
                                         <th>Events</th>
                                         <th>Exceptions</th>
@@ -75,6 +76,7 @@ class ClientApp extends React.Component {
                                         <td>TO BE IMPLEMENTED</td>
                                         <td>TO BE IMPLEMENTED</td>
                                     </tr>
+                                    </tbody>
                                 </table>
                                 <Chart chartConfig={config}/>
                             </div>

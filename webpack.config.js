@@ -6,7 +6,7 @@ module.exports = {
       "./src/main.js",
   ],
   output : {
-      filename: "/home/mmckeaveney/Development/FinalYearProject/jvm-real-time-metrics-app/jvm-real-time-metrics-java/src/main/webapp/bundle.js"
+      filename: "/home/mmckeaveney/Development/jvm-real-time-metrics-app/jvm-real-time-metrics-java/src/main/webapp/bundle.js"
   },
     module: {
         loaders: [

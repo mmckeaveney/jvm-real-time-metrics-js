@@ -1,6 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router';
 import connectToStores from 'alt/utils/connectToStores';
 import RaisedButton from 'material-ui/lib/raised-button';
+import IconButton from 'material-ui/lib/icon-button';
+import ArrowBack from 'material-ui/lib/svg-icons/navigation/arrow-back';
 import Chart from './Chart';
 import ClientApplicationStore from '../stores/ClientApplicationStore';
 import _ from 'underscore';
@@ -9,9 +12,6 @@ import _ from 'underscore';
 class ClientAppDrilldown extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            open : false
-        }
     }
 
     static getStores(props) {
@@ -23,15 +23,19 @@ class ClientAppDrilldown extends React.Component {
     }
 
     render() {
+
+
+        var actuatorMetrics = this.props.clientApplications[this.props.params.id].actuatorMetrics;
+        var appName = this.props.clientApplications[this.props.params.id].appName;
+
         var styles = {
             fontWeight: "bold",
             textAlign: "center"
         }
 
-
         var config = {
             title: {
-                text: this.props.title + " Metrics"
+                text: appName + " Metrics"
             },
             plotOptions: {
                 line: {
@@ -59,7 +63,6 @@ class ClientAppDrilldown extends React.Component {
             ]
         };
 
-        var actuatorMetrics = this.props.clientApplications[this.props.params.id].actuatorMetrics;
 
         var actuatorMarkup = _.map(actuatorMetrics, (value, key) => {
             return (
@@ -73,15 +76,21 @@ class ClientAppDrilldown extends React.Component {
         return (
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div className="panel panel-primary">
-                    <div className="panel-heading">{this.props.title}</div>
+                    <div className="panel-heading">
+                        <Link to="/environment">
+                            <IconButton> <ArrowBack/> </IconButton>
+                        </Link>
+                        {appName} Details
+                    </div>
                     <div className="panel-body">
                         <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                         <div className="panel panel-primary">
                             <div className="panel-heading">
-                                <h3 className="panel-title">Events</h3>
+                                <h3 className="panel-title">{appName} Events</h3>
                             </div>
                             <div className="panel-body">
                                 <table className="table">
+                                    <tbody>
                                     <tr>
                                         <th>Event</th>
                                         <th>Type</th>
@@ -92,6 +101,7 @@ class ClientAppDrilldown extends React.Component {
                                         <td>Update/Release</td>
                                         <td>1 hour ago</td>
                                     </tr>
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
@@ -100,10 +110,11 @@ class ClientAppDrilldown extends React.Component {
                         <div className="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                         <div className="panel panel-primary">
                             <div className="panel-heading">
-                                <h3 className="panel-title">Exceptions</h3>
+                                <h3 className="panel-title">{appName} Exceptions</h3>
                             </div>
                             <div className="panel-body">
                                 <table className="table">
+                                    <tbody>
                                     <tr>
                                         <th>Exception</th>
                                         <th>Time</th>
@@ -112,6 +123,7 @@ class ClientAppDrilldown extends React.Component {
                                         <td>SQLException</td>
                                         <td>1 hour ago</td>
                                     </tr>
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
@@ -120,10 +132,11 @@ class ClientAppDrilldown extends React.Component {
                         <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                         <div className="panel panel-primary">
                             <div className="panel-heading">
-                                <h3 className="panel-title">Alerts</h3>
+                                <h3 className="panel-title">{appName} Alerts</h3>
                             </div>
                             <div className="panel-body">
                                 <table className="table">
+                                    <tbody>
                                     <tr>
                                         <th>Event</th>
                                         <th>Type</th>
@@ -135,6 +148,7 @@ class ClientAppDrilldown extends React.Component {
                                         <td>1 hour ago</td>
                                         <td><RaisedButton label="See Alert" style={{margin:"5px"}} secondary={true} /></td>
                                     </tr>
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
@@ -143,15 +157,17 @@ class ClientAppDrilldown extends React.Component {
                         <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                             <div className="panel panel-primary">
                                 <div className="panel-heading">
-                                    <h3 className="panel-title">Metrics</h3>
+                                    <h3 className="panel-title">{appName} Metrics</h3>
                                 </div>
                                 <div className="panel-body">
                                     <table className="table">
+                                        <tbody>
                                         <tr>
                                             <th>Key</th>
                                             <th>Value</th>
                                         </tr>
                                         {actuatorMarkup}
+                                        </tbody>
                                     </table>
                                 </div>
                             </div>
@@ -160,10 +176,11 @@ class ClientAppDrilldown extends React.Component {
                         <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                             <div className="panel panel-primary">
                                 <div className="panel-heading">
-                                    <h3 className="panel-title">Query Times</h3>
+                                    <h3 className="panel-title">{appName} Query Times</h3>
                                 </div>
                                 <div className="panel-body">
                                     <table className="table">
+                                        <tbody>
                                         <tr>
                                             <th>Query Method</th>
                                             <th>Class</th>
@@ -176,6 +193,7 @@ class ClientAppDrilldown extends React.Component {
                                             <td>200ms</td>
                                             <td>10 minutes ago</td>
                                         </tr>
+                                        </tbody>
                                     </table>
                                 </div>
                             </div>
