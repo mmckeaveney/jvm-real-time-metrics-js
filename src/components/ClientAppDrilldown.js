@@ -7,6 +7,7 @@ import ArrowBack from 'material-ui/lib/svg-icons/navigation/arrow-back';
 import Chart from './Chart';
 import ClientApplicationStore from '../stores/ClientApplicationStore';
 import _ from 'underscore';
+import RealTimeMetricsPanel from './RealTimeMetricsPanel';
 
 @connectToStores
 class ClientAppDrilldown extends React.Component {
@@ -27,42 +28,6 @@ class ClientAppDrilldown extends React.Component {
 
         var actuatorMetrics = this.props.clientApplications[this.props.params.id].actuatorMetrics;
         var appName = this.props.clientApplications[this.props.params.id].appName;
-
-        var styles = {
-            fontWeight: "bold",
-            textAlign: "center"
-        }
-
-        var config = {
-            title: {
-                text: appName + " Metrics"
-            },
-            plotOptions: {
-                line: {
-                    dataLabels: {
-                        enabled: true
-                    },
-                    enableMouseTracking: false
-                }
-            },
-            xAxis: {
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-            },
-            series: [{
-                name: 'CPU Usage',
-                data: [2900.9, 1000.5, 1060.4, 1290.2, 1440.0, 1760.0, 1350.6, 1480.5, 2160.4, 1940.1, 950.6, 540.4]
-            },
-                {
-                    name: 'Heap Space',
-                    data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
-                },
-                {
-                    name: 'Exceptions Thrown',
-                    data: [29, 13, 10, 100, 50, 40, 30, 20, 10, 9, 8, 1, 10, 19, 15]
-                }
-            ]
-        };
-
 
         var actuatorMarkup = _.map(actuatorMetrics, (value, key) => {
             return (
@@ -154,24 +119,8 @@ class ClientAppDrilldown extends React.Component {
                         </div>
                         </div>
 
-                        <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                            <div className="panel panel-primary">
-                                <div className="panel-heading">
-                                    <h3 className="panel-title">{appName} Metrics</h3>
-                                </div>
-                                <div className="panel-body">
-                                    <table className="table">
-                                        <tbody>
-                                        <tr>
-                                            <th>Key</th>
-                                            <th>Value</th>
-                                        </tr>
-                                        {actuatorMarkup}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
+                            <RealTimeMetricsPanel appName={appName}
+                                                  actuatorMetrics={actuatorMetrics}/>
 
                         <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                             <div className="panel panel-primary">
@@ -198,7 +147,7 @@ class ClientAppDrilldown extends React.Component {
                                 </div>
                             </div>
                         </div>
-                        <Chart chartConfig={config}/>
+                        <Chart appName={appName}/>
                     </div>
                     <div className="panel-footer">
                         <RaisedButton label="Add to Favourites" secondary={true} /></div>
