@@ -4,7 +4,6 @@ import WhatsNew from './WhatsNew';
 import Favourites from './Favourites';
 import $ from 'jquery';
 
-
 // CSS
 require('../styles/MainDashboard.scss');
 
@@ -16,8 +15,6 @@ class HomeDashboard extends React.Component {
     }
 
     render() {
-
-
         return (
                 <div className="row-fluid">
                     <WhatsNew/>

@@ -7,6 +7,7 @@ import HomeDashboard from '../components/HomeDashboard';
 import EnvironmentDashboard from '../components/EnvironmentDashboard';
 import AlertsDashboard from '../components/AlertsDashboard';
 import ClientAppDrilldown from '../components/ClientAppDrilldown';
+import Login from '../components/Login';
 
 let routes = (
     <Router history={createBrowserHistory()}>

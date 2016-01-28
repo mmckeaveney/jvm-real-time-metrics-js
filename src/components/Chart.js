@@ -30,7 +30,7 @@ class Chart extends React.Component {
     }
 
     getTimeSeriesDataFromServer(timeScale) {
-        var timeSeriesUrl = `http://localhost:8090/timeseries/?appName=${this.props.appName}&timeScale=${timeScale}`;
+        var timeSeriesUrl = `http://localhost:8090/api/timeseries/?appName=${this.props.appName}&timeScale=${timeScale}`;
         $.ajax({
             url: timeSeriesUrl,
             type: "GET",
