@@ -5,7 +5,24 @@ import _ from 'underscore';
 class AppActions {
 
     constructor() {
+        this.generateActions('updateLatestEvents');
         this.generateActions('updateLatestApplicationMetadata');
+    }
+
+    getLatestEvents(criteria) {
+        var url;
+        if (criteria == "All") {
+           url = "http://localhost:8090/api/events/all";
+        } else {
+           url = `http://localhost:8090/api/events/?${criteria}`;
+        }
+        $.getJSON({url: url,
+            success: (events) => {
+                this.setState({
+                    events: events
+                });
+            }
+        });
     }
 
     getTimeSeriesMetricsForSingleApp(appName, timeScale) {

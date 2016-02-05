@@ -5,6 +5,8 @@ import AppActions from '../actions/AppActions';
 import ClientApp from './ClientApp';
 import WebSocket from '../utils/WebSocket';
 import ClientApplicationStore from '../stores/ClientApplicationStore';
+import MaterialPanel from './MaterialPanel';
+
 
 // CSS
 require('../styles/MainDashboard.scss');
@@ -14,7 +16,7 @@ class ClientApplications extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            clientApplications: []
+            clientApplications: null
         }
     }
 
@@ -46,21 +48,17 @@ class ClientApplications extends React.Component {
                 )
             })
         } else {
-            clientApps =  <span> No docker client applications currently available. </span>
+            clientApps = <span> No docker client applications currently available. </span>
         }
 
         return (
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="client-application-container"
                  style={{marginTop:"10px"}}>
+                <MaterialPanel title="Environment Applications"
+                               subtitle="All the current applications running in your environment">
+                    {clientApps}
+                </MaterialPanel>
 
-                <div className="panel panel-primary">
-                    <div className="panel-heading">
-                        <h3 className="panel-title" style={{fontSize: "25px"}}>Environment Applications</h3>
-                    </div>
-                    <div className="panel-body">
-                        {clientApps}
-                    </div>
-                </div>
             </div>
         );
     }

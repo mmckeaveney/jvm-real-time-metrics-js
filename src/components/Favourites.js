@@ -10,6 +10,7 @@ import Tab from 'material-ui/lib/tabs/tab';
 import Colors from 'material-ui/lib/styles/colors';
 import ReactHighcharts from 'react-highcharts/bundle/highcharts';
 import Chart from "./Chart";
+import MaterialPanel from './MaterialPanel';
 
 // CSS
 require('../styles/MainDashboard.scss');
@@ -85,16 +86,11 @@ class Favourites extends React.Component {
 
         return (
             <div className="col-lg-8 col-md-8 col-sm-8 col-xs-8" id="article-panel-container" style={{marginTop:"10px"}}>
-                <div className="panel panel-primary">
-                    <div className="panel-heading">
-                        <h3 className="panel-title">Favourites</h3>
-                    </div>
-                    <div className="panel-body">
+                <MaterialPanel title="Favourites" subtitle="Applications added to your favourites">
                         <Chart chartConfig={config}/>
                         <Chart chartConfig={config2}/>
 
-                    </div>
-                </div>
+                </MaterialPanel>
             </div>
         );
     }

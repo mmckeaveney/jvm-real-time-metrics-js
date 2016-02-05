@@ -11,6 +11,14 @@ import Tab from 'material-ui/lib/tabs/tab';
 import Colors from 'material-ui/lib/styles/colors';
 import Chart from './Chart';
 import _ from 'underscore';
+import MaterialPanel from './MaterialPanel';
+import Table from 'material-ui/lib/table/table';
+import TableHeaderColumn from 'material-ui/lib/table/table-header-column';
+import TableRow from 'material-ui/lib/table/table-row';
+import TableHeader from 'material-ui/lib/table/table-header';
+import TableRowColumn from 'material-ui/lib/table/table-row-column';
+import TableBody from 'material-ui/lib/table/table-body';
+import CardActions from 'material-ui/lib/card/card-actions';
 
 // CSS
 require('../styles/MainDashboard.scss');
@@ -36,33 +44,33 @@ class ClientApp extends React.Component {
 
         return (
             <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                        <div className="panel panel-primary" style={styles}>
-                            <div className="panel-heading">{this.props.title}</div>
-                            <div className="panel-body">
-                                <table className="table" >
-                                    <tbody>
-                                    <tr>
-                                        <th>Events</th>
-                                        <th>Exceptions</th>
-                                        <th>Alerts</th>
-                                    </tr>
-                                    <tr>
-                                        <td>TO BE IMPLEMENTED</td>
-                                        <td>TO BE IMPLEMENTED</td>
-                                        <td>TO BE IMPLEMENTED</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                                <Chart appName={this.props.title}/>
-                            </div>
-                        <div className="panel-footer">
-                            <RaisedButton label="More Details"
-                                          containerElement={<Link to={`/appdetail/${this.props.index}`}/> }
-                                          linkButton={true}
-                                          style={{margin:"5px"}}
-                                          secondary={true} />
-                                <RaisedButton label="Add to Favourites" secondary={true} /></div>
-                        </div>
+                <MaterialPanel title={this.props.title}>
+                <Table selectable={false}>
+                    <TableHeader displaySelectAll={false}
+                                 adjustForCheckbox={false}>
+                        <TableRow>
+                            <TableHeaderColumn>Events</TableHeaderColumn>
+                            <TableHeaderColumn>Exceptions</TableHeaderColumn>
+                            <TableHeaderColumn>Alerts</TableHeaderColumn>
+                        </TableRow>
+                    </TableHeader>
+                    <TableBody displayRowCheckbox={false}>
+                        <TableRow>
+                            <TableRowColumn>TO BE IMPLEMENTED</TableRowColumn>
+                            <TableRowColumn>TO BE IMPLEMENTED</TableRowColumn>
+                            <TableRowColumn>TO BE IMPLEMENTED</TableRowColumn>
+                        </TableRow>
+                    </TableBody>
+                </Table>
+                    <Chart appName={this.props.title}/>
+                    <CardActions>
+                    <RaisedButton label="More Details"
+                                  containerElement={<Link to={`/appdetail/${this.props.index}`}/> }
+                                  linkButton={true}
+                                  secondary={true} />
+                    <RaisedButton label="Add to Favourites" secondary={true} />
+                    </CardActions>
+                    </MaterialPanel>
                 </div>
         );
     }

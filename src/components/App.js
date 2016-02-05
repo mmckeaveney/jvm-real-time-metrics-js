@@ -4,17 +4,21 @@ import Tabs from 'material-ui/lib/tabs/tabs';
 import Tab from 'material-ui/lib/tabs/tab';
 import RaisedButton from 'material-ui/lib/raised-button';
 import AppBar from 'material-ui/lib/app-bar';
+import CircularProgress from 'material-ui/lib/circular-progress';
+import IconButton from 'material-ui/lib/icon-button';
+import Cancel from 'material-ui/lib/svg-icons/navigation/cancel';
+import Avatar from 'material-ui/lib/avatar';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import ThemeDecorator from 'material-ui/lib/styles/theme-decorator';
 import ThemeManager from 'material-ui/lib/styles/theme-manager';
-import DarkTheme from 'material-ui/lib/styles/raw-themes/dark-raw-theme';
+import LightTheme from 'material-ui/lib/styles/raw-themes/light-raw-theme';
 import Login from './Login';
 
 // CSS
 require('../styles/main.scss');
 
 // Component for the main Container Div of the application.
-@ThemeDecorator(ThemeManager.getMuiTheme(DarkTheme))
+@ThemeDecorator(ThemeManager.getMuiTheme(LightTheme))
 class App extends React.Component {
     constructor(props) {
         super(props);
@@ -27,6 +31,7 @@ class App extends React.Component {
             idToken: this.getIdToken()
         });
         this.setupAjax();
+        this.getUserProfile();
     }
 
     setupAjax() {
@@ -38,6 +43,16 @@ class App extends React.Component {
                 }
             }
         })
+    }
+
+    getUserProfile() {
+        this.lock.getProfile(localStorage.getItem('userToken'), function (err, profile) {
+            if (err) {
+                console.log("Error loading the Profile", err);
+                return;
+            }
+            this.setState({profile: profile});
+        }.bind(this));
     }
 
     getIdToken() {
@@ -62,16 +77,27 @@ class App extends React.Component {
     }
 
     render() {
+        var currentUser;
+        if (this.state.profile) {
+            currentUser = (
+                <div>
+                    <Avatar src={ this.state.profile.picture }/> { this.state.profile.nickname }
+                    <IconButton onClick={this.logOut}> <Cancel/> </IconButton>
+                </div>
+            );
+        } else {
+            currentUser = (
+                <span className="glyphicon glyphicon-user" aria-hidden="true"> Profile Loading..
+                </span>
+            );
+        }
         var myTabs = (
             <Tabs>
                 <Tab label={<Link to="/">HOME</Link>}/>
                 <Tab label={<Link to="/environment">ENVIRONMENT</Link>}/>
                 <Tab label={<Link to="/alerts">ALERTS</Link>}/>
                 <Tab label={<Link to="/settings">SETTINGS</Link>}/>
-                <Tab label={
-                <span className="glyphicon glyphicon-user" aria-hidden="true">
-                 <RaisedButton label="Logout" secondary={true} onClick={this.logOut}/>
-                 </span>}
+                <Tab label={ currentUser }
                 />
             </Tabs>
         );
@@ -87,7 +113,7 @@ class App extends React.Component {
                 </div>
             );
         } else {
-            return (<Login lock={this.lock} idToken={this.state.idToken} />);
+            return (<Login lock={this.lock} idToken={this.state.idToken}/>);
         }
     }
 }

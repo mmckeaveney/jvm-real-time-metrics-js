@@ -7,7 +7,16 @@ class Login extends React.Component {
     }
 
     componentWillMount() {
-        this.props.lock.show();
+        this.props.lock.show({
+            socialBigButtons: true,
+            icon: "https://www.linode.com/media/images/common/longview_icon.png",
+            dict: {
+                signin: {
+                    title: "Welcome to JVM Real Time Metrics System. Please Sign in.",
+                }
+            }
+        });
+
     }
 
     render() {

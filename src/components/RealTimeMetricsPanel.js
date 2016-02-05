@@ -2,6 +2,13 @@ import React from 'react';
 import connectToStores from 'alt/utils/connectToStores';
 import ClientApplicationStore from '../stores/ClientApplicationStore';
 import _ from 'underscore';
+import Table from 'material-ui/lib/table/table';
+import TableHeaderColumn from 'material-ui/lib/table/table-header-column';
+import TableRow from 'material-ui/lib/table/table-row';
+import TableHeader from 'material-ui/lib/table/table-header';
+import TableRowColumn from 'material-ui/lib/table/table-row-column';
+import TableBody from 'material-ui/lib/table/table-body';
+import MaterialPanel from './MaterialPanel';
 
 @connectToStores
 class RealTimeMetricsPanel extends React.Component {
@@ -19,36 +26,32 @@ class RealTimeMetricsPanel extends React.Component {
 
     render() {
         var actuatorMetrics = this.props.actuatorMetrics;
-        var appName = this.props.appName;
 
         var actuatorMarkup = _.map(actuatorMetrics, (value, key) => {
             return (
-                <tr>
-                    <td> {key} </td>
-                    <td> {value} </td>
-                </tr>
+                <TableRow>
+                    <TableRowColumn>{ key }</TableRowColumn>
+                    <TableRowColumn>{ value }</TableRowColumn>
+                </TableRow>
             )
         });
 
         return (
-            <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                <div className="panel panel-primary">
-                    <div className="panel-heading">
-                        <h3 className="panel-title">{appName} Metrics</h3>
-                    </div>
-                    <div className="panel-body">
-                        <table className="table">
-                            <tbody>
-                            <tr>
-                                <th>Key</th>
-                                <th>Value</th>
-                            </tr>
-                            {actuatorMarkup}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+            <MaterialPanel title={ `${this.props.appName} Metrics`}>
+                <Table selectable={false}>
+                    <TableHeader displaySelectAll={false}
+                                 adjustForCheckbox={false}>
+                        <TableRow>
+                            <TableHeaderColumn>Key</TableHeaderColumn>
+                            <TableHeaderColumn>Value</TableHeaderColumn>
+                        </TableRow>
+                    </TableHeader>
+                    <TableBody displayRowCheckbox={false}>
+                        {actuatorMarkup}
+                    </TableBody>
+                </Table>
+            </MaterialPanel>
+
         );
     }
 }

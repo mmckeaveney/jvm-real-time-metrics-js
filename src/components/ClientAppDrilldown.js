@@ -8,6 +8,15 @@ import Chart from './Chart';
 import ClientApplicationStore from '../stores/ClientApplicationStore';
 import _ from 'underscore';
 import RealTimeMetricsPanel from './RealTimeMetricsPanel';
+import MaterialPanel from './MaterialPanel';
+import Table from 'material-ui/lib/table/table';
+import TableHeaderColumn from 'material-ui/lib/table/table-header-column';
+import TableRow from 'material-ui/lib/table/table-row';
+import TableHeader from 'material-ui/lib/table/table-header';
+import TableRowColumn from 'material-ui/lib/table/table-row-column';
+import TableBody from 'material-ui/lib/table/table-body';
+import CardActions from 'material-ui/lib/card/card-actions';
+import EventPanel from './EventPanel';
 
 @connectToStores
 class ClientAppDrilldown extends React.Component {
@@ -40,39 +49,18 @@ class ClientAppDrilldown extends React.Component {
 
         return (
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <div className="panel panel-primary">
-                    <div className="panel-heading">
-                        <Link to="/environment">
-                            <IconButton> <ArrowBack/> </IconButton>
-                        </Link>
-                        {appName} Details
+                <MaterialPanel title={`${appName} Details `}
+                               subtitle={
+                               <Link to="/environment">
+                               GO BACK
+                                   <IconButton> <ArrowBack/> </IconButton>
+                               </Link>
+                                }>
+                    <div className="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                        <EventPanel appName={appName}/>
                     </div>
-                    <div className="panel-body">
-                        <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                        <div className="panel panel-primary">
-                            <div className="panel-heading">
-                                <h3 className="panel-title">{appName} Events</h3>
-                            </div>
-                            <div className="panel-body">
-                                <table className="table">
-                                    <tbody>
-                                    <tr>
-                                        <th>Event</th>
-                                        <th>Type</th>
-                                        <th>Time</th>
-                                    </tr>
-                                    <tr>
-                                        <td>Updated to version 1.1 </td>
-                                        <td>Update/Release</td>
-                                        <td>1 hour ago</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        </div>
 
-                        <div className="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                    <div className="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                         <div className="panel panel-primary">
                             <div className="panel-heading">
                                 <h3 className="panel-title">{appName} Exceptions</h3>
@@ -92,9 +80,9 @@ class ClientAppDrilldown extends React.Component {
                                 </table>
                             </div>
                         </div>
-                        </div>
+                    </div>
 
-                        <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                         <div className="panel panel-primary">
                             <div className="panel-heading">
                                 <h3 className="panel-title">{appName} Alerts</h3>
@@ -108,50 +96,53 @@ class ClientAppDrilldown extends React.Component {
                                         <th>Time</th>
                                     </tr>
                                     <tr>
-                                        <td>Updated to version 1.1 </td>
+                                        <td>Updated to version 1.1</td>
                                         <td>Update/Release</td>
                                         <td>1 hour ago</td>
-                                        <td><RaisedButton label="See Alert" style={{margin:"5px"}} secondary={true} /></td>
+                                        <td><RaisedButton label="See Alert" style={{margin:"5px"}} secondary={true}/>
+                                        </td>
                                     </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
+                    </div>
+
+                    <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    <RealTimeMetricsPanel appName={appName}
+                                          actuatorMetrics={actuatorMetrics}/>
                         </div>
 
-                            <RealTimeMetricsPanel appName={appName}
-                                                  actuatorMetrics={actuatorMetrics}/>
-
-                        <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                            <div className="panel panel-primary">
-                                <div className="panel-heading">
-                                    <h3 className="panel-title">{appName} Query Times</h3>
-                                </div>
-                                <div className="panel-body">
-                                    <table className="table">
-                                        <tbody>
-                                        <tr>
-                                            <th>Query Method</th>
-                                            <th>Class</th>
-                                            <th>Execution Time</th>
-                                            <th>How Long Ago</th>
-                                        </tr>
-                                        <tr>
-                                            <td>updateUserCredentials() </td>
-                                            <td>UserDaoImpl</td>
-                                            <td>200ms</td>
-                                            <td>10 minutes ago</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+                    <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <div className="panel panel-primary">
+                            <div className="panel-heading">
+                                <h3 className="panel-title">{appName} Query Times</h3>
+                            </div>
+                            <div className="panel-body">
+                                <table className="table">
+                                    <tbody>
+                                    <tr>
+                                        <th>Query Method</th>
+                                        <th>Class</th>
+                                        <th>Execution Time</th>
+                                        <th>How Long Ago</th>
+                                    </tr>
+                                    <tr>
+                                        <td>updateUserCredentials()</td>
+                                        <td>UserDaoImpl</td>
+                                        <td>200ms</td>
+                                        <td>10 minutes ago</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
-                        <Chart appName={appName}/>
                     </div>
-                    <div className="panel-footer">
-                        <RaisedButton label="Add to Favourites" secondary={true} /></div>
-                </div>
+                    <Chart appName={appName}/>
+                    <CardActions>
+                        <RaisedButton label="Add to Favourites" secondary={true}/>
+                    </CardActions>
+                </MaterialPanel>
             </div>
         );
     }
