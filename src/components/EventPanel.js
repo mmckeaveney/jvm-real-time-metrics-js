@@ -39,18 +39,32 @@ class EventPanel extends React.Component {
         });
     }
 
-    calculateTimeDelta(eventTime) {
-        var dateFuture = new Date(new Date().getFullYear() +1, 0, 1);
-        var dateNow = new Date();
+    calculateTimeDelta(since) {
+        var date = new Date(since);
+        var seconds = Math.floor(((new Date().getTime()) / 1000) - date);
 
-        var seconds = Math.floor((dateFuture - (dateNow))/1000);
-        var minutes = Math.floor(seconds/60);
-        var hours = Math.floor(minutes/60);
-        var days = Math.floor(hours/24);
+        var interval = Math.floor(seconds / 31536000);
 
-        hours = hours-(days*24);
-        minutes = minutes-(days*24*60)-(hours*60);
-        seconds = seconds-(days*24*60*60)-(hours*60*60)-(minutes*60);
+        if (interval >= 1) {
+            return interval + " years ago";
+        }
+        interval = Math.floor(seconds / 2592000);
+        if (interval >= 1) {
+            return interval + " months ago";
+        }
+        interval = Math.floor(seconds / 86400);
+        if (interval >= 1) {
+            return interval + " days ago";
+        }
+        interval = Math.floor(seconds / 3600);
+        if (interval >= 1) {
+            return interval + " hours ago";
+        }
+        interval = Math.floor(seconds / 60);
+        if (interval >= 1) {
+            return interval + " minutes ago";
+        }
+        return Math.floor(seconds) + " seconds ago";
     }
 
     render() {
@@ -61,7 +75,7 @@ class EventPanel extends React.Component {
                     <TableRow>
                         <TableRowColumn>{ event.image }</TableRowColumn>
                         <TableRowColumn>{ event.status }</TableRowColumn>
-                        <TableRowColumn>{ event.time }</TableRowColumn>
+                        <TableRowColumn>{ this.calculateTimeDelta(event.time) }</TableRowColumn>
                     </TableRow>
                 )
             });
