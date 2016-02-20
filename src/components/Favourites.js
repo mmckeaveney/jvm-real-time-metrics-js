@@ -85,7 +85,7 @@ class Favourites extends React.Component {
 
 
         return (
-            <div className="col-lg-8 col-md-8 col-sm-8 col-xs-8" id="article-panel-container" style={{marginTop:"10px"}}>
+            <div className="col-lg-7 col-md-7 col-sm-7 col-xs-7" id="article-panel-container" style={{marginTop:"10px"}}>
                 <MaterialPanel title="Favourites" subtitle="Applications added to your favourites">
                         <Chart chartConfig={config}/>
                         <Chart chartConfig={config2}/>

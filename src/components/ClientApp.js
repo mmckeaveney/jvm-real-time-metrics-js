@@ -62,7 +62,6 @@ class ClientApp extends React.Component {
                         </TableRow>
                     </TableBody>
                 </Table>
-                    <Chart appName={this.props.title}/>
                     <CardActions>
                     <RaisedButton label="More Details"
                                   containerElement={<Link to={`/appdetail/${this.props.index}`}/> }

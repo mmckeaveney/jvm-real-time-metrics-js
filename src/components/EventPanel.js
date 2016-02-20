@@ -10,6 +10,7 @@ import MaterialPanel from './MaterialPanel';
 import Actions from '../actions/AppActions';
 import CircularProgress from 'material-ui/lib/circular-progress';
 import $ from 'jquery';
+import WebSocket from '../utils/WebSocket';
 
 class EventPanel extends React.Component {
     constructor(props) {
@@ -20,7 +21,11 @@ class EventPanel extends React.Component {
     }
 
     componentDidMount() {
-       this.getLatestEvents(this.props.appName)
+       this.getLatestEvents(this.props.appName);
+        WebSocket.register([{
+            route: '/jvmrt/eventsUpdate',
+            callback: this.getLatestEvents(this.props.appName)
+        }]);
     }
 
     getLatestEvents(criteria) {

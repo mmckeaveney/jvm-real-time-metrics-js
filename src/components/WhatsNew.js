@@ -24,7 +24,7 @@ class WhatsNew extends React.Component {
 
     render() {
         return (
-            <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4" id="whats-new" style={{marginTop:"10px"}}>
+            <div className="col-lg-5 col-md-5 col-sm-5 col-xs-5" id="whats-new" style={{marginTop:"10px"}}>
                 <MaterialPanel title="Latest" subtitle="The Latest From Your Environment">
 
                     <EventPanel appName="All"/>
