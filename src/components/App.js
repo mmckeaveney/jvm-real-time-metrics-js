@@ -88,6 +88,7 @@ class App extends React.Component {
         } else {
             currentUser = (
                 <span className="glyphicon glyphicon-user" aria-hidden="true"> Profile Loading..
+                    <IconButton onClick={this.logOut}> <Cancel/> </IconButton>
                 </span>
             );
         }

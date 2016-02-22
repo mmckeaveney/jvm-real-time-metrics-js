@@ -21,7 +21,6 @@ class ClientApplicationStore {
                clientApplications: incomingMetadata
            });
     }
-
 }
 
 export default alt.createStore(ClientApplicationStore);

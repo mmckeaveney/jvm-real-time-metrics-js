@@ -14,7 +14,8 @@ let routes = (
         <Route path="/" component={App}>
             <IndexRoute component={HomeDashboard} />
             <Route path="/environment" component={EnvironmentDashboard}/>
-            <Route path="/appdetail/:id" component={ClientAppDrilldown}/>
+            // TODO: This is a routing hack, fix it
+            <Route path="/appdetail/frankblizzard/:image" component={ClientAppDrilldown}/>
             <Route path="/alerts" component={AlertsDashboard}/>
         </Route>
     </Router>

@@ -64,7 +64,7 @@ class ClientApp extends React.Component {
                 </Table>
                     <CardActions>
                     <RaisedButton label="More Details"
-                                  containerElement={<Link to={`/appdetail/${this.props.index}`}/> }
+                                  containerElement={<Link to={`/appdetail/${this.props.title}`}/> }
                                   linkButton={true}
                                   secondary={true} />
                     <RaisedButton label="Add to Favourites" secondary={true} />

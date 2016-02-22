@@ -8,6 +8,7 @@ import Chart from './Chart';
 import ClientApplicationStore from '../stores/ClientApplicationStore';
 import _ from 'underscore';
 import RealTimeMetricsPanel from './RealTimeMetricsPanel';
+import AppActions from '../actions/AppActions';
 import MaterialPanel from './MaterialPanel';
 import Table from 'material-ui/lib/table/table';
 import TableHeaderColumn from 'material-ui/lib/table/table-header-column';
@@ -34,9 +35,13 @@ class ClientAppDrilldown extends React.Component {
 
     render() {
 
+            // TODO: This is a routing hack, fix it
+            var currentApp = _.findWhere(this.props.clientApplications, {
+                appName : `frankblizzard/${this.props.params.image}`
+            })
 
-        var actuatorMetrics = this.props.clientApplications[this.props.params.id].actuatorMetrics;
-        var appName = this.props.clientApplications[this.props.params.id].appName;
+        var actuatorMetrics = currentApp.actuatorMetrics;
+        var appName = currentApp.appName;
 
         var actuatorMarkup = _.map(actuatorMetrics, (value, key) => {
             return (
