@@ -11,6 +11,7 @@ import Actions from '../actions/AppActions';
 import CircularProgress from 'material-ui/lib/circular-progress';
 import $ from 'jquery';
 import WebSocket from '../utils/WebSocket';
+import TimeDelta from '../utils/TimeDelta';
 
 class EventPanel extends React.Component {
     constructor(props) {
@@ -44,34 +45,6 @@ class EventPanel extends React.Component {
         });
     }
 
-    calculateTimeDelta(since) {
-        var date = new Date(since);
-        var seconds = Math.floor(((new Date().getTime()) / 1000) - date);
-
-        var interval = Math.floor(seconds / 31536000);
-
-        if (interval >= 1) {
-            return interval + " years ago";
-        }
-        interval = Math.floor(seconds / 2592000);
-        if (interval >= 1) {
-            return interval + " months ago";
-        }
-        interval = Math.floor(seconds / 86400);
-        if (interval >= 1) {
-            return interval + " days ago";
-        }
-        interval = Math.floor(seconds / 3600);
-        if (interval >= 1) {
-            return interval + " hours ago";
-        }
-        interval = Math.floor(seconds / 60);
-        if (interval >= 1) {
-            return interval + " minutes ago";
-        }
-        return Math.floor(seconds) + " seconds ago";
-    }
-
     render() {
         var eventsMarkup;
         if (this.state.events) {
@@ -80,7 +53,7 @@ class EventPanel extends React.Component {
                     <TableRow>
                         <TableRowColumn>{ event.image }</TableRowColumn>
                         <TableRowColumn>{ event.status }</TableRowColumn>
-                        <TableRowColumn>{ this.calculateTimeDelta(event.time) }</TableRowColumn>
+                        <TableRowColumn>{ TimeDelta.calculateTimeDelta(event.time) }</TableRowColumn>
                     </TableRow>
                 )
             });

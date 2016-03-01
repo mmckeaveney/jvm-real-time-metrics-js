@@ -18,6 +18,7 @@ import TableRowColumn from 'material-ui/lib/table/table-row-column';
 import TableBody from 'material-ui/lib/table/table-body';
 import CardActions from 'material-ui/lib/card/card-actions';
 import EventPanel from './EventPanel';
+import ExceptionPanel from './ExceptionPanel';
 
 @connectToStores
 class ClientAppDrilldown extends React.Component {
@@ -65,26 +66,8 @@ class ClientAppDrilldown extends React.Component {
                         <EventPanel appName={appName}/>
                     </div>
 
-                    <div className="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                        <div className="panel panel-primary">
-                            <div className="panel-heading">
-                                <h3 className="panel-title">{appName} Exceptions</h3>
-                            </div>
-                            <div className="panel-body">
-                                <table className="table">
-                                    <tbody>
-                                    <tr>
-                                        <th>Exception</th>
-                                        <th>Time</th>
-                                    </tr>
-                                    <tr>
-                                        <td>SQLException</td>
-                                        <td>1 hour ago</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+                    <div className="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                        <ExceptionPanel appName={appName}/>
                     </div>
 
                     <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
