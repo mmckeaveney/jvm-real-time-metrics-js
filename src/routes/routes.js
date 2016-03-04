@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, IndexRoute } from 'react-router';
-import createBrowserHistory from 'history/lib/createBrowserHistory';
+import { browserHistory } from 'react-router';
 import App from '../components/App.js';
 import HomeDashboard from '../components/HomeDashboard';
 import EnvironmentDashboard from '../components/EnvironmentDashboard';
@@ -11,7 +11,7 @@ import Login from '../components/Login';
 import Settings from '../components/Settings';
 
 let routes = (
-    <Router history={createBrowserHistory()}>
+    <Router history={browserHistory}>
         <Route path="/" component={App}>
             <IndexRoute component={HomeDashboard} />
             <Route path="/environment" component={EnvironmentDashboard}/>

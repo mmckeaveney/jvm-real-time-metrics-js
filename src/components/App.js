@@ -13,6 +13,7 @@ import ThemeDecorator from 'material-ui/lib/styles/theme-decorator';
 import ThemeManager from 'material-ui/lib/styles/theme-manager';
 import LightTheme from 'material-ui/lib/styles/raw-themes/light-raw-theme';
 import Login from './Login';
+import $ from 'jquery';
 
 // CSS
 require('../styles/main.scss');
@@ -51,7 +52,11 @@ class App extends React.Component {
                 console.log("Error loading the Profile", err);
                 return;
             }
-            this.setState({profile: profile});
+            $.post({url: `http://localhost:8090/api/usercheck?userId=${profile.user_id}&userName=${profile.nickname}&email=${profile.email}`,
+                success: (user) => {
+                    this.setState({profile: profile});
+                }
+            });
         }.bind(this));
     }
 
