@@ -18,6 +18,7 @@ import { browserHistory } from 'react-router'
 import IconMenu from 'material-ui/lib/menus/icon-menu';
 import MoreVertIcon from 'material-ui/lib/svg-icons/navigation/more-vert';
 import MenuItem from 'material-ui/lib/menus/menu-item';
+import AuthService from '../utils/AuthService';
 
 // CSS
 require('../styles/main.scss');
@@ -31,27 +32,15 @@ class App extends React.Component {
     }
 
     componentWillMount() {
-        this.lock = new Auth0Lock('879T6QmvcY1giFlYveEx2LM0Qygom43T', 'mmckeaveney.eu.auth0.com');
         this.setState({
-            idToken: this.getIdToken()
+            idToken: AuthService.getIdToken()
         });
-        this.setupAjax();
+        AuthService.setupAjax();
         this.getUserProfile();
     }
 
-    setupAjax() {
-        $.ajaxSetup({
-            'beforeSend': function (xhr) {
-                if (localStorage.getItem('userToken')) {
-                    xhr.setRequestHeader('Authorization',
-                        'Bearer ' + localStorage.getItem('userToken'));
-                }
-            }
-        })
-    }
-
     getUserProfile() {
-        this.lock.getProfile(localStorage.getItem('userToken'), function (err, profile) {
+        AuthService.getLock().getProfile(localStorage.getItem('userToken'), function (err, profile) {
             if (err) {
                 console.log("Error loading the Profile", err);
                 return;
@@ -62,27 +51,6 @@ class App extends React.Component {
                 }
             });
         }.bind(this));
-    }
-
-    getIdToken() {
-        var idToken = localStorage.getItem('userToken');
-        var authHash = this.lock.parseHash(window.location.hash);
-        if (!idToken && authHash) {
-            if (authHash.id_token) {
-                idToken = authHash.id_token
-                localStorage.setItem('userToken', authHash.id_token);
-            }
-            if (authHash.error) {
-                console.log("Error signing in", authHash);
-                return null;
-            }
-        }
-        return idToken;
-    }
-
-    logOut() {
-        localStorage.removeItem("userToken");
-        window.location = "/";
     }
 
     handleActive(tab) {
@@ -102,7 +70,7 @@ class App extends React.Component {
                         targetOrigin={{horizontal: 'right', vertical: 'top'}}
                         anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                     >
-                        <MenuItem primaryText="Sign out" onClick={this.logOut} />
+                        <MenuItem primaryText="Sign out" onClick={AuthService.logOut} />
                     </IconMenu>
                 </div>
             );
@@ -117,7 +85,7 @@ class App extends React.Component {
                         targetOrigin={{horizontal: 'right', vertical: 'top'}}
                         anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                     >
-                        <MenuItem primaryText="Sign out" onClick={this.logOut} />
+                        <MenuItem primaryText="Sign out" onClick={AuthService.logOut} />
                     </IconMenu>
                     </div>
             );
@@ -157,7 +125,7 @@ class App extends React.Component {
                 </div>
             );
         } else {
-            return (<Login lock={this.lock} idToken={this.state.idToken}/>);
+            return (<Login lock={AuthService.getLock()} idToken={this.state.idToken}/>);
         }
     }
 }

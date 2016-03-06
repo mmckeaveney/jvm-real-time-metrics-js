@@ -37,7 +37,7 @@ class ClientApplications extends React.Component {
     render() {
         var clientApps;
 
-        if (this.props.clientApplications) {
+        if (this.props.clientApplications.length > 0) {
             clientApps = this.props.clientApplications.map((app, index) => {
                 return (
                     <ClientApp key={index}
@@ -48,7 +48,7 @@ class ClientApplications extends React.Component {
                 )
             })
         } else {
-            clientApps = <span> No docker client applications currently available. </span>
+            clientApps = <span> No docker client applications currently available at this time. </span>
         }
 
         return (

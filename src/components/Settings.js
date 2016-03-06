@@ -8,6 +8,7 @@ import $ from 'jquery';
 import SelectField from 'material-ui/lib/select-field';
 import MenuItem from 'material-ui/lib/menus/menu-item';
 import RaisedButton from 'material-ui/lib/raised-button';
+import AuthService from '../utils/AuthService';
 
 const items = [
     <MenuItem key={1} value={1} primaryText="Light Theme"/>,
@@ -21,18 +22,23 @@ class Settings extends React.Component {
             value: null,
             dockerHost: null,
             dockerPort: null,
-            theme: null
+            theme: null,
+            userId: null,
+            username: null
         }
     }
 
-    componentDidMount() {
-        //this.getSettingsForUser(this.props.appName);
+    componentWillMount() {
+        this.getSettingsForUser();
     }
 
     saveSettingsForUser() {
-
-        var url = "http://localhost:8090/api/events/all";
+        var url = `http://localhost:8090/api/settings/save/?userId=${this.state.userId}`;
         $.post({url: url,
+                data: {
+                    dockerHost: this.state.dockerHost,
+                    dockerPort: this.state.dockerPort
+                },
             success: (settings) => {
                 console.log("settings saved.");
             }
@@ -40,34 +46,57 @@ class Settings extends React.Component {
     }
 
     getSettingsForUser() {
-        var url = `http://localhost:8090/api/settings?userId=${userId}`;
-        $.getJSON({url: url,
-            success: (settings) => {
-                this.setState({
-                    dockerHost: settings.dockerHost,
-                    dockerPort: settings.dockerPort,
-                    theme: settings.theme
+            AuthService.getLock().getProfile(localStorage.getItem('userToken'), function (err, profile) {
+                if (err) {
+                    console.log("Error loading the Profile", err);
+                    return;
+                }
+                var url = `http://localhost:8090/api/settings/?userId=${profile.user_id}`;
+                $.post({url: url,
+                    success: (settings) => {
+                        this.setState({
+                            dockerHost: settings.dockerHost,
+                            dockerPort: settings.dockerPort,
+                            userId: profile.user_id,
+                            username: profile.nickname
+                        });
+                    }
                 });
-            }
-        });
+            }.bind(this));
+
     }
 
-    render() {
+    handleDockerHost = (event) => {
+        this.setState({
+            dockerHost: event.target.value
+        });
+    };
 
+    handleDockerPort = (event) => {
+        this.setState({
+            dockerPort: event.target.value
+        });
+    };
+
+    render() {
         return (
-            <MaterialPanel title={ `Settings for User getUserNameHere`}>
+            <MaterialPanel title={ `Settings for User ${this.state.username}`}>
                 <TextField
-                    hintText="Docker Host"
+                    ref="dockerHost"
+                    value={this.state.dockerHost}
                     floatingLabelText="Enter your docker host url."
+                    onChange={this.handleDockerHost}
                 /><br/>
                 <TextField
-                    hintText="Docker Port "
+                    ref="dockerPort"
+                    value={this.state.dockerPort}
                     floatingLabelText="Enter your docker host port."
+                    onChange={this.handleDockerPort}
                 /><br/>
                 <SelectField value={this.state.value} floatingLabelText="Choose your theme.">
                     { items }
                 </SelectField>
-                <RaisedButton label="Save" secondary={true} onClick={this.saveSettingsForUser()} />
+                <RaisedButton label="Save" secondary={true} onMouseDown={this.saveSettingsForUser} />
             </MaterialPanel>
         );
     }

@@ -20,24 +20,16 @@ import CardActions from 'material-ui/lib/card/card-actions';
 import EventPanel from './EventPanel';
 import ExceptionPanel from './ExceptionPanel';
 
-@connectToStores
 class ClientAppDrilldown extends React.Component {
     constructor(props) {
         super(props);
     }
 
-    static getStores(props) {
-        return [ClientApplicationStore];
-    }
-
-    static getPropsFromStores(props) {
-        return ClientApplicationStore.getState();
-    }
 
     render() {
 
             // TODO: This is a routing hack, fix it
-            var currentApp = _.findWhere(this.props.clientApplications, {
+            var currentApp = _.findWhere(ClientApplicationStore.getState().clientApplications, {
                 appName : `frankblizzard/${this.props.params.image}`
             })
 
