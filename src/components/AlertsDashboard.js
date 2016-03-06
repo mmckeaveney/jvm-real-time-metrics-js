@@ -59,12 +59,13 @@ class AlertsDashboard extends React.Component {
                 <div className="panel panel-primary">
                     <div className="panel-heading">Alert Settings</div>
                     <div className="panel-body">
-                            <div className="panel panel-primary">
+                            /* <div className="panel panel-primary">
                                 <div className="panel-heading">
                                     <h3 className="panel-title">Alert Thresholds for Martin McKeaveney</h3>
                                 </div>
                                 <div className="panel-body">
                                     <table className="table">
+                                        <tbody>
                                         <tr>
                                             <th>Application</th>
                                             <th>Metrics</th>
@@ -115,9 +116,10 @@ class AlertsDashboard extends React.Component {
                                                 <RaisedButton label="Amit Sharma" style={{margin:"5px"}} secondary={true} /></td>
                                             <td><RaisedButton label="DELETE" style={{margin:"5px"}} primary={true} /></td>
                                         </tr>
+                                        </tbody>
                                     </table>
                                 </div>
-                            </div>
+                            </div> */
                         </div>
                     </div>
                 </div>

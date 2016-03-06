@@ -76,7 +76,7 @@ class ClientAppDrilldown extends React.Component {
                                 <h3 className="panel-title">{appName} Alerts</h3>
                             </div>
                             <div className="panel-body">
-                                <table className="table">
+                               /* <table className="table">
                                     <tbody>
                                     <tr>
                                         <th>Event</th>
@@ -91,7 +91,7 @@ class ClientAppDrilldown extends React.Component {
                                         </td>
                                     </tr>
                                     </tbody>
-                                </table>
+                                </table> */
                             </div>
                         </div>
                     </div>
@@ -107,7 +107,7 @@ class ClientAppDrilldown extends React.Component {
                                 <h3 className="panel-title">{appName} Query Times</h3>
                             </div>
                             <div className="panel-body">
-                                <table className="table">
+                               /* <table className="table">
                                     <tbody>
                                     <tr>
                                         <th>Query Method</th>
@@ -122,7 +122,7 @@ class ClientAppDrilldown extends React.Component {
                                         <td>10 minutes ago</td>
                                     </tr>
                                     </tbody>
-                                </table>
+                                </table> */
                             </div>
                         </div>
                     </div>

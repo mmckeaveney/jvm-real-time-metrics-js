@@ -7,12 +7,21 @@ import CircularProgress from 'material-ui/lib/circular-progress';
 import $ from 'jquery';
 import SelectField from 'material-ui/lib/select-field';
 import MenuItem from 'material-ui/lib/menus/menu-item';
+import RaisedButton from 'material-ui/lib/raised-button';
+
+const items = [
+    <MenuItem key={1} value={1} primaryText="Light Theme"/>,
+    <MenuItem key={2} value={2} primaryText="Dark Theme"/>,
+];
 
 class Settings extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            settings:{}
+            value: null,
+            dockerHost: null,
+            dockerPort: null,
+            theme: null
         }
     }
 
@@ -20,12 +29,24 @@ class Settings extends React.Component {
         //this.getSettingsForUser(this.props.appName);
     }
 
-    getSettingsForUser(criteria) {
+    saveSettingsForUser() {
+
         var url = "http://localhost:8090/api/events/all";
+        $.post({url: url,
+            success: (settings) => {
+                console.log("settings saved.");
+            }
+        });
+    }
+
+    getSettingsForUser() {
+        var url = `http://localhost:8090/api/settings?userId=${userId}`;
         $.getJSON({url: url,
             success: (settings) => {
                 this.setState({
-                    settings: settings
+                    dockerHost: settings.dockerHost,
+                    dockerPort: settings.dockerPort,
+                    theme: settings.theme
                 });
             }
         });
@@ -43,10 +64,10 @@ class Settings extends React.Component {
                     hintText="Docker Port "
                     floatingLabelText="Enter your docker host port."
                 /><br/>
-                <SelectField value="Select Theme">
-                    <MenuItem value={"someVal"} primaryText="Light Theme"/>
-                    <MenuItem value={"someVal1"} primaryText="Dark Theme"/>
+                <SelectField value={this.state.value} floatingLabelText="Choose your theme.">
+                    { items }
                 </SelectField>
+                <RaisedButton label="Save" secondary={true} onClick={this.saveSettingsForUser()} />
             </MaterialPanel>
         );
     }

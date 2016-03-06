@@ -34,34 +34,28 @@ class ClientApp extends React.Component {
     }
 
     render() {
-        var styles = {
-            fontWeight: "bold",
-            textAlign: "center"
-        }
-
-
 
 
         return (
             <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                 <MaterialPanel title={this.props.title}>
-                <Table selectable={false}>
-                    <TableHeader displaySelectAll={false}
-                                 adjustForCheckbox={false}>
-                        <TableRow>
-                            <TableHeaderColumn>Events</TableHeaderColumn>
-                            <TableHeaderColumn>Exceptions</TableHeaderColumn>
-                            <TableHeaderColumn>Alerts</TableHeaderColumn>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody displayRowCheckbox={false}>
-                        <TableRow>
-                            <TableRowColumn>TO BE IMPLEMENTED</TableRowColumn>
-                            <TableRowColumn>TO BE IMPLEMENTED</TableRowColumn>
-                            <TableRowColumn>TO BE IMPLEMENTED</TableRowColumn>
-                        </TableRow>
-                    </TableBody>
-                </Table>
+                    <Table selectable={false}>
+                        <TableHeader displaySelectAll={false}
+                                     adjustForCheckbox={false}>
+                            <TableRow>
+                                <TableHeaderColumn>Events</TableHeaderColumn>
+                                <TableHeaderColumn>Exceptions</TableHeaderColumn>
+                                <TableHeaderColumn>Alerts</TableHeaderColumn>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody displayRowCheckbox={false}>
+                            <TableRow>
+                                <TableRowColumn>TO BE IMPLEMENTED</TableRowColumn>
+                                <TableRowColumn>TO BE IMPLEMENTED</TableRowColumn>
+                                <TableRowColumn>TO BE IMPLEMENTED</TableRowColumn>
+                            </TableRow>
+                        </TableBody>
+                    </Table>
                     <CardActions>
                     <RaisedButton label="More Details"
                                   containerElement={<Link to={`/appdetail/${this.props.title}`}/> }

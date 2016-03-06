@@ -48,9 +48,9 @@ class EventPanel extends React.Component {
     render() {
         var eventsMarkup;
         if (this.state.events) {
-            eventsMarkup = _.map(this.state.events, (event) => {
+            eventsMarkup = _.map(this.state.events, (event, index) => {
                 return (
-                    <TableRow>
+                    <TableRow key={index}>
                         <TableRowColumn>{ event.image }</TableRowColumn>
                         <TableRowColumn>{ event.status }</TableRowColumn>
                         <TableRowColumn>{ TimeDelta.calculateTimeDelta(event.time) }</TableRowColumn>

@@ -14,6 +14,10 @@ import ThemeManager from 'material-ui/lib/styles/theme-manager';
 import LightTheme from 'material-ui/lib/styles/raw-themes/light-raw-theme';
 import Login from './Login';
 import $ from 'jquery';
+import { browserHistory } from 'react-router'
+import IconMenu from 'material-ui/lib/menus/icon-menu';
+import MoreVertIcon from 'material-ui/lib/svg-icons/navigation/more-vert';
+import MenuItem from 'material-ui/lib/menus/menu-item';
 
 // CSS
 require('../styles/main.scss');
@@ -21,8 +25,8 @@ require('../styles/main.scss');
 // Component for the main Container Div of the application.
 @ThemeDecorator(ThemeManager.getMuiTheme(LightTheme))
 class App extends React.Component {
-    constructor(props) {
-        super(props);
+    constructor(props, context) {
+        super(props, context);
         injectTapEventPlugin();
     }
 
@@ -81,30 +85,62 @@ class App extends React.Component {
         window.location = "/";
     }
 
+    handleActive(tab) {
+        browserHistory.push(tab.props.route);
+    }
+
     render() {
         var currentUser;
         if (this.state.profile) {
             currentUser = (
                 <div>
-                    <Avatar src={ this.state.profile.picture }/> { this.state.profile.nickname }
-                    <IconButton onClick={this.logOut}> <Cancel/> </IconButton>
+                    <Avatar src={this.state.profile.picture}/> {this.state.profile.nickname}
+                    <IconMenu
+                        iconButtonElement={
+                         <IconButton><MoreVertIcon /></IconButton>
+        }
+                        targetOrigin={{horizontal: 'right', vertical: 'top'}}
+                        anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+                    >
+                        <MenuItem primaryText="Sign out" onClick={this.logOut} />
+                    </IconMenu>
                 </div>
             );
         } else {
             currentUser = (
-                <span className="glyphicon glyphicon-user" aria-hidden="true"> Profile Loading..
-                    <IconButton onClick={this.logOut}> <Cancel/> </IconButton>
-                </span>
+                <div>
+                    Profile Loading..
+                    <IconMenu
+                        iconButtonElement={
+                         <IconButton><MoreVertIcon /></IconButton>
+        }
+                        targetOrigin={{horizontal: 'right', vertical: 'top'}}
+                        anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+                    >
+                        <MenuItem primaryText="Sign out" onClick={this.logOut} />
+                    </IconMenu>
+                    </div>
             );
         }
+
+        var styles = {
+            appBar: {
+                flexWrap: 'wrap'
+            },
+            tabs: {
+                width: '100%'
+            },
+            tab: {
+                marginLeft: 20
+            }
+        };
+
         var myTabs = (
-            <Tabs>
-                <Tab label={<Link to="/">HOME</Link>}/>
-                <Tab label={<Link to="/environment">ENVIRONMENT</Link>}/>
-                <Tab label={<Link to="/alerts">ALERTS</Link>}/>
-                <Tab label={<Link to="/settings">SETTINGS</Link>}/>
-                <Tab label={ currentUser }
-                />
+            <Tabs style={styles.tabs}>
+                <Tab label="HOME" route="/" onActive={this.handleActive} />
+                <Tab label="ENVIRONMENT" route="/environment" onActive={this.handleActive} />
+                <Tab label="ALERTS" route="/alerts" style={styles.tab} onActive={this.handleActive} />
+                <Tab label="SETTINGS" route="/settings" onActive={this.handleActive} />
             </Tabs>
         );
 
@@ -113,8 +149,10 @@ class App extends React.Component {
                 <div className="container-fluid">
                     <AppBar
                         title={<span>JVM Real Time Metrics System</span>}
-                        iconElementRight={myTabs}
+                        iconElementRight={currentUser}
+                        style={styles.appBar}
                     />
+                    {myTabs}
                     {this.props.children}
                 </div>
             );
@@ -123,6 +161,7 @@ class App extends React.Component {
         }
     }
 }
+
 
 export default App;
 
