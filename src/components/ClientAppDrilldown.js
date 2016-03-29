@@ -67,24 +67,6 @@ class ClientAppDrilldown extends React.Component {
                             <div className="panel-heading">
                                 <h3 className="panel-title">{appName} Alerts</h3>
                             </div>
-                            <div className="panel-body">
-                               /* <table className="table">
-                                    <tbody>
-                                    <tr>
-                                        <th>Event</th>
-                                        <th>Type</th>
-                                        <th>Time</th>
-                                    </tr>
-                                    <tr>
-                                        <td>Updated to version 1.1</td>
-                                        <td>Update/Release</td>
-                                        <td>1 hour ago</td>
-                                        <td><RaisedButton label="See Alert" style={{margin:"5px"}} secondary={true}/>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table> */
-                            </div>
                         </div>
                     </div>
 

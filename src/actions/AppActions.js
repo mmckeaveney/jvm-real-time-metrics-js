@@ -6,21 +6,21 @@ class AppActions {
 
     constructor() {
         this.generateActions('updateLatestEvents');
+        this.generateActions('saveAlert');
+        this.generateActions('updateLatestAlerts');
         this.generateActions('updateLatestApplicationMetadata');
     }
 
-    getLatestEvents(criteria) {
-        var url;
-        if (criteria == "All") {
-           url = "http://localhost:8090/api/events/all";
-        } else {
-           url = `http://localhost:8090/api/events/?${criteria}`;
-        }
-        $.getJSON({url: url,
-            success: (events) => {
-                this.setState({
-                    events: events
-                });
+    fetchLatestAlerts() {
+        var self = this;
+        $.ajax({
+            dataType: "json",
+            url: "http://localhost:8090/api/alerts/all",
+            success: (alerts) => {
+                self.actions.updateLatestAlerts(alerts);
+            },
+            error: (error) => {
+                console.log("Error retrieving alerts", error)
             }
         });
     }

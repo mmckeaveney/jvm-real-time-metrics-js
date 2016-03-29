@@ -6,6 +6,7 @@ import ClientApp from './ClientApp';
 import WebSocket from '../utils/WebSocket';
 import ClientApplicationStore from '../stores/ClientApplicationStore';
 import MaterialPanel from './MaterialPanel';
+import CircularProgress from 'material-ui/lib/circular-progress';
 
 
 // CSS
@@ -48,7 +49,7 @@ class ClientApplications extends React.Component {
                 )
             })
         } else {
-            clientApps = <span> No docker client applications currently available at this time. </span>
+            clientApps =  <CircularProgress/>
         }
 
         return (

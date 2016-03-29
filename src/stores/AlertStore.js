@@ -1,0 +1,32 @@
+import alt from '../alt'
+import React from 'react';
+import Actions from '../actions/AppActions';
+import { decorate, bind } from 'alt/utils/decorators'
+import _ from 'underscore';
+
+@decorate(alt)
+class AlertStore {
+
+    constructor() {
+        this.state = {
+            alerts : []
+        }
+    }
+
+    @bind(Actions.updateLatestAlerts)
+    updateLatestAlerts(alerts) {
+        this.setState({
+            alerts: alerts
+        });
+    }
+
+    @bind(Actions.saveAlert)
+    saveAlert(alert) {
+        this.setState({
+            alerts: this.state.alerts.concat([alert])
+        });
+    }
+
+}
+
+export default alt.createStore(AlertStore);

@@ -48,9 +48,9 @@ class ExceptionPanel extends React.Component {
     render() {
         var exceptionsMarkup;
         if (this.state.exceptions) {
-            exceptionsMarkup = _.map(this.state.exceptions, (exception) => {
+            exceptionsMarkup = _.map(this.state.exceptions, (exception, index) => {
                 return (
-                    <TableRow>
+                    <TableRow key={index}>
                         <TableRowColumn>{ exception.applicationName  }</TableRowColumn>
                         <TableRowColumn>{ exception.exceptionType }</TableRowColumn>
                         <TableRowColumn>{ exception.exceptionClass }</TableRowColumn>
