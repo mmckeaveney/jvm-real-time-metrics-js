@@ -8,8 +8,7 @@ class AlertDropdown extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            value: 0,
-            data: null
+            value: 0
         }
     }
 
@@ -21,7 +20,7 @@ class AlertDropdown extends React.Component {
 
     render() {
         var items = this.props.data.map((item, index) => {
-            return <MenuItem value={index} key={index} primaryText={item}/>
+            return <MenuItem key={index} value={index} primaryText={item}/>
         });
 
         return (

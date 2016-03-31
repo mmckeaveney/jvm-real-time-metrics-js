@@ -13,6 +13,7 @@ import TableRowColumn from 'material-ui/lib/table/table-row-column';
 import TableBody from 'material-ui/lib/table/table-body';
 import EventPanel from './EventPanel';
 import ExceptionPanel from './ExceptionPanel';
+import AlertPanel from './AlertPanel';
 
 // CSS
 require('../styles/MainDashboard.scss');
@@ -32,25 +33,7 @@ class WhatsNew extends React.Component {
 
                     <ExceptionPanel appName="All"/>
 
-                    <MaterialPanel title="Alerts">
-                        <Table selectable={false}>
-                            <TableHeader displaySelectAll={false}
-                                         adjustForCheckbox={false}>
-                                <TableRow>
-                                    <TableHeaderColumn>Event</TableHeaderColumn>
-                                    <TableHeaderColumn>Type</TableHeaderColumn>
-                                    <TableHeaderColumn>Time</TableHeaderColumn>
-                                </TableRow>
-                            </TableHeader>
-                            <TableBody displayRowCheckbox={false}>
-                                <TableRow>
-                                    <TableRowColumn>App updated</TableRowColumn>
-                                    <TableRowColumn>Update</TableRowColumn>
-                                    <TableRowColumn>2 hours ago</TableRowColumn>
-                                </TableRow>
-                            </TableBody>
-                        </Table>
-                        </MaterialPanel>
+                    <AlertPanel appName="All"/>
             </MaterialPanel>
         </div> );
     }

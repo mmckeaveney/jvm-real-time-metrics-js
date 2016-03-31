@@ -8,6 +8,7 @@ class AppActions {
         this.generateActions('updateLatestEvents');
         this.generateActions('saveAlert');
         this.generateActions('updateLatestAlerts');
+        this.generateActions('deleteAlert');
         this.generateActions('updateLatestApplicationMetadata');
     }
 

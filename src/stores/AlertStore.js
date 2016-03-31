@@ -27,6 +27,16 @@ class AlertStore {
         });
     }
 
+    @bind(Actions.deleteAlert)
+    deleteAlert(id) {
+        var updatedAlerts = this.state.alerts.filter(function (alert) {
+            return alert.id !== id;
+        });
+
+        this.setState({
+            alerts: updatedAlerts
+        });
+    }
 }
 
 export default alt.createStore(AlertStore);

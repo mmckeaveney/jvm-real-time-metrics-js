@@ -19,6 +19,7 @@ import IconMenu from 'material-ui/lib/menus/icon-menu';
 import MoreVertIcon from 'material-ui/lib/svg-icons/navigation/more-vert';
 import MenuItem from 'material-ui/lib/menus/menu-item';
 import AuthService from '../utils/AuthService';
+import NotificationDialog from './NotificationDialog';
 
 // CSS
 require('../styles/main.scss');
@@ -122,6 +123,7 @@ class App extends React.Component {
                     />
                     {myTabs}
                     {this.props.children}
+                    <NotificationDialog/>
                 </div>
             );
         } else {

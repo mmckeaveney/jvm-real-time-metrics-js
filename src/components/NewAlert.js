@@ -10,6 +10,7 @@ import TableBody from 'material-ui/lib/table/table-body';
 import TextField from 'material-ui/lib/text-field';
 import $ from 'jquery';
 import AppActions from '../actions/AppActions';
+import NotificationSnackbar from './NotificationSnackbar';
 
 class NewAlert extends React.Component {
     constructor(props) {
@@ -19,26 +20,29 @@ class NewAlert extends React.Component {
             metrics: [
                 "gcps_marksweeptime", "gaugeresponsemetrics", "classes", "gcps_marksweepcount",
                 "threadstotalStarted", "processors", "heapinit", "memfree", "systemloadaverage",
-                "gcps_scavengetime",  "mem", "counterstatus200metrics", "heap", "heapused", "instanceuptime",
+                "gcps_scavengetime", "mem", "counterstatus200metrics", "heap", "heapused", "instanceuptime",
                 "gcps_scavengecount", "heapcommitted", "threads", "httpsessionsmax", "uptime", "classesloaded",
                 "httpsessionsactive", "threadspeak", "classesunloaded", "threadsdaemon"
             ],
             conditions: ["Less Than", "Greater Than"],
             criteria: null,
-            users: []
+            users: [],
+            errorText: ''
         }
     }
 
     componentWillMount() {
-        $.getJSON({url: "http://localhost:8090/api/users/all",
+        $.getJSON({
+            url: "http://localhost:8090/api/users/all",
             success: (users) => {
                 this.setState({
-                    users : users
+                    users: users
                 });
             }
         });
 
-        $.getJSON({url: "http://localhost:8090/api/clientapps/names/all",
+        $.getJSON({
+            url: "http://localhost:8090/api/clientapps/names/all",
             success: (clientApps) => {
                 this.setState({
                     apps: clientApps
@@ -54,47 +58,67 @@ class NewAlert extends React.Component {
     };
 
     saveAlert() {
-        var alert = {
-            appName: this.refs.appName.props.data[0],
-            metric: this.refs.metric.props.data[0],
-            condition: this.refs.condition.props.data[0],
-            criteria: this.refs.criteria.props.value,
-            user: this.refs.user.props.data[0]
-        }
-        $.ajax({
-            url: `http://localhost:8090/api/alerts/add`,
-            type: "POST",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-                data: JSON.stringify(alert),
-                dataType : 'application/json',
-            success: (alert) => {
-                console.log(alert)
-                AppActions.saveAlert(alert);
-            },
-            error: (error) => {
-                console.log("error when saving alert", error);
+        var number = this.refs.criteria.props.value;
+        if (isNaN(parseFloat(number)) && !isFinite(number)) {
+            this.setState({
+                errorText: "Must be a number."
+            });
+
+        } else {
+
+            var alert = {
+                appName: this.refs.appName.props.data[this.refs.appName.state.value],
+                metric: this.refs.metric.props.data[this.refs.metric.state.value],
+                condition: this.refs.condition.props.data[this.refs.condition.state.value],
+                criteria: number,
+                user: this.refs.user.props.data[this.refs.user.state.value]
             }
-        });
+            var snackBar = this.refs.newAlert;
+            $.ajax({
+                url: `http://localhost:8090/api/alerts/add`,
+                type: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                data: JSON.stringify(alert),
+                dataType: 'json',
+                success: (alert) => {
+                    console.log(alert)
+                    AppActions.saveAlert(alert);
+                    snackBar.show();
+                },
+                error: (error) => {
+                    console.log("error when saving alert", error);
+                }
+            });
+        }
     }
 
     render() {
         return (
-        <TableRow>
-            <TableRowColumn><AlertDropdown data={this.state.apps} ref="appName"/></TableRowColumn>
-            <TableRowColumn><AlertDropdown data={this.state.metrics} ref="metric"/></TableRowColumn>
-            <TableRowColumn><AlertDropdown data={this.state.conditions} ref="condition"/></TableRowColumn>
-            <TableRowColumn><TextField
-                ref="criteria"
-                value={this.state.criteria}
-                floatingLabelText="Alert Criteria"
-                onChange={this.handleCriteriaChange}
-            /></TableRowColumn>
-            <TableRowColumn><AlertDropdown data={this.state.users} ref="user"/></TableRowColumn>
-            <TableRowColumn><RaisedButton label="ADD" onClick={this.saveAlert.bind(this, this.props)}/></TableRowColumn>
-        </TableRow>
+            <TableRow>
+                <TableRowColumn><AlertDropdown data={this.state.apps} ref="appName"/></TableRowColumn>
+                <TableRowColumn><AlertDropdown data={this.state.metrics} ref="metric"/></TableRowColumn>
+                <TableRowColumn><AlertDropdown data={this.state.conditions} ref="condition"/></TableRowColumn>
+                <TableRowColumn>
+                    <TextField
+                        ref="criteria"
+                        value={this.state.criteria}
+                        floatingLabelText="Alert Criteria"
+                        onChange={this.handleCriteriaChange}
+                        errorText={this.state.errorText}
+                    /></TableRowColumn>
+                <TableRowColumn><AlertDropdown data={this.state.users} ref="user"/></TableRowColumn>
+                <TableRowColumn><RaisedButton label="ADD"
+                                              secondary={true}
+                                              onClick={this.saveAlert.bind(this, this.props)}/></TableRowColumn>
+                <NotificationSnackbar ref="newAlert"
+                                      message="New Alert added."
+                />
+                <TableRowColumn>N/A</TableRowColumn>
+                <TableRowColumn>N/A</TableRowColumn>
+            </TableRow>
         );
     }
 }

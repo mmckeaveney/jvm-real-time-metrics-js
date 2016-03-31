@@ -1,30 +1,54 @@
 import React from 'react';
 import RaisedButton from 'material-ui/lib/raised-button';
+import TableRow from 'material-ui/lib/table/table-row';
+import TableHeader from 'material-ui/lib/table/table-header';
+import TableRowColumn from 'material-ui/lib/table/table-row-column';
+import Checkbox from 'material-ui/lib/checkbox';
+import $ from 'jquery';
+import AppActions from '../actions/AppActions';
+import TimeDelta from '../utils/TimeDelta';
 
 class Alert extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            appName: [],
-            metrics: [],
-            conditions: [],
-            criteria: [],
-            users: []
+            appName: null,
+            metric: null,
+            condition: null,
+            criteria: null,
+            user: null,
+            triggered: false,
+            timeLastTriggered: null
         }
+    }
+
+    deleteAlert() {
+        $.post(`http://localhost:8090/api/alerts/delete/${this.props.id}`);
+        AppActions.deleteAlert(this.props.id);
+    }
+
+    resetAlert() {
+        $.post(`http://localhost:8090/api/alerts/reset/${this.props.id}`);
+        this.setState({
+          triggered: false
+        });
     }
 
     render() {
         return (
-            <tr>
-                <td><RaisedButton label="ReactClient" style={{margin:"5px"}} secondary={true}/></td>
-                <td><RaisedButton label="CPU" style={{margin:"5px"}} secondary={true}/>
-                    <RaisedButton label="HEAP" style={{margin:"5px"}} secondary={true}/></td>
-                <td><RaisedButton label="DROPS BELOW" style={{margin:"5px"}} primary={true}/></td>
-                <td><RaisedButton label="10000" style={{margin:"5px"}} primary={true}/></td>
-                <td><RaisedButton label="Martin McKeaveney" style={{margin:"5px"}} secondary={true}/>
-                    <RaisedButton label="Ryan Wilson" style={{margin:"5px"}} secondary={true}/></td>
-                <td><RaisedButton label="DELETE" style={{margin:"5px"}} primary={true}/></td>
-            </tr>
+            <TableRow>
+                <TableRowColumn>{this.props.appName}</TableRowColumn>
+                <TableRowColumn>{this.props.metric}</TableRowColumn>
+                <TableRowColumn>{this.props.condition}</TableRowColumn>
+                <TableRowColumn>{this.props.criteria}</TableRowColumn>
+                <TableRowColumn>{this.props.user}</TableRowColumn>
+                <TableRowColumn>
+                    <RaisedButton label="DELETE" primary={true} onClick={this.deleteAlert.bind(this, this.props)}/>
+                    <RaisedButton label="RESET" onClick={this.resetAlert.bind(this, this.props)}/>
+                </TableRowColumn>
+                <TableRowColumn> <Checkbox checked={this.props.triggered} disabled={true} /> </TableRowColumn>
+                <TableRowColumn> {TimeDelta.timestampToDateTime(this.props.timeLastTriggered)} </TableRowColumn>
+            </TableRow>
         );
     }
 }

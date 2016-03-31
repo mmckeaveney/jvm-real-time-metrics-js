@@ -15,6 +15,7 @@ import TableRowColumn from 'material-ui/lib/table/table-row-column';
 import TableBody from 'material-ui/lib/table/table-body';
 import Chart from './Chart';
 import MaterialPanel from './MaterialPanel';
+import Alert from './Alert';
 import NewAlert from './NewAlert';
 import connectToStores from 'alt/utils/connectToStores';
 import AppActions from '../actions/AppActions';
@@ -38,28 +39,21 @@ class AlertsDashboard extends React.Component {
         return AlertStore.getState();
     }
 
-    deleteAlert() {
-        console.log("delete")
-    }
-
     render() {
-        var styles = {
-            fontWeight: "bold",
-            textAlign: "center"
-        }
-
         var alerts = this.props.alerts.map((alert, index) => {
             return (
-                <TableRow key={index}>
-                    <TableRowColumn>{alert.appName}</TableRowColumn>
-                    <TableRowColumn>{alert.metric}</TableRowColumn>
-                    <TableRowColumn>{alert.condition}</TableRowColumn>
-                    <TableRowColumn>{alert.criteria}</TableRowColumn>
-                    <TableRowColumn>{alert.user}</TableRowColumn>
-                    <TableRowColumn><RaisedButton label="DELETE" onClick={this.deleteAlert.bind(this, this.props)}/></TableRowColumn>
-                </TableRow>
+            <Alert key={index}
+                   id={alert.id}
+                   appName={alert.appName}
+                   metric={alert.metric}
+                   condition={alert.condition}
+                   criteria={alert.criteria}
+                   user={alert.user}
+                   triggered={alert.triggered}
+                   timeLastTriggered={alert.timeLastTriggered}
+            />
             )
-        })
+        });
 
         return (
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -74,6 +68,8 @@ class AlertsDashboard extends React.Component {
                                 <TableHeaderColumn>Criteria</TableHeaderColumn>
                                 <TableHeaderColumn>Users to Alert</TableHeaderColumn>
                                 <TableHeaderColumn>Actions</TableHeaderColumn>
+                                <TableHeaderColumn>Triggered?</TableHeaderColumn>
+                                <TableHeaderColumn>Time Last Triggered</TableHeaderColumn>
                             </TableRow>
                         </TableHeader>
                         <TableBody displayRowCheckbox={false}>

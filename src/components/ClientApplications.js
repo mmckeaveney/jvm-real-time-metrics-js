@@ -24,7 +24,7 @@ class ClientApplications extends React.Component {
     componentDidMount() {
         WebSocket.register([{
             route: '/jvmrt/metricsUpdate', callback: AppActions.updateLatestApplicationMetadata
-        }]);
+        }], "/metricspoll");
     }
 
     static getStores(props) {
