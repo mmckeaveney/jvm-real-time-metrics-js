@@ -113,11 +113,9 @@ class NewAlert extends React.Component {
                 <TableRowColumn><RaisedButton label="ADD"
                                               secondary={true}
                                               onClick={this.saveAlert.bind(this, this.props)}/></TableRowColumn>
-                <NotificationSnackbar ref="newAlert"
-                                      message="New Alert added."
-                />
                 <TableRowColumn>N/A</TableRowColumn>
                 <TableRowColumn>N/A</TableRowColumn>
+                <NotificationSnackbar ref="newAlert" message="New Alert added." />
             </TableRow>
         );
     }

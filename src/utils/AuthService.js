@@ -12,14 +12,11 @@ class AuthService {
     }
 
     setupAjax() {
-        $.ajaxPrefilter({
-            'beforeSend': function (xhr) {
-                if (localStorage.getItem('userToken')) {
-                    xhr.setRequestHeader('Authorization',
-                        'Bearer ' + localStorage.getItem('userToken'));
-                }
+        $.ajaxSetup({
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('userToken')
             }
-        })
+        });
     }
 
     getIdToken() {

@@ -3,8 +3,9 @@ import Snackbar from 'material-ui/lib/snackbar';
 import FlatButton from 'material-ui/lib/flat-button';
 import Dialog from 'material-ui/lib/dialog';
 import WebSocket from '../utils/WebSocket';
+import { browserHistory } from 'react-router'
 
-class NotificationDialog extends React.Component {
+class AlertNotificationDialog extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -18,14 +19,19 @@ class NotificationDialog extends React.Component {
 
     componentDidMount() {
         WebSocket.register([{
-            route: '/jvmrt/alertNotification', callback: this.show
+            route: '/jvmrt/alertnotification', callback: this.show
         }], "/alertnotification");
     }
 
     show = (alert) => {
+        console.log("alert triggered");
         var incomingAlert = JSON.parse(alert.body);
         this.setState({
-            open: true
+            open: true,
+            appName: incomingAlert.appName,
+            metric: incomingAlert.metric,
+            condition: incomingAlert.condition,
+            criteria: incomingAlert.criteria
         });
     };
 
@@ -35,6 +41,10 @@ class NotificationDialog extends React.Component {
         });
     };
 
+    goToAlerts = () => {
+        browserHistory.push("/alerts");
+    };
+
     render() {
         const actions = [
             <FlatButton
@@ -42,20 +52,26 @@ class NotificationDialog extends React.Component {
                 secondary={true}
                 onTouchTap={this.handleClose}
             />,
+            <FlatButton
+                label="GO TO ALERTS PAGE"
+                secondary={true}
+                onTouchTap={this.goToAlerts}
+            />
         ];
 
         return (
                 <Dialog
-                    title={this.props.title}
+                    title={"New Alert Triggered!"}
                     actions={actions}
                     modal={false}
                     open={this.state.open}
                     onRequestClose={this.handleClose}
                 >
-                    {`An Alert you set has been triggered.`}
+                    {`An Alert you set has been triggered: \n
+                     ${this.state.appName} ${this.state.metric} ${this.state.condition} ${this.state.criteria}`}
                 </Dialog>
         );
     }
 }
 
-export default NotificationDialog;
+export default AlertNotificationDialog;

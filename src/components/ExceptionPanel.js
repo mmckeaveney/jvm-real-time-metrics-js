@@ -26,7 +26,7 @@ class ExceptionPanel extends React.Component {
         WebSocket.register([{
             route: '/jvmrt/exceptionsUpdate',
             callback: this.getLatestExceptions(this.props.appName)
-        }]);
+        }], "/exceptionspoll");
     }
 
     getLatestExceptions(criteria) {
@@ -47,7 +47,7 @@ class ExceptionPanel extends React.Component {
 
     render() {
         var exceptionsMarkup;
-        if (this.state.exceptions) {
+        if (this.state.exceptions.length > 0) {
             exceptionsMarkup = _.map(this.state.exceptions, (exception, index) => {
                 return (
                     <TableRow key={index}>
@@ -60,7 +60,7 @@ class ExceptionPanel extends React.Component {
                 )
             });
         } else {
-            exceptionsMarkup = <CircularProgress />
+            exceptionsMarkup = <div>No exceptions thrown at this level.</div>
         }
 
         return (

@@ -19,6 +19,9 @@ import TableHeader from 'material-ui/lib/table/table-header';
 import TableRowColumn from 'material-ui/lib/table/table-row-column';
 import TableBody from 'material-ui/lib/table/table-body';
 import CardActions from 'material-ui/lib/card/card-actions';
+import $ from 'jquery';
+import NotificationSnackbar from './NotificationSnackbar';
+import { browserHistory } from 'react-router'
 
 // CSS
 require('../styles/MainDashboard.scss');
@@ -29,13 +32,47 @@ class ClientApp extends React.Component {
         super(props);
         this.state = {
             title : null,
-            actuatorMetrics : null
+            actuatorMetrics : null,
+            events: null,
+            exceptions: null,
+            alerts: null,
+            containerId: null
         }
     }
 
+    componentWillMount() {
+
+    }
+
+    killApp() {
+        var props = this.props;
+        $.post(`http://localhost:8090/api/docker/kill/${props.containerId}`)
+            .done(function() {
+                console.log("Successfully killed docker container " + props.containerId)
+            })
+            .fail(function(error) {
+                console.log("Error when killing docker container", error)
+            });
+        this.refs.appKilled.show();
+    }
+
+    restartApp() {
+        var props = this.props;
+        $.post(`http://localhost:8090/api/docker/restart/${props.containerId}`)
+            .done(function() {
+                console.log("Successfully restarted docker container " + props.containerId)
+            })
+            .fail(function() {
+                console.log("Error when restarting docker container", error)
+            });
+        this.refs.appRestarted.show();
+    }
+
+    goToDrilldown() {
+        browserHistory.push(`/appdetail/${this.props.title}`);
+    }
+
     render() {
-
-
         return (
             <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                 <MaterialPanel title={this.props.title}>
@@ -58,12 +95,21 @@ class ClientApp extends React.Component {
                     </Table>
                     <CardActions>
                     <RaisedButton label="More Details"
-                                  containerElement={<Link to={`/appdetail/${this.props.title}`}/> }
-                                  linkButton={true}
+                                  onClick={this.goToDrilldown.bind(this, this.props)}
                                   secondary={true} />
                     <RaisedButton label="Add to Favourites" secondary={true} />
+                        <RaisedButton label="Restart" secondary={true}
+                                      onClick={this.restartApp.bind(this, this.props)} />
+                        <RaisedButton label="Kill" primary={true}
+                                      onClick={this.killApp.bind(this, this.props)}/>
                     </CardActions>
                     </MaterialPanel>
+                <NotificationSnackbar ref="appKilled"
+                                      message={`${this.props.title} Killed.`}
+                />
+                <NotificationSnackbar ref="appRestarted"
+                                      message={`${this.props.title} Restarted.`}
+                />
                 </div>
         );
     }

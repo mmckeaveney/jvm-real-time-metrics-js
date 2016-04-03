@@ -19,7 +19,7 @@ import IconMenu from 'material-ui/lib/menus/icon-menu';
 import MoreVertIcon from 'material-ui/lib/svg-icons/navigation/more-vert';
 import MenuItem from 'material-ui/lib/menus/menu-item';
 import AuthService from '../utils/AuthService';
-import NotificationDialog from './NotificationDialog';
+import AlertNotificationDialog from './AlertNotificationDialog';
 
 // CSS
 require('../styles/main.scss');
@@ -46,7 +46,7 @@ class App extends React.Component {
                 console.log("Error loading the Profile", err);
                 return;
             }
-            $.post({url: `http://localhost:8090/api/usercheck?userId=${profile.user_id}&userName=${profile.nickname}&email=${profile.email}`,
+            $.post({url: `http://localhost:8090/api/usercheck?id=${profile.user_id}&uname=${profile.nickname}&email=${profile.email}`,
                 success: (user) => {
                     this.setState({profile: profile});
                 }
@@ -123,7 +123,7 @@ class App extends React.Component {
                     />
                     {myTabs}
                     {this.props.children}
-                    <NotificationDialog/>
+                    <AlertNotificationDialog/>
                 </div>
             );
         } else {

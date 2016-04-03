@@ -7,6 +7,9 @@ import Checkbox from 'material-ui/lib/checkbox';
 import $ from 'jquery';
 import AppActions from '../actions/AppActions';
 import TimeDelta from '../utils/TimeDelta';
+import Dialog from 'material-ui/lib/dialog';
+import FlatButton from 'material-ui/lib/flat-button';
+import NotificationSnackbar from './NotificationSnackbar';
 
 class Alert extends React.Component {
     constructor(props) {
@@ -18,13 +21,15 @@ class Alert extends React.Component {
             criteria: null,
             user: null,
             triggered: false,
-            timeLastTriggered: null
+            timeLastTriggered: null,
+            open: false
         }
     }
 
     deleteAlert() {
         $.post(`http://localhost:8090/api/alerts/delete/${this.props.id}`);
         AppActions.deleteAlert(this.props.id);
+        this.refs.deleteAlert.show;
     }
 
     resetAlert() {
@@ -32,9 +37,16 @@ class Alert extends React.Component {
         this.setState({
           triggered: false
         });
+        this.refs.resetAlert.show;
     }
 
     render() {
+
+        var resetButton;
+           if (this.props.triggered) {
+               resetButton =  <RaisedButton label="RESET" onClick={this.resetAlert.bind(this, this.props)}/>
+           }
+
         return (
             <TableRow>
                 <TableRowColumn>{this.props.appName}</TableRowColumn>
@@ -43,12 +55,15 @@ class Alert extends React.Component {
                 <TableRowColumn>{this.props.criteria}</TableRowColumn>
                 <TableRowColumn>{this.props.user}</TableRowColumn>
                 <TableRowColumn>
-                    <RaisedButton label="DELETE" primary={true} onClick={this.deleteAlert.bind(this, this.props)}/>
-                    <RaisedButton label="RESET" onClick={this.resetAlert.bind(this, this.props)}/>
+                    <RaisedButton label="DELETE" primary={true}
+                                  onClick={this.deleteAlert.bind(this, this.props)}/>
+                    {resetButton}
                 </TableRowColumn>
                 <TableRowColumn> <Checkbox checked={this.props.triggered} disabled={true} /> </TableRowColumn>
-                <TableRowColumn> {TimeDelta.timestampToDateTime(this.props.timeLastTriggered)} </TableRowColumn>
+                <NotificationSnackbar ref="deleteAlert" message="Alert Deleted." />
+                <NotificationSnackbar ref="resetAlert" message="Alert Reset." />
             </TableRow>
+
         );
     }
 }

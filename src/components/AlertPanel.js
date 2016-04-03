@@ -24,17 +24,17 @@ class AlertPanel extends React.Component {
     componentDidMount() {
         this.getLatestAlerts(this.props.appName);
         WebSocket.register([{
-            route: '/jvmrt/alertNotification',
+            route: '/jvmrt/alertnotification',
             callback: this.getLatestAlerts(this.props.appName)
-        }]);
+        }], "/alertnotification");
     }
 
-    getLatestAlerts(criteria) {
+    getLatestAlerts(appName) {
         var url;
-        if (criteria == "All") {
-            url = "http://localhost:8090/api/alerts/triggered";
+        if (appName == "All") {
+            url = "http://localhost:8090/api/alerts/triggered/all";
         } else {
-            url = `http://localhost:8090/api/alerts/triggered/?appName=${criteria}`;
+            url = `http://localhost:8090/api/alerts/triggered/?appName=${appName}`;
         }
         $.getJSON({url: url,
             success: (alerts) => {
@@ -47,7 +47,7 @@ class AlertPanel extends React.Component {
 
     render() {
         var alertsMarkup;
-        if (this.state.alerts) {
+        if (this.state.alerts.length > 0) {
             alertsMarkup = _.map(this.state.alerts, (alert, index) => {
                 return (
                     <TableRow key={index}>
@@ -58,7 +58,7 @@ class AlertPanel extends React.Component {
                 )
             });
         } else {
-            alertsMarkup = <CircularProgress />
+            alertsMarkup = <div>No alerts triggered at this level.</div>
         }
 
         return (

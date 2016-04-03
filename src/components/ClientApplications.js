@@ -23,7 +23,8 @@ class ClientApplications extends React.Component {
 
     componentDidMount() {
         WebSocket.register([{
-            route: '/jvmrt/metricsUpdate', callback: AppActions.updateLatestApplicationMetadata
+            route: '/jvmrt/metricsUpdate',
+            callback: AppActions.updateLatestApplicationMetadata
         }], "/metricspoll");
     }
 
@@ -44,7 +45,8 @@ class ClientApplications extends React.Component {
                     <ClientApp key={index}
                                title={app.appName}
                                content={app.actuatorMetrics}
-                               index={index}>
+                               containerId={app.containerId}
+                               >
                     </ClientApp>
                 )
             })

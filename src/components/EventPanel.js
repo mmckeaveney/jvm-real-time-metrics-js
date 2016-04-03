@@ -26,7 +26,7 @@ class EventPanel extends React.Component {
         WebSocket.register([{
             route: '/jvmrt/eventsUpdate',
             callback: this.getLatestEvents(this.props.appName)
-        }]);
+        }], "/eventspoll");
     }
 
     getLatestEvents(criteria) {

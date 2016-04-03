@@ -31,6 +31,12 @@ class Chart extends React.Component {
 
     getTimeSeriesDataFromServer(timeScale) {
         var timeSeriesUrl = `http://localhost:8090/api/timeseries/?appName=${this.props.appName}&timeScale=${timeScale}`;
+        $.ajaxSetup({
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('userToken')
+            },
+            cache: false
+        });
         $.ajax({
             url: timeSeriesUrl,
             type: "GET",
