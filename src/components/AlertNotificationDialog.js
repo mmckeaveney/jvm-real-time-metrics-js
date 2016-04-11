@@ -4,7 +4,7 @@ import FlatButton from 'material-ui/lib/flat-button';
 import Dialog from 'material-ui/lib/dialog';
 import WebSocket from '../utils/WebSocket';
 import { browserHistory } from 'react-router'
-import { AppActions } from '../actions/AppActions';
+import AppActions from '../actions/AppActions';
 
 class AlertNotificationDialog extends React.Component {
     constructor(props) {

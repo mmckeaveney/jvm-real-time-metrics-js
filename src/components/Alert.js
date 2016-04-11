@@ -3,7 +3,7 @@ import RaisedButton from 'material-ui/lib/raised-button';
 import TableRow from 'material-ui/lib/table/table-row';
 import TableHeader from 'material-ui/lib/table/table-header';
 import TableRowColumn from 'material-ui/lib/table/table-row-column';
-import Checkbox from 'material-ui/lib/checkbox';
+import Toggle from 'material-ui/lib/toggle';
 import $ from 'jquery';
 import AppActions from '../actions/AppActions';
 import TimeDelta from '../utils/TimeDelta';
@@ -33,6 +33,7 @@ class Alert extends React.Component {
     }
 
     resetAlert() {
+        AppActions.resetAlert(this.props.id);
         $.post(`http://localhost:8090/api/alerts/reset/${this.props.id}`);
         this.setState({
           triggered: false
@@ -59,7 +60,7 @@ class Alert extends React.Component {
                                   onClick={this.deleteAlert.bind(this, this.props)}/>
                     {resetButton}
                 </TableRowColumn>
-                <TableRowColumn> <Checkbox checked={this.props.triggered} disabled={true} /> </TableRowColumn>
+                <TableRowColumn> <Toggle toggled={this.props.triggered} /> </TableRowColumn>
                 <NotificationSnackbar ref="deleteAlert" message="Alert Deleted." />
                 <NotificationSnackbar ref="resetAlert" message="Alert Reset." />
             </TableRow>

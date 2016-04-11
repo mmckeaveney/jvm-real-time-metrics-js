@@ -27,13 +27,27 @@ class AlertStore {
         });
     }
 
+    @bind(Actions.resetAlert)
+    resetAlert(id) {
+        var alerts = this.state.alerts;
+        var index = _.findIndex(alerts, (currentAlert) => {
+            return currentAlert.id == id;
+        });
+        alerts[index].triggered = false;
+
+        this.setState({
+            alerts: alerts
+        });
+    }
+
     @bind(Actions.updateTriggeredAlert)
     updateTriggeredAlert(alert) {
+        var triggered = JSON.parse(alert);
         var alerts = this.state.alerts;
-        var index = _.findIndex(currentAlerts, (currentAlert) => {
-            currentAlert.id == alert.id;
+        var index = _.findIndex(alerts, (currentAlert) => {
+            return currentAlert.id == triggered.id;
         });
-        alerts[index] = alert;
+        alerts[index].triggered = true;
 
         this.setState({
             alerts: alerts
