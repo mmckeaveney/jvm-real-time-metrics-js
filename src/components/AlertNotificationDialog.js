@@ -4,6 +4,7 @@ import FlatButton from 'material-ui/lib/flat-button';
 import Dialog from 'material-ui/lib/dialog';
 import WebSocket from '../utils/WebSocket';
 import { browserHistory } from 'react-router'
+import { AppActions } from '../actions/AppActions';
 
 class AlertNotificationDialog extends React.Component {
     constructor(props) {
@@ -26,6 +27,7 @@ class AlertNotificationDialog extends React.Component {
     show = (alert) => {
         console.log("alert triggered");
         var incomingAlert = JSON.parse(alert.body);
+        AppActions.updateTriggeredAlert(alert.body);
         this.setState({
             open: true,
             appName: incomingAlert.appName,
