@@ -43,9 +43,7 @@ class ClientApplications extends React.Component {
             clientApps = this.props.clientApplications.map((app, index) => {
                 return (
                     <ClientApp key={index}
-                               title={app.appName}
-                               content={app.actuatorMetrics}
-                               containerId={app.containerId}
+                               application={app}
                                >
                     </ClientApp>
                 )

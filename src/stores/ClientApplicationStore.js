@@ -9,8 +9,7 @@ class ClientApplicationStore {
 
     constructor() {
         this.state = {
-            clientApplications : [],
-            favourites: []
+            clientApplications : []
         }
     }
 

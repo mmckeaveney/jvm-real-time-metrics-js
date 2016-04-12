@@ -20,18 +20,49 @@ import CardActions from 'material-ui/lib/card/card-actions';
 import EventPanel from './EventPanel';
 import ExceptionPanel from './ExceptionPanel';
 import AlertPanel from './AlertPanel';
+import AuthService from '../utils/AuthService';
 
+@connectToStores
 class ClientAppDrilldown extends React.Component {
     constructor(props) {
         super(props);
     }
 
+    static getStores(props) {
+        return [ClientApplicationStore];
+    }
+
+    static getPropsFromStores(props) {
+        return ClientApplicationStore.getState();
+    }
+
+    addToFavourites() {
+        // Store user data in a store
+        AuthService.getLock().getProfile(localStorage.getItem('userToken'), function (err, profile) {
+            if (err) {
+                console.log("Error loading the Profile", err);
+                return;
+            }
+            var url = `http://localhost:8090/api/settings/?userId=${profile.user_id}`;
+            $.post({
+                url: url,
+                success: () => {
+                    $.post(`http://localhost:8090/user/favourites/save/?userId=${profile.user_id}`)
+                        .done(function () {
+                            console.log("Saved Favourite Successfully.");
+                        })
+                        .fail(function () {
+                            console.log("Error when saving favourite ", error);
+                        });
+                }
+            });
+        }.bind(this));
+    }
 
     render() {
-
             // TODO: This is a routing hack, fix it
             var currentApp = _.findWhere(ClientApplicationStore.getState().clientApplications, {
-                appName : `frankblizzard/${this.props.params.image}`
+                containerId : this.props.params.containerId
             })
 
         var actuatorMetrics = currentApp.actuatorMetrics;
@@ -55,11 +86,11 @@ class ClientAppDrilldown extends React.Component {
                                    <IconButton> <ArrowBack/> </IconButton>
                                </Link>
                                 }>
-                    <div className="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                    <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                         <EventPanel appName={appName}/>
                     </div>
 
-                    <div className="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                    <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                         <ExceptionPanel appName={appName}/>
                     </div>
 
@@ -99,7 +130,7 @@ class ClientAppDrilldown extends React.Component {
                     </div>
                     <Chart appName={appName}/>
                     <CardActions>
-                        <RaisedButton label="Add to Favourites" secondary={true}/>
+                        <RaisedButton label="Add to Favourites" secondary={true} onClick={this.addToFavourites.bind(this, this.props)}/>
                     </CardActions>
                 </MaterialPanel>
             </div>

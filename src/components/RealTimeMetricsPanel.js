@@ -29,7 +29,7 @@ class RealTimeMetricsPanel extends React.Component {
 
         var actuatorMarkup = _.map(actuatorMetrics, (value, key) => {
             return (
-                <TableRow>
+                <TableRow key={key}>
                     <TableRowColumn>{ key }</TableRowColumn>
                     <TableRowColumn>{ value }</TableRowColumn>
                 </TableRow>

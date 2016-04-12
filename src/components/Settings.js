@@ -34,11 +34,12 @@ class Settings extends React.Component {
 
     saveSettingsForUser() {
         var url = `http://localhost:8090/api/settings/save/?userId=${this.state.userId}`;
-        $.post({url: url,
-                data: {
-                    dockerHost: this.state.dockerHost,
-                    dockerPort: this.state.dockerPort
-                },
+        $.post({
+            url: url,
+            data: {
+                dockerHost: this.state.dockerHost,
+                dockerPort: this.state.dockerPort
+            },
             success: (settings) => {
                 console.log("settings saved.");
             }
@@ -46,23 +47,19 @@ class Settings extends React.Component {
     }
 
     getSettingsForUser() {
-            AuthService.getLock().getProfile(localStorage.getItem('userToken'), function (err, profile) {
-                if (err) {
-                    console.log("Error loading the Profile", err);
-                    return;
-                }
-                var url = `http://localhost:8090/api/settings/?userId=${profile.user_id}`;
-                $.post({url: url,
-                    success: (settings) => {
-                        this.setState({
-                            dockerHost: settings.dockerHost,
-                            dockerPort: settings.dockerPort,
-                            userId: profile.user_id,
-                            username: profile.nickname
-                        });
-                    }
+        var profile = localStorage.getItem("userProfile");
+        var url = `http://localhost:8090/api/settings/?userId=${profile.user_id}`;
+        $.post({
+            url: url,
+            success: (settings) => {
+                this.setState({
+                    dockerHost: settings.dockerHost,
+                    dockerPort: settings.dockerPort,
+                    userId: profile.user_id,
+                    username: profile.nickname
                 });
-            }.bind(this));
+            }
+        });
 
     }
 
@@ -96,7 +93,7 @@ class Settings extends React.Component {
                 <SelectField value={this.state.value} floatingLabelText="Choose your theme.">
                     { items }
                 </SelectField>
-                <RaisedButton label="Save" secondary={true} onMouseDown={this.saveSettingsForUser} />
+                <RaisedButton label="Save" secondary={true} onMouseDown={this.saveSettingsForUser}/>
             </MaterialPanel>
         );
     }

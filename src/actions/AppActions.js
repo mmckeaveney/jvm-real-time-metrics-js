@@ -28,6 +28,12 @@ class AppActions {
         });
     }
 
+    updateCurrentUser(profile) {
+        // TODO: Fix This
+        $.post({url: `http://localhost:8090/api/usercheck?id=${profile.user_id}&uname=${profile.nickname}&email=${profile.email}`});
+        this.dispatch(profile);
+    }
+
 }
 
 export default alt.createActions(AppActions);
