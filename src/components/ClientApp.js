@@ -19,6 +19,11 @@ import TableHeader from 'material-ui/lib/table/table-header';
 import TableRowColumn from 'material-ui/lib/table/table-row-column';
 import TableBody from 'material-ui/lib/table/table-body';
 import CardActions from 'material-ui/lib/card/card-actions';
+import $ from 'jquery';
+import NotificationSnackbar from './NotificationSnackbar';
+import { hashHistory } from 'react-router'
+import AuthService from '../utils/AuthService';
+import UserStore from '../stores/UserStore';
 
 // CSS
 require('../styles/MainDashboard.scss');
@@ -28,17 +33,60 @@ class ClientApp extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            title : null,
-            actuatorMetrics : null
+            application: null
         }
     }
 
+    componentWillMount() {
+
+    }
+
+    killApp() {
+        var props = this.props;
+        $.post(`http://localhost:8090/api/docker/kill/${props.application.containerId}`)
+            .done(function () {
+                console.log("Successfully killed docker container " + props.application.containerId)
+            })
+            .fail(function (error) {
+                console.log("Error when killing docker container", error)
+            });
+        this.refs.appKilled.show();
+    }
+
+    restartApp() {
+        var props = this.props;
+        $.post(`http://localhost:8090/api/docker/restart/${props.application.containerId}`)
+            .done(function () {
+                console.log("Successfully restarted docker container " + props.application.containerId)
+            })
+            .fail(function () {
+                console.log("Error when restarting docker container", error)
+            });
+        this.refs.appRestarted.show();
+    }
+
+    goToDrilldown() {
+        hashHistory.push(`/appdetail/${this.props.application.containerId}`);
+    }
+
+    addToFavourites() {
+        // Store user data in a store
+        var profile = UserStore.getState().user;
+        var url = `http://localhost:8090/api/user/favourites/save/?userId=${profile.user_id}&favourite=${this.props.application.containerId}`;
+        $.post({
+            url: url,
+        }).done(function () {
+                console.log("Successfully saved favourite " + props.application.containerId)
+            })
+            .fail(function () {
+                console.log("Error saving favourite", error)
+            });
+    }
+
     render() {
-
-
         return (
             <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                <MaterialPanel title={this.props.title}>
+                <MaterialPanel title={this.props.application.appName}>
                     <Table selectable={false}>
                         <TableHeader displaySelectAll={false}
                                      adjustForCheckbox={false}>
@@ -57,14 +105,24 @@ class ClientApp extends React.Component {
                         </TableBody>
                     </Table>
                     <CardActions>
-                    <RaisedButton label="More Details"
-                                  containerElement={<Link to={`/appdetail/${this.props.title}`}/> }
-                                  linkButton={true}
-                                  secondary={true} />
-                    <RaisedButton label="Add to Favourites" secondary={true} />
+                        <RaisedButton label="More Details"
+                                      onClick={this.goToDrilldown.bind(this, this.props)}
+                                      default={true}/>
+                        <RaisedButton label="Add to Favourites" default={true}
+                                      onClick={this.addToFavourites.bind(this, this.props)}/>
+                        <RaisedButton label="Restart" default={true}
+                                      onClick={this.restartApp.bind(this, this.props)}/>
+                        <RaisedButton label="Kill" default={true}
+                                      onClick={this.killApp.bind(this, this.props)}/>
                     </CardActions>
-                    </MaterialPanel>
-                </div>
+                </MaterialPanel>
+                <NotificationSnackbar ref="appKilled"
+                                      message={`${this.props.application.appName} Killed.`}
+                />
+                <NotificationSnackbar ref="appRestarted"
+                                      message={`${this.props.application.appName} Restarted.`}
+                />
+            </div>
         );
     }
 }

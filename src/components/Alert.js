@@ -1,30 +1,71 @@
 import React from 'react';
 import RaisedButton from 'material-ui/lib/raised-button';
+import TableRow from 'material-ui/lib/table/table-row';
+import TableHeader from 'material-ui/lib/table/table-header';
+import TableRowColumn from 'material-ui/lib/table/table-row-column';
+import Toggle from 'material-ui/lib/toggle';
+import $ from 'jquery';
+import AppActions from '../actions/AppActions';
+import TimeDelta from '../utils/TimeDelta';
+import Dialog from 'material-ui/lib/dialog';
+import FlatButton from 'material-ui/lib/flat-button';
+import NotificationSnackbar from './NotificationSnackbar';
 
 class Alert extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            appName: [],
-            metrics: [],
-            conditions: [],
-            criteria: [],
-            users: []
+            appName: null,
+            metric: null,
+            condition: null,
+            criteria: null,
+            user: null,
+            triggered: false,
+            timeLastTriggered: null,
+            open: false
         }
     }
 
+    deleteAlert() {
+        $.post(`http://localhost:8090/api/alerts/delete/${this.props.id}`);
+        AppActions.deleteAlert(this.props.id);
+        this.refs.deleteAlert.show;
+    }
+
+    resetAlert() {
+        AppActions.resetAlert(this.props.id);
+        $.post(`http://localhost:8090/api/alerts/reset/${this.props.id}`);
+        this.setState({
+          triggered: false
+        });
+        this.refs.resetAlert.show;
+    }
+
     render() {
+
+        var resetButton;
+           if (this.props.triggered) {
+               resetButton =  <RaisedButton label="RESET" onClick={this.resetAlert.bind(this, this.props)}/>
+           }
+
         return (
-            <tr>
-                <td><RaisedButton label="ReactClient" style={{margin:"5px"}} secondary={true}/></td>
-                <td><RaisedButton label="CPU" style={{margin:"5px"}} secondary={true}/>
-                    <RaisedButton label="HEAP" style={{margin:"5px"}} secondary={true}/></td>
-                <td><RaisedButton label="DROPS BELOW" style={{margin:"5px"}} primary={true}/></td>
-                <td><RaisedButton label="10000" style={{margin:"5px"}} primary={true}/></td>
-                <td><RaisedButton label="Martin McKeaveney" style={{margin:"5px"}} secondary={true}/>
-                    <RaisedButton label="Ryan Wilson" style={{margin:"5px"}} secondary={true}/></td>
-                <td><RaisedButton label="DELETE" style={{margin:"5px"}} primary={true}/></td>
-            </tr>
+            <TableRow>
+                <TableRowColumn>{this.props.appName}</TableRowColumn>
+                <TableRowColumn>{this.props.metric}</TableRowColumn>
+                <TableRowColumn>{this.props.condition}</TableRowColumn>
+                <TableRowColumn>{this.props.criteria}</TableRowColumn>
+                <TableRowColumn>{this.props.user}</TableRowColumn>
+                <TableRowColumn>
+                    <RaisedButton label="DELETE" default={true}
+                                  onClick={this.deleteAlert.bind(this, this.props)}/>
+                    {resetButton}
+                </TableRowColumn>
+                <TableRowColumn> <Toggle toggled={this.props.triggered} /> </TableRowColumn>
+                <TableRowColumn> {this.props.timeLastTriggered == 0 ? "N/A" : this.props.timeLastTriggered} </TableRowColumn>
+                <NotificationSnackbar ref="deleteAlert" message="Alert Deleted." />
+                <NotificationSnackbar ref="resetAlert" message="Alert Reset." />
+            </TableRow>
+
         );
     }
 }

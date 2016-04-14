@@ -10,26 +10,15 @@ import TableRowColumn from 'material-ui/lib/table/table-row-column';
 import TableBody from 'material-ui/lib/table/table-body';
 import MaterialPanel from './MaterialPanel';
 
-@connectToStores
 class RealTimeMetricsPanel extends React.Component {
     constructor(props) {
         super(props);
     }
 
-    static getStores(props) {
-        return [ClientApplicationStore];
-    }
-
-    static getPropsFromStores(props) {
-        return ClientApplicationStore.getState();
-    }
-
     render() {
-        var actuatorMetrics = this.props.actuatorMetrics;
-
-        var actuatorMarkup = _.map(actuatorMetrics, (value, key) => {
+        var actuatorMarkup = _.map(this.props.actuatorMetrics, (value, key) => {
             return (
-                <TableRow>
+                <TableRow key={key}>
                     <TableRowColumn>{ key }</TableRowColumn>
                     <TableRowColumn>{ value }</TableRowColumn>
                 </TableRow>

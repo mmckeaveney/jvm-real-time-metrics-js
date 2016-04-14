@@ -8,13 +8,21 @@ import $ from 'jquery';
 import SelectField from 'material-ui/lib/select-field';
 import MenuItem from 'material-ui/lib/menus/menu-item';
 import RaisedButton from 'material-ui/lib/raised-button';
+import FlatButton from 'material-ui/lib/flat-button';
 import AuthService from '../utils/AuthService';
+import UserStore from '../stores/UserStore';
+import Stepper from 'material-ui/lib/Stepper/Stepper';
+import Step from 'material-ui/lib/Stepper/VerticalStep';
+import FontIcon from 'material-ui/lib/font-icon';
+import connectToStores from 'alt/utils/connectToStores';
+import NotificationSnackbar from './NotificationSnackbar';
 
 const items = [
     <MenuItem key={1} value={1} primaryText="Light Theme"/>,
     <MenuItem key={2} value={2} primaryText="Dark Theme"/>,
 ];
 
+@connectToStores
 class Settings extends React.Component {
     constructor(props) {
         super(props);
@@ -24,45 +32,105 @@ class Settings extends React.Component {
             dockerPort: null,
             theme: null,
             userId: null,
-            username: null
+            username: null,
+            activeStep: -1,
+            statusSteps: []
         }
     }
 
-    componentWillMount() {
-        this.getSettingsForUser();
+    static getStores(props) {
+        return [UserStore];
     }
 
-    saveSettingsForUser() {
-        var url = `http://localhost:8090/api/settings/save/?userId=${this.state.userId}`;
-        $.post({url: url,
-                data: {
-                    dockerHost: this.state.dockerHost,
-                    dockerPort: this.state.dockerPort
-                },
-            success: (settings) => {
+    static getPropsFromStores(props) {
+        return UserStore.getState();
+    }
+
+    componentWillMount() {
+        this.getSettings();
+    }
+
+    selectStep(CurrentStep) {
+        this.setState({
+            activeStep: CurrentStep,
+        });
+    }
+
+    updateCompletedSteps(CurrentStep) {
+        return this.state.statusSteps[CurrentStep];
+    }
+
+    createIcon(step) {
+        if (step.props.isCompleted) {
+            return (
+                <FontIcon className="material-icons" style={{fontSize: 14}}>
+                    done
+                </FontIcon>
+            );
+        }
+
+        return <span>{step.props.orderStepLabel}</span>;
+    }
+
+    continue() {
+        const {
+            activeStep,
+            statusSteps,
+            } = this.state;
+
+        statusSteps[activeStep] = true;
+
+        this.setState({
+            activeStep: activeStep + 1,
+            statusSteps: statusSteps,
+        });
+    }
+
+
+    updateCompletedSteps(currentStep) {
+        return currentStep < this.state.lastActiveStep;
+    }
+
+    saveSettings() {
+        var url = `http://localhost:8090/api/settings/save`;
+        var snackBar = this.refs.settingsSaved;
+        $.ajax({
+            url: url,
+            type: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            data: JSON.stringify({
+                dockerHost: this.state.dockerHost,
+                dockerPort: this.state.dockerPort
+            }),
+            dataType: 'json',
+            success: (alert) => {
                 console.log("settings saved.");
+                console.log(alert)
+                snackBar.show();
+            },
+            error: (error) => {
+                console.log("error when saving settings", error);
             }
         });
     }
 
-    getSettingsForUser() {
-            AuthService.getLock().getProfile(localStorage.getItem('userToken'), function (err, profile) {
-                if (err) {
-                    console.log("Error loading the Profile", err);
-                    return;
-                }
-                var url = `http://localhost:8090/api/settings/?userId=${profile.user_id}`;
-                $.post({url: url,
-                    success: (settings) => {
-                        this.setState({
-                            dockerHost: settings.dockerHost,
-                            dockerPort: settings.dockerPort,
-                            userId: profile.user_id,
-                            username: profile.nickname
-                        });
-                    }
+    getSettings() {
+        var profile = this.props.user;
+        var url = `http://localhost:8090/api/settings`;
+        $.get({
+            url: url,
+            success: (settings) => {
+                this.setState({
+                    dockerHost: settings.dockerHost,
+                    dockerPort: settings.dockerPort,
+                    userId: profile.user_id,
+                    username: profile.nickname
                 });
-            }.bind(this));
+            }
+        });
 
     }
 
@@ -81,22 +149,36 @@ class Settings extends React.Component {
     render() {
         return (
             <MaterialPanel title={ `Settings for User ${this.state.username}`}>
-                <TextField
-                    ref="dockerHost"
-                    value={this.state.dockerHost}
-                    floatingLabelText="Enter your docker host url."
-                    onChange={this.handleDockerHost}
-                /><br/>
-                <TextField
-                    ref="dockerPort"
-                    value={this.state.dockerPort}
-                    floatingLabelText="Enter your docker host port."
-                    onChange={this.handleDockerPort}
-                /><br/>
-                <SelectField value={this.state.value} floatingLabelText="Choose your theme.">
-                    { items }
-                </SelectField>
-                <RaisedButton label="Save" secondary={true} onMouseDown={this.saveSettingsForUser} />
+                <Stepper activeStep={this.state.activeStep} onStepHeaderTouch={this.selectStep.bind(this)}
+                    updateCompletedStatus={this.updateCompletedSteps.bind(this, this.props)}
+                    createIcon={this.createIcon}
+                >
+                    <Step orderStepLabel="1" stepLabel="Select Docker Host.">
+                        <TextField ref="dockerHost" value={this.state.dockerHost}
+                            floatingLabelText="Enter your docker host url."
+                            onChange={this.handleDockerHost}
+                        />
+                    </Step>
+                    <Step orderStepLabel="2" stepLabel="Select Docker Port.">
+                        <TextField ref="dockerPort" value={this.state.dockerPort}
+                                   floatingLabelText="Enter your docker host port."
+                                   onChange={this.handleDockerPort}
+                        />
+                    </Step>
+
+                    <Step orderStepLabel="3" stepLabel="Choose a theme.">
+                        <SelectField value={this.state.value} floatingLabelText="Choose your theme.">
+                            { items }
+                        </SelectField>
+                    </Step>
+
+                    <Step orderStepLabel="4" stepLabel="Save Settings" actions={[
+                      <RaisedButton key={0} label="Save" default={true} onClick={this.saveSettings.bind(this, this.props)}/>,
+                    ]}>
+                        You're all done. Click save to save your settings.
+                    </Step>
+                </Stepper>
+                <NotificationSnackbar ref="settingsSaved" message="Settings Saved." />
             </MaterialPanel>
         );
     }

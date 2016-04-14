@@ -26,13 +26,15 @@ class EventPanel extends React.Component {
         WebSocket.register([{
             route: '/jvmrt/eventsUpdate',
             callback: this.getLatestEvents(this.props.appName)
-        }]);
+        }], "/eventspoll");
     }
 
     getLatestEvents(criteria) {
         var url;
         if (criteria == "All") {
             url = "http://localhost:8090/api/events/all";
+        } else if (criteria == "mostRecent") {
+            url = "http://localhost:8090/api/events/mostRecent";
         } else {
             url = `http://localhost:8090/api/events/?appName=${criteria}`;
         }
@@ -58,7 +60,7 @@ class EventPanel extends React.Component {
                 )
             });
         } else {
-           eventsMarkup = <CircularProgress />
+           eventsMarkup = <div>No events at this level.</div>
         }
 
         return (

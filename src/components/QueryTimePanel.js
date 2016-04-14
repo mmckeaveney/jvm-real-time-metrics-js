@@ -13,73 +13,73 @@ import $ from 'jquery';
 import WebSocket from '../utils/WebSocket';
 import TimeDelta from '../utils/TimeDelta';
 
-class ExceptionPanel extends React.Component {
+class QueryTimePanel extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            exceptions: []
+            queryTimes: []
         }
     }
 
     componentDidMount() {
-        this.getLatestExceptions(this.props.appName);
+        this.getLatestQueryTimes(this.props.appName);
         WebSocket.register([{
-            route: '/jvmrt/exceptionsUpdate',
-            callback: this.getLatestExceptions(this.props.appName)
-        }], "/exceptionspoll");
+            route: '/jvmrt/queryTimeUpdate',
+            callback: this.getLatestQueryTimes(this.props.appName)
+        }], "/querytimepoll");
     }
 
-    getLatestExceptions(criteria) {
+    getLatestQueryTimes(criteria) {
         var url;
         if (criteria == "All") {
-            url = "http://localhost:8090/api/exception/all";
+            url = "http://localhost:8090/api/querytime/all";
         } else if (criteria == "mostRecent") {
-            url = "http://localhost:8090/api/exception/mostRecent";
+            url = "http://localhost:8090/api/querytime/mostRecent";
         } else {
-            url = `http://localhost:8090/api/exception/?appName=${criteria}`;
+            url = `http://localhost:8090/api/querytime/?appName=${criteria}`;
         }
         $.getJSON({url: url,
-            success: (exceptions) => {
+            success: (queryTimes) => {
                 this.setState({
-                    exceptions: exceptions
+                    queryTimes: queryTimes
                 });
             }
         });
     }
 
     render() {
-        var exceptionsMarkup;
-        if (this.state.exceptions.length > 0) {
-            exceptionsMarkup = _.map(this.state.exceptions, (exception, index) => {
+        var queryTimesMarkup;
+        if (this.state.queryTimes.length > 0) {
+            queryTimesMarkup = _.map(this.state.queryTimes, (queryTime, index) => {
                 return (
                     <TableRow key={index}>
-                        <TableRowColumn>{ exception.applicationName  }</TableRowColumn>
-                        <TableRowColumn>{ exception.exceptionType }</TableRowColumn>
-                        <TableRowColumn>{ exception.exceptionClass }</TableRowColumn>
-                        <TableRowColumn>{ exception.exceptionMethod }</TableRowColumn>
-                        <TableRowColumn>{ TimeDelta.calculateTimeDelta(exception.time) }</TableRowColumn>
+                        <TableRowColumn>{ queryTime.applicationName  }</TableRowColumn>
+                        <TableRowColumn>{ queryTime.className }</TableRowColumn>
+                        <TableRowColumn>{ queryTime.methodName }</TableRowColumn>
+                        <TableRowColumn>{ queryTime.executionTime }ms</TableRowColumn>
+                        <TableRowColumn>{ TimeDelta.calculateTimeDelta(queryTime.timeExecuted/1000) }</TableRowColumn>
                     </TableRow>
                 )
             });
         } else {
-            exceptionsMarkup = <div>No exceptions thrown at this level.</div>
+            queryTimesMarkup = <div>No queries run at this level.</div>
         }
 
         return (
-            <MaterialPanel title={ `${this.props.appName} Exceptions`}>
+            <MaterialPanel title={ `${this.props.appName} Query Times`}>
                 <Table selectable={false}>
                     <TableHeader displaySelectAll={false}
                                  adjustForCheckbox={false}>
                         <TableRow>
                             <TableHeaderColumn>Application</TableHeaderColumn>
-                            <TableHeaderColumn>Exception</TableHeaderColumn>
                             <TableHeaderColumn>Class</TableHeaderColumn>
                             <TableHeaderColumn>Method</TableHeaderColumn>
-                            <TableHeaderColumn>Time</TableHeaderColumn>
+                            <TableHeaderColumn>Execution Time</TableHeaderColumn>
+                            <TableHeaderColumn>Time Executed</TableHeaderColumn>
                         </TableRow>
                     </TableHeader>
                     <TableBody displayRowCheckbox={false}>
-                        { exceptionsMarkup }
+                        { queryTimesMarkup }
                     </TableBody>
                 </Table>
             </MaterialPanel>
@@ -87,4 +87,4 @@ class ExceptionPanel extends React.Component {
     }
 }
 
-export default ExceptionPanel;
+export default QueryTimePanel;

@@ -3,8 +3,8 @@ var Stomp = require('stompjs/lib/stomp');
 
 class WebSocket {
 
-    static register(registrations) {
-        var socket = SockJS('/metricspoll');
+    static register(registrations, endpoint) {
+        var socket = SockJS(endpoint);
         var stompClient = Stomp.Stomp.over(socket);
         stompClient.connect({}, (frame) => {
             console.log('Connected: ' + frame);

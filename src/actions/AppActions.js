@@ -1,70 +1,44 @@
 import alt from '../alt';
 import $ from 'jquery';
 import _ from 'underscore';
+import AuthService from '../utils/AuthService';
 
 class AppActions {
 
     constructor() {
         this.generateActions('updateLatestEvents');
+        this.generateActions('saveAlert');
+        this.generateActions('updateLatestAlerts');
+        this.generateActions('updateTriggeredAlert');
+        this.generateActions('deleteAlert');
+        this.generateActions('resetAlert');
         this.generateActions('updateLatestApplicationMetadata');
     }
 
-    getLatestEvents(criteria) {
-        var url;
-        if (criteria == "All") {
-           url = "http://localhost:8090/api/events/all";
-        } else {
-           url = `http://localhost:8090/api/events/?${criteria}`;
-        }
-        $.getJSON({url: url,
-            success: (events) => {
-                this.setState({
-                    events: events
-                });
+    fetchLatestAlerts() {
+        var self = this;
+        $.ajax({
+            dataType: "json",
+            url: "http://localhost:8090/api/alerts/all",
+            success: (alerts) => {
+                self.actions.updateLatestAlerts(alerts);
+            },
+            error: (error) => {
+                console.log("Error retrieving alerts", error)
             }
         });
     }
 
-    getTimeSeriesMetricsForSingleApp(appName, timeScale) {
-        var timeSeriesUrl = `http://localhost:8090/timeseries/?appName=${appName}&timeScale=${timeScale}`;
-        $.ajax({
-            url: timeSeriesUrl,
-            type: "GET",
-            dataType: "json",
-            success: (timeseries) => {
-                var config = {
-                    title: {
-                        text: appName + " Metrics"
-                    },
-                    plotOptions: {
-                        line: {
-                            dataLabels: {
-                                enabled: true
-                            },
-                            enableMouseTracking: false
-                        }
-                    },
-                    xAxis: {
-                        categories: []
-                    },
-                    series: []
-                };
-
-                timeseries.timeStamps.forEach((timeStamp) => {
-                    config.xAxis.categories.push(timeStamp);
-                });
-
-                _.map(timeseries.timeSeriesMetrics, (value, key) => {
-                    config.series.push({
-                        name: key,
-                        data: value
-                    })
-                });
-            },
-            error: (error) => {
-                console.log("There was an issue getting timeSeries data", error);
-            }
-        });
+    updateCurrentUser(profile) {
+        AuthService.setupAjax();
+        $.post({url: `http://localhost:8090/api/usercheck?id=${profile.user_id}&uname=${profile.nickname}&email=${profile.email}`})
+            .done((user) => {
+                console.log("User successfully saved : " + user);
+            })
+            .fail((error) => {
+                console.log("Error when saving user", error);
+            });
+        this.dispatch(profile);
     }
 
 }

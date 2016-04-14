@@ -6,6 +6,7 @@ import ClientApp from './ClientApp';
 import WebSocket from '../utils/WebSocket';
 import ClientApplicationStore from '../stores/ClientApplicationStore';
 import MaterialPanel from './MaterialPanel';
+import CircularProgress from 'material-ui/lib/circular-progress';
 
 
 // CSS
@@ -22,8 +23,9 @@ class ClientApplications extends React.Component {
 
     componentDidMount() {
         WebSocket.register([{
-            route: '/jvmrt/metricsUpdate', callback: AppActions.updateLatestApplicationMetadata
-        }]);
+            route: '/jvmrt/metricsUpdate',
+            callback: AppActions.updateLatestApplicationMetadata
+        }], "/metricspoll");
     }
 
     static getStores(props) {
@@ -41,14 +43,13 @@ class ClientApplications extends React.Component {
             clientApps = this.props.clientApplications.map((app, index) => {
                 return (
                     <ClientApp key={index}
-                               title={app.appName}
-                               content={app.actuatorMetrics}
-                               index={index}>
+                               application={app}
+                               >
                     </ClientApp>
                 )
             })
         } else {
-            clientApps = <span> No docker client applications currently available at this time. </span>
+            clientApps =  <CircularProgress/>
         }
 
         return (

@@ -7,121 +7,77 @@ import NavigationClose from 'material-ui/lib/svg-icons/navigation/close';
 import Tabs from 'material-ui/lib/tabs/tabs';
 import Tab from 'material-ui/lib/tabs/tab';
 import Colors from 'material-ui/lib/styles/colors';
+import Table from 'material-ui/lib/table/table';
+import TableHeaderColumn from 'material-ui/lib/table/table-header-column';
+import TableRow from 'material-ui/lib/table/table-row';
+import TableHeader from 'material-ui/lib/table/table-header';
+import TableRowColumn from 'material-ui/lib/table/table-row-column';
+import TableBody from 'material-ui/lib/table/table-body';
 import Chart from './Chart';
+import MaterialPanel from './MaterialPanel';
+import Alert from './Alert';
+import NewAlert from './NewAlert';
+import connectToStores from 'alt/utils/connectToStores';
+import AppActions from '../actions/AppActions';
+import AlertStore from '../stores/AlertStore';
 
 // CSS
 require('../styles/MainDashboard.scss');
 
-
+@connectToStores
 class AlertsDashboard extends React.Component {
     constructor(props) {
         super(props);
+        AppActions.fetchLatestAlerts();
+    }
+
+    static getStores(props) {
+        return [AlertStore];
+    }
+
+    static getPropsFromStores(props) {
+        return AlertStore.getState();
     }
 
     render() {
-        var styles = {
-            fontWeight: "bold",
-            textAlign: "center"
-        }
+        var alerts = this.props.alerts.map((alert, index) => {
+            return (
+            <Alert key={index}
+                   id={alert.id}
+                   appName={alert.appName}
+                   metric={alert.metric}
+                   condition={alert.condition}
+                   criteria={alert.criteria}
+                   user={alert.user}
+                   triggered={alert.triggered}
+                   timeLastTriggered={alert.timeLastTriggered}
+            />
+            )
+        });
 
-
-        var config = {
-            title: {
-                text: this.props.title + " Metrics"
-            },
-            plotOptions: {
-                line: {
-                    dataLabels: {
-                        enabled: true
-                    },
-                    enableMouseTracking: false
-                }
-            },
-            xAxis: {
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-            },
-            series: [{
-                name: 'CPU Usage',
-                data: [2900.9, 1000.5, 1060.4, 1290.2, 1440.0, 1760.0, 1350.6, 1480.5, 2160.4, 1940.1, 950.6, 540.4]
-            },
-                {
-                    name: 'Heap Space',
-                    data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
-                },
-                {
-                    name: 'Exceptions Thrown',
-                    data: [29, 13, 10, 100, 50, 40, 30, 20, 10, 9, 8, 1, 10, 19, 15]
-                }
-            ]
-        };
         return (
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <div className="panel panel-primary">
-                    <div className="panel-heading">Alert Settings</div>
-                    <div className="panel-body">
-                            /* <div className="panel panel-primary">
-                                <div className="panel-heading">
-                                    <h3 className="panel-title">Alert Thresholds for Martin McKeaveney</h3>
-                                </div>
-                                <div className="panel-body">
-                                    <table className="table">
-                                        <tbody>
-                                        <tr>
-                                            <th>Application</th>
-                                            <th>Metrics</th>
-                                            <th>Condition</th>
-                                            <th>Criteria</th>
-                                            <th>Users To Alert</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                        <tr>
-                                            <td><RaisedButton label="ReactClient" style={{margin:"5px"}} secondary={true} /></td>
-                                            <td><RaisedButton label="CPU" style={{margin:"5px"}} secondary={true} />
-                                            <RaisedButton label="HEAP" style={{margin:"5px"}} secondary={true} /></td>
-                                            <td><RaisedButton label="DROPS BELOW" style={{margin:"5px"}} primary={true} /></td>
-                                            <td><RaisedButton label="10000" style={{margin:"5px"}} primary={true} /></td>
-                                            <td><RaisedButton label="Martin McKeaveney" style={{margin:"5px"}} secondary={true} />
-                                                <RaisedButton label="Ryan Wilson" style={{margin:"5px"}} secondary={true} /></td>
-                                            <td><RaisedButton label="DELETE" style={{margin:"5px"}} primary={true} /></td>
-                                        </tr>
-                                        <tr>
-                                            <td><RaisedButton label="JVClient" style={{margin:"5px"}} secondary={true} />
-                                                <RaisedButton label="VBPS" style={{margin:"5px"}} secondary={true} />
-                                            </td>
-                                            <td><RaisedButton label="UPTIME" style={{margin:"5px"}} secondary={true} />
-                                                <RaisedButton label="THREADS" style={{margin:"5px"}} secondary={true} /></td>
-                                            <td><RaisedButton label="EXCEEDS" style={{margin:"5px"}} primary={true} /></td>
-                                            <td><RaisedButton label="10000" style={{margin:"5px"}} primary={true} /></td>
-                                            <td><RaisedButton label="Martin McKeaveney" style={{margin:"5px"}} secondary={true} />
-                                                <RaisedButton label="Mark O'Sullivan" style={{margin:"5px"}} secondary={true} /></td>
-                                            <td><RaisedButton label="DELETE" style={{margin:"5px"}} primary={true} /></td>
-                                        </tr>
-                                        <tr>
-                                            <td><RaisedButton label="ReactClient" style={{margin:"5px"}} secondary={true} /></td>
-                                            <td><RaisedButton label="CPU" style={{margin:"5px"}} secondary={true} />
-                                                <RaisedButton label="HEAP" style={{margin:"5px"}} secondary={true} /></td>
-                                            <td><RaisedButton label="DROPS BELOW" style={{margin:"5px"}} primary={true} /></td>
-                                            <td><RaisedButton label="10000" style={{margin:"5px"}} primary={true} /></td>
-                                            <td><RaisedButton label="Martin McKeaveney" style={{margin:"5px"}} secondary={true} />
-                                                <RaisedButton label="Jeff Alvarado" style={{margin:"5px"}} secondary={true} /></td>
-                                            <td><RaisedButton label="DELETE" style={{margin:"5px"}} primary={true} /></td>
-                                        </tr>
-                                        <tr>
-                                            <td><RaisedButton label="ReactClient" style={{margin:"5px"}} secondary={true} /></td>
-                                            <td><RaisedButton label="CPU" style={{margin:"5px"}} secondary={true} />
-                                                <RaisedButton label="HEAP" style={{margin:"5px"}} secondary={true} /></td>
-                                            <td><RaisedButton label="DROPS BELOW" style={{margin:"5px"}} primary={true} /></td>
-                                            <td><RaisedButton label="10000" style={{margin:"5px"}} primary={true} /></td>
-                                            <td><RaisedButton label="Martin McKeaveney" style={{margin:"5px"}} secondary={true} />
-                                                <RaisedButton label="Amit Sharma" style={{margin:"5px"}} secondary={true} /></td>
-                                            <td><RaisedButton label="DELETE" style={{margin:"5px"}} primary={true} /></td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div> */
-                        </div>
-                    </div>
+                <MaterialPanel title={ `Alerts for User`}>
+                    <Table selectable={false}>
+                        <TableHeader displaySelectAll={false}
+                                     adjustForCheckbox={false}>
+                            <TableRow>
+                                <TableHeaderColumn>Application</TableHeaderColumn>
+                                <TableHeaderColumn>Metrics</TableHeaderColumn>
+                                <TableHeaderColumn>Condition</TableHeaderColumn>
+                                <TableHeaderColumn>Criteria</TableHeaderColumn>
+                                <TableHeaderColumn>Users to Alert</TableHeaderColumn>
+                                <TableHeaderColumn>Actions</TableHeaderColumn>
+                                <TableHeaderColumn>Triggered?</TableHeaderColumn>
+                                <TableHeaderColumn>Time Last Triggered</TableHeaderColumn>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody displayRowCheckbox={false}>
+                            {alerts}
+                            <NewAlert/>
+                        </TableBody>
+                    </Table>
+                </MaterialPanel>
                 </div>
         );
     }
