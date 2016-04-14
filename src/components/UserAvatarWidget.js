@@ -11,6 +11,7 @@ import MenuItem from 'material-ui/lib/menus/menu-item';
 import AuthService from '../utils/AuthService';
 import Avatar from 'material-ui/lib/avatar';
 import connectToStores from 'alt/utils/connectToStores';
+import AppActions from '../actions/AppActions';
 
 // CSS
 require('../styles/main.scss');
@@ -50,12 +51,14 @@ class UserAvatarWidget extends React.Component {
                 </div>
             );
         } else {
+            var profile = JSON.parse(localStorage.getItem("userProfile"));
             currentUser = (
                 <div>
                     Profile Loading..
                     {userIconMenu}
                 </div>
             );
+            AppActions.updateCurrentUser(profile);
         }
 
         return currentUser;

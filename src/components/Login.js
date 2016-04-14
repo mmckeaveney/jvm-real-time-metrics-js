@@ -3,6 +3,7 @@ import HomeDashboard from './HomeDashboard';
 import App from './App';
 import { hashHistory } from 'react-router';
 import AppActions from '../actions/AppActions';
+import AuthService from '../utils/AuthService';
 
 class Login extends React.Component {
     constructor(props) {
@@ -11,6 +12,7 @@ class Login extends React.Component {
     }
 
     componentWillMount() {
+        AuthService.setupAjax();
         this.lock.show({
             socialBigButtons: true,
             icon: "https://www.linode.com/media/images/common/longview_icon.png",

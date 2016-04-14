@@ -33,7 +33,10 @@ class AlertPanel extends React.Component {
         var url;
         if (appName == "All") {
             url = "http://localhost:8090/api/alerts/triggered/all";
-        } else {
+        } else if (appName == "mostRecent") {
+            url = "http://localhost:8090/api/alerts/triggered/mostRecent";
+        } else
+        {
             url = `http://localhost:8090/api/alerts/triggered/?appName=${appName}`;
         }
         $.getJSON({url: url,
@@ -43,6 +46,8 @@ class AlertPanel extends React.Component {
                 });
             }
         });
+
+
     }
 
     render() {

@@ -10,6 +10,7 @@ import ClientApplicationStore from '../stores/ClientApplicationStore';
 import UserStore from '../stores/UserStore';
 import ClientApp from './ClientApp';
 import CircularProgress from 'material-ui/lib/circular-progress';
+import _ from 'underscore';
 
 // CSS
 require('../styles/MainDashboard.scss');
@@ -31,8 +32,9 @@ class Favourites extends React.Component {
         return ClientApplicationStore.getState();
     }
 
-    componentDidMount() {
-        $.get(`http://localhost:8090/api/user/favourites/find/?userId=${UserStore.getState().user.user_id}`)
+    componentWillMount() {
+        var user = JSON.parse(localStorage.getItem("userProfile"));
+        $.get(`http://localhost:8090/api/user/favourites/find/?userId=${user.user_id}`)
             .done((favourites) => {
                 this.setState({
                     favourites: favourites
@@ -46,9 +48,14 @@ class Favourites extends React.Component {
     render() {
 
         var favourites;
-        if (this.props.clientApplications.length > 0) {
-            favourites = this.props.clientApplications.map((app, index) => {
-                // Filter out the favourites by ID and use them
+        // If there are any client applications available
+        if (this.props.clientApplications.length > 0 && this.state.favourites.length > 0) {
+            // Filter the favourites by containerId
+            var filtered = _.filter(this.props.clientApplications, (app) => {
+                     return _.contains(this.state.favourites, app.containerId);
+                });
+            // Render the favourites on the page.
+            favourites = filtered.map((app, index) => {
                 return (
                     <ClientApp key={index}
                                application={app}
@@ -57,7 +64,7 @@ class Favourites extends React.Component {
                 )
             })
         } else {
-            favourites =  <CircularProgress/>
+            favourites = <div> No Favourites Saved For user.</div>
         }
 
 

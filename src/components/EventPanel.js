@@ -33,6 +33,8 @@ class EventPanel extends React.Component {
         var url;
         if (criteria == "All") {
             url = "http://localhost:8090/api/events/all";
+        } else if (criteria == "mostRecent") {
+            url = "http://localhost:8090/api/events/mostRecent";
         } else {
             url = `http://localhost:8090/api/events/?appName=${criteria}`;
         }
@@ -58,7 +60,7 @@ class EventPanel extends React.Component {
                 )
             });
         } else {
-           eventsMarkup = <CircularProgress />
+           eventsMarkup = <div>No events at this level.</div>
         }
 
         return (

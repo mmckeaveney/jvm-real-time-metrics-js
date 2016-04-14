@@ -29,9 +29,7 @@ class MaterialPanel extends React.Component {
         }
 
         return (
-                <Card style={styles.cardStyles}
-                      actAsExpander={true}
-                      showExpandableButton={true}>
+                <Card style={styles.cardStyles}>
 
                     <CardHeader title={this.props.title}
                                 subtitle={this.props.subtitle}

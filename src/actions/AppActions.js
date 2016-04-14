@@ -1,6 +1,7 @@
 import alt from '../alt';
 import $ from 'jquery';
 import _ from 'underscore';
+import AuthService from '../utils/AuthService';
 
 class AppActions {
 
@@ -29,8 +30,14 @@ class AppActions {
     }
 
     updateCurrentUser(profile) {
-        // TODO: Fix This
-        $.post({url: `http://localhost:8090/api/usercheck?id=${profile.user_id}&uname=${profile.nickname}&email=${profile.email}`});
+        AuthService.setupAjax();
+        $.post({url: `http://localhost:8090/api/usercheck?id=${profile.user_id}&uname=${profile.nickname}&email=${profile.email}`})
+            .done((user) => {
+                console.log("User successfully saved : " + user);
+            })
+            .fail((error) => {
+                console.log("Error when saving user", error);
+            });
         this.dispatch(profile);
     }
 

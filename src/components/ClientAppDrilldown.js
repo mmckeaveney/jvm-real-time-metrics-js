@@ -1,11 +1,13 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { hashHistory } from 'react-router';
 import connectToStores from 'alt/utils/connectToStores';
 import RaisedButton from 'material-ui/lib/raised-button';
+import FlatButton from 'material-ui/lib/flat-button';
 import IconButton from 'material-ui/lib/icon-button';
 import ArrowBack from 'material-ui/lib/svg-icons/navigation/arrow-back';
 import Chart from './Chart';
 import ClientApplicationStore from '../stores/ClientApplicationStore';
+import UserStore from '../stores/UserStore';
 import _ from 'underscore';
 import RealTimeMetricsPanel from './RealTimeMetricsPanel';
 import AppActions from '../actions/AppActions';
@@ -19,6 +21,7 @@ import TableBody from 'material-ui/lib/table/table-body';
 import CardActions from 'material-ui/lib/card/card-actions';
 import EventPanel from './EventPanel';
 import ExceptionPanel from './ExceptionPanel';
+import QueryTimePanel from './QueryTimePanel';
 import AlertPanel from './AlertPanel';
 import AuthService from '../utils/AuthService';
 
@@ -37,12 +40,7 @@ class ClientAppDrilldown extends React.Component {
     }
 
     addToFavourites() {
-        // Store user data in a store
-        AuthService.getLock().getProfile(localStorage.getItem('userToken'), function (err, profile) {
-            if (err) {
-                console.log("Error loading the Profile", err);
-                return;
-            }
+            var profile = UserStore.getState().user;
             var url = `http://localhost:8090/api/settings/?userId=${profile.user_id}`;
             $.post({
                 url: url,
@@ -56,11 +54,13 @@ class ClientAppDrilldown extends React.Component {
                         });
                 }
             });
-        }.bind(this));
+    }
+
+    goBack() {
+        hashHistory.push("/environment");
     }
 
     render() {
-            // TODO: This is a routing hack, fix it
             var currentApp = _.findWhere(ClientApplicationStore.getState().clientApplications, {
                 containerId : this.props.params.containerId
             })
@@ -68,24 +68,14 @@ class ClientAppDrilldown extends React.Component {
         var actuatorMetrics = currentApp.actuatorMetrics;
         var appName = currentApp.appName;
 
-        var actuatorMarkup = _.map(actuatorMetrics, (value, key) => {
-            return (
-                <tr>
-                    <td> {key} </td>
-                    <td> {value} </td>
-                </tr>
-            )
-        });
-
         return (
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <MaterialPanel title={`${appName} Details `}
                                subtitle={
-                               <Link to="/environment">
-                               GO BACK
-                                   <IconButton> <ArrowBack/> </IconButton>
-                               </Link>
-                                }>
+                               <FlatButton label="Back" labelPosition="after" primary={true} onClick={this.goBack.bind(this, this.props)}
+                                  icon={<ArrowBack />
+                               } />
+                }>
                     <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                         <EventPanel appName={appName}/>
                     </div>
@@ -104,29 +94,7 @@ class ClientAppDrilldown extends React.Component {
                         </div>
 
                     <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                        <div className="panel panel-primary">
-                            <div className="panel-heading">
-                                <h3 className="panel-title">{appName} Query Times</h3>
-                            </div>
-                            <div className="panel-body">
-                               <table className="table">
-                                    <tbody>
-                                    <tr>
-                                        <th>Query Method</th>
-                                        <th>Class</th>
-                                        <th>Execution Time</th>
-                                        <th>How Long Ago</th>
-                                    </tr>
-                                    <tr>
-                                        <td>updateUserCredentials()</td>
-                                        <td>UserDaoImpl</td>
-                                        <td>200ms</td>
-                                        <td>10 minutes ago</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+                        <QueryTimePanel appName={appName}/>
                     </div>
                     <Chart appName={appName}/>
                     <CardActions>

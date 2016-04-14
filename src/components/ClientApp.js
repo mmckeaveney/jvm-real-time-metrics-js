@@ -72,17 +72,9 @@ class ClientApp extends React.Component {
     addToFavourites() {
         // Store user data in a store
         var profile = UserStore.getState().user;
-        var url = `http://localhost:8090/api/user/favourites/save/?userId=${profile.user_id}`;
+        var url = `http://localhost:8090/api/user/favourites/save/?userId=${profile.user_id}&favourite=${this.props.application.containerId}`;
         $.post({
             url: url,
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            dataType: 'json',
-            data: {
-                'favourite' : this.props.application.containerId
-            }
         }).done(function () {
                 console.log("Successfully saved favourite " + props.application.containerId)
             })

@@ -56,11 +56,12 @@ class Alert extends React.Component {
                 <TableRowColumn>{this.props.criteria}</TableRowColumn>
                 <TableRowColumn>{this.props.user}</TableRowColumn>
                 <TableRowColumn>
-                    <RaisedButton label="DELETE" primary={true}
+                    <RaisedButton label="DELETE" default={true}
                                   onClick={this.deleteAlert.bind(this, this.props)}/>
                     {resetButton}
                 </TableRowColumn>
                 <TableRowColumn> <Toggle toggled={this.props.triggered} /> </TableRowColumn>
+                <TableRowColumn> {this.props.timeLastTriggered == 0 ? "N/A" : this.props.timeLastTriggered} </TableRowColumn>
                 <NotificationSnackbar ref="deleteAlert" message="Alert Deleted." />
                 <NotificationSnackbar ref="resetAlert" message="Alert Reset." />
             </TableRow>
