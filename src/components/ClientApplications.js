@@ -53,14 +53,11 @@ class ClientApplications extends React.Component {
         }
 
         return (
-            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="client-application-container"
-                 style={{marginTop:"10px"}}>
                 <MaterialPanel title="Environment Applications"
+                               icon="cloud"
                                subtitle="All the current applications running in your environment">
                     {clientApps}
                 </MaterialPanel>
-
-            </div>
         );
     }
 }

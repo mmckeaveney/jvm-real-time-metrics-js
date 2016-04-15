@@ -70,7 +70,7 @@ class Favourites extends React.Component {
 
         return (
             <div className="col-lg-7 col-md-7 col-sm-7 col-xs-7" id="article-panel-container" style={{marginTop:"10px"}}>
-                <MaterialPanel title="Favourites" subtitle="Applications added to your favourites">
+                <MaterialPanel title="Favourites" subtitle="Applications added to your favourites" icon="star">
                     { favourites }
                 </MaterialPanel>
             </div>

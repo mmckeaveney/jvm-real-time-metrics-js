@@ -66,7 +66,7 @@ class QueryTimePanel extends React.Component {
         }
 
         return (
-            <MaterialPanel title={ `${this.props.appName} Query Times`}>
+            <MaterialPanel title={ `${this.props.appName} Query Times (${this.state.queryTimes.length})`} icon="watch_later">
                 <Table selectable={false}>
                     <TableHeader displaySelectAll={false}
                                  adjustForCheckbox={false}>

@@ -1,12 +1,7 @@
 import React from 'react';
 import { Router, Link, hashHistory } from 'react-router';
-import Tabs from 'material-ui/lib/tabs/tabs';
-import Tab from 'material-ui/lib/tabs/tab';
-import RaisedButton from 'material-ui/lib/raised-button';
-import FlatButton from 'material-ui/lib/flat-button';
 import FontIcon from 'material-ui/lib/font-icon';
 import AppBar from 'material-ui/lib/app-bar';
-import CircularProgress from 'material-ui/lib/circular-progress';
 import IconButton from 'material-ui/lib/icon-button';
 import Cancel from 'material-ui/lib/svg-icons/navigation/cancel';
 import Avatar from 'material-ui/lib/avatar';
@@ -17,7 +12,6 @@ import MenuItem from 'material-ui/lib/menus/menu-item';
 import AuthService from '../utils/AuthService';
 import AlertNotificationDialog from './AlertNotificationDialog';
 import AppActions from '../actions/AppActions';
-import UserStore from '../stores/UserStore';
 import NavTabs from './NavTabs';
 import UserAvatarWidget from './UserAvatarWidget';
 import LeftNav from 'material-ui/lib/left-nav';
@@ -25,12 +19,14 @@ import Home from 'material-ui/lib/svg-icons/action/home';
 import Poll from 'material-ui/lib/svg-icons/social/poll';
 import Notifications from 'material-ui/lib/svg-icons/social/notifications';
 import Settings from 'material-ui/lib/svg-icons/action/settings';
-import connectToStores from 'alt/utils/connectToStores';
+import customBaseTheme from '../themes/customTheme';
+import MuiThemeProvider from 'material-ui/lib/MuiThemeProvider';
+import getMuiTheme from 'material-ui/lib/styles/getMuiTheme';
 
 // CSS
 require('../styles/main.scss');
 
-
+const customMuiTheme = getMuiTheme(customBaseTheme);
 // Component for the main Container Div of the application.
 class App extends React.Component {
     constructor(props, context) {
@@ -61,9 +57,17 @@ class App extends React.Component {
 
         if (localStorage.getItem("userToken")) {
             return (
+                <MuiThemeProvider muiTheme={customMuiTheme}>
                 <div className="container-fluid">
                     <AppBar
-                        title={<span>JVM Real Time Metrics System</span>}
+                        title={
+                        <div>
+                            JVM Real Time Metrics System {" "}
+                            <FontIcon className="material-icons" color="white">poll</FontIcon>
+                            <FontIcon className="material-icons" color="white">trending_up</FontIcon>
+                            <FontIcon className="material-icons" color="white">cloud</FontIcon>
+                        </div>
+                        }
                         iconElementRight={<UserAvatarWidget/>}
                         style={styles.appBar}
                         onLeftIconButtonTouchTap={this.handleToggle.bind(this, this.props)}
@@ -83,6 +87,7 @@ class App extends React.Component {
                         <MenuItem primaryText="Settings" leftIcon={<Settings/>} linkButton containerElement={<Link to="/settings" />}/>
                     </LeftNav>
                 </div>
+                </MuiThemeProvider>
             );
         } else {
             return (<Login/>);

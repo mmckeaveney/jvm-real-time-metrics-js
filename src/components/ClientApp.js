@@ -2,8 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import AppActions from '../actions/AppActions';
 import AppBar from 'material-ui/lib/app-bar';
-import IconButton from 'material-ui/lib/icon-button';
-import FlatButton from 'material-ui/lib/flat-button';
+import CustomButton from './CustomButton';
 import RaisedButton from 'material-ui/lib/raised-button';
 import NavigationClose from 'material-ui/lib/svg-icons/navigation/close';
 import Tabs from 'material-ui/lib/tabs/tabs';
@@ -85,7 +84,6 @@ class ClientApp extends React.Component {
 
     render() {
         return (
-            <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                 <MaterialPanel title={this.props.application.appName}>
                     <Table selectable={false}>
                         <TableHeader displaySelectAll={false}
@@ -98,31 +96,35 @@ class ClientApp extends React.Component {
                         </TableHeader>
                         <TableBody displayRowCheckbox={false}>
                             <TableRow>
-                                <TableRowColumn>TO BE IMPLEMENTED</TableRowColumn>
-                                <TableRowColumn>TO BE IMPLEMENTED</TableRowColumn>
-                                <TableRowColumn>TO BE IMPLEMENTED</TableRowColumn>
+                                <TableRowColumn>40</TableRowColumn>
+                                <TableRowColumn>10</TableRowColumn>
+                                <TableRowColumn>4</TableRowColumn>
                             </TableRow>
                         </TableBody>
                     </Table>
-                    <CardActions>
-                        <RaisedButton label="More Details"
+                    <CardActions style={{
+                        textAlign: "center"
+                    }}>
+                        <CustomButton label="More Details"
                                       onClick={this.goToDrilldown.bind(this, this.props)}
-                                      default={true}/>
-                        <RaisedButton label="Add to Favourites" default={true}
+                                      icon="search" />
+                        <CustomButton label="Add to Favourites"
+                                      icon="star"
                                       onClick={this.addToFavourites.bind(this, this.props)}/>
-                        <RaisedButton label="Restart" default={true}
+                        <CustomButton label="Restart"
+                                      icon="refresh"
                                       onClick={this.restartApp.bind(this, this.props)}/>
-                        <RaisedButton label="Kill" default={true}
+                        <CustomButton label="Kill"
+                                      icon="remove_circle"
                                       onClick={this.killApp.bind(this, this.props)}/>
                     </CardActions>
+                    <NotificationSnackbar ref="appKilled"
+                                          message={`${this.props.application.appName} Killed.`}
+                    />
+                    <NotificationSnackbar ref="appRestarted"
+                                          message={`${this.props.application.appName} Restarted.`}
+                    />
                 </MaterialPanel>
-                <NotificationSnackbar ref="appKilled"
-                                      message={`${this.props.application.appName} Killed.`}
-                />
-                <NotificationSnackbar ref="appRestarted"
-                                      message={`${this.props.application.appName} Restarted.`}
-                />
-            </div>
         );
     }
 }

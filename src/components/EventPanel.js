@@ -63,11 +63,26 @@ class EventPanel extends React.Component {
            eventsMarkup = <div>No events at this level.</div>
         }
 
+        var styles = {
+            textStyles: {
+                fontSize: 30
+            },
+            cardStyles: {
+                fontSize: 20,
+                border: "1px solid #4527A0",
+                margin: 20
+            },
+            headerStyles: {
+                fontSize: 30
+            }
+        }
+
         return (
-                <MaterialPanel title={ `${this.props.appName} Events`}>
+                <MaterialPanel title={ `${this.props.appName} Events (${this.state.events.length})`} icon="event">
                         <Table selectable={false}>
                             <TableHeader displaySelectAll={false}
-                                         adjustForCheckbox={false}>
+                                         adjustForCheckbox={false}
+                                         style={styles.headerStyles}>
                                     <TableRow>
                                         <TableHeaderColumn>Application</TableHeaderColumn>
                                         <TableHeaderColumn>Event</TableHeaderColumn>

@@ -1,5 +1,6 @@
 import React from 'react';
 import RaisedButton from 'material-ui/lib/raised-button';
+import CustomButton from './CustomButton';
 import TableRow from 'material-ui/lib/table/table-row';
 import TableHeader from 'material-ui/lib/table/table-header';
 import TableRowColumn from 'material-ui/lib/table/table-row-column';
@@ -45,7 +46,9 @@ class Alert extends React.Component {
 
         var resetButton;
            if (this.props.triggered) {
-               resetButton =  <RaisedButton label="RESET" onClick={this.resetAlert.bind(this, this.props)}/>
+               resetButton =   <CustomButton label="Reset"
+                                             icon="refresh"
+                                             onClick={this.resetAlert.bind(this, this.props)}/>
            }
 
         return (
@@ -56,12 +59,13 @@ class Alert extends React.Component {
                 <TableRowColumn>{this.props.criteria}</TableRowColumn>
                 <TableRowColumn>{this.props.user}</TableRowColumn>
                 <TableRowColumn>
-                    <RaisedButton label="DELETE" default={true}
+                    <CustomButton label="Delete"
+                                  icon="clear"
                                   onClick={this.deleteAlert.bind(this, this.props)}/>
                     {resetButton}
                 </TableRowColumn>
                 <TableRowColumn> <Toggle toggled={this.props.triggered} /> </TableRowColumn>
-                <TableRowColumn> {this.props.timeLastTriggered == 0 ? "N/A" : this.props.timeLastTriggered} </TableRowColumn>
+                <TableRowColumn> {this.props.timeLastTriggered == 0 ? "N/A" : TimeDelta.calculateTimeDelta(this.props.timeLastTriggered/1000)} </TableRowColumn>
                 <NotificationSnackbar ref="deleteAlert" message="Alert Deleted." />
                 <NotificationSnackbar ref="resetAlert" message="Alert Reset." />
             </TableRow>

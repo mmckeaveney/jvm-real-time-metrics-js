@@ -26,7 +26,7 @@ class RealTimeMetricsPanel extends React.Component {
         });
 
         return (
-            <MaterialPanel title={ `${this.props.appName} Metrics`}>
+            <MaterialPanel title={ `${this.props.appName} Metrics`} icon="show_chart">
                 <Table selectable={false}>
                     <TableHeader displaySelectAll={false}
                                  adjustForCheckbox={false}>

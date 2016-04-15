@@ -6,6 +6,7 @@ import TableRow from 'material-ui/lib/table/table-row';
 import TableHeader from 'material-ui/lib/table/table-header';
 import TableRowColumn from 'material-ui/lib/table/table-row-column';
 import TableBody from 'material-ui/lib/table/table-body';
+import FontIcon from 'material-ui/lib/font-icon';
 import MaterialPanel from './MaterialPanel';
 import Actions from '../actions/AppActions';
 import CircularProgress from 'material-ui/lib/circular-progress';
@@ -67,7 +68,7 @@ class AlertPanel extends React.Component {
         }
 
         return (
-            <MaterialPanel title={ `${this.props.appName} Alerts`}>
+            <MaterialPanel title={ `${this.props.appName} Alerts (${this.state.alerts.length})`} icon="notifications">
                 <Table selectable={false}>
                     <TableHeader displaySelectAll={false}
                                  adjustForCheckbox={false}>
