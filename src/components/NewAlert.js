@@ -114,12 +114,7 @@ class NewAlert extends React.Component {
                     /></TableRowColumn>
                 <TableRowColumn><AlertDropdown data={this.state.users} ref="user"/></TableRowColumn>
                 <TableRowColumn>
-                    <CustomButton label="Save"
-                                  icon=""
-                                  onClick={this.deleteAlert.bind(this, this.props)}/>
-                    <FloatingActionButton mini={true} onClick={this.saveAlert.bind(this, this.props)}>
-                        <ContentAdd />
-                    </FloatingActionButton>
+                    <CustomButton label="Save" icon="add" onClick={this.saveAlert.bind(this, this.props)}/>
                 </TableRowColumn>
                 <TableRowColumn>N/A</TableRowColumn>
                 <TableRowColumn>N/A</TableRowColumn>
