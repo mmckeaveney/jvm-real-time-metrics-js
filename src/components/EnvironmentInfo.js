@@ -35,30 +35,20 @@ class EnvironmentInfo extends React.Component {
     render() {
         var appName = "mostRecent";
         return (
-            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <MaterialPanel title={`About your Environment `} >
+                <MaterialPanel title={`Environment Summary `} icon="apps" >
                         <List>
                             <ListItem insetChildren={true} primaryText={`Number of apps in environment : ${this.props.clientApplications.length}`} />
                             <ListItem insetChildren={true} primaryText={`Most Problematic Application (Most Exceptions): `} />
                         </List>
-                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <EventPanel appName={appName}/>
-                    </div>
 
-                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <ExceptionPanel appName={appName}/>
-                    </div>
 
-                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <AlertPanel appName={appName}/>
-                    </div>
 
-                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <QueryTimePanel appName={appName}/>
-                    </div>
 
                 </MaterialPanel>
-            </div>
         );
     }
 }

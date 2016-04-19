@@ -20,6 +20,7 @@ import NewAlert from './NewAlert';
 import connectToStores from 'alt/utils/connectToStores';
 import AppActions from '../actions/AppActions';
 import AlertStore from '../stores/AlertStore';
+import UserStore from '../stores/UserStore';
 
 // CSS
 require('../styles/MainDashboard.scss');
@@ -32,11 +33,14 @@ class AlertsDashboard extends React.Component {
     }
 
     static getStores(props) {
-        return [AlertStore];
+        return [AlertStore, UserStore];
     }
 
     static getPropsFromStores(props) {
-        return AlertStore.getState();
+        return {
+            ... AlertStore.getState(),
+            ... UserStore.getState()
+        };
     }
 
     render() {
@@ -57,7 +61,7 @@ class AlertsDashboard extends React.Component {
 
         return (
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <MaterialPanel title={ `Alerts for User`}>
+                <MaterialPanel title={ `Alerts for user ${this.props.user.nickname}`} icon="notifications">
                     <Table selectable={false}>
                         <TableHeader displaySelectAll={false}
                                      adjustForCheckbox={false}>

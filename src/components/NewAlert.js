@@ -1,5 +1,6 @@
 import React from 'react';
 import RaisedButton from 'material-ui/lib/raised-button';
+import CustomButton from './CustomButton';
 import AlertDropdown from './AlertDropdown';
 import Table from 'material-ui/lib/table/table';
 import TableHeaderColumn from 'material-ui/lib/table/table-header-column';
@@ -11,6 +12,8 @@ import TextField from 'material-ui/lib/text-field';
 import $ from 'jquery';
 import AppActions from '../actions/AppActions';
 import NotificationSnackbar from './NotificationSnackbar';
+import FloatingActionButton from 'material-ui/lib/floating-action-button';
+import ContentAdd from 'material-ui/lib/svg-icons/content/add';
 
 class NewAlert extends React.Component {
     constructor(props) {
@@ -110,9 +113,8 @@ class NewAlert extends React.Component {
                         errorText={this.state.errorText}
                     /></TableRowColumn>
                 <TableRowColumn><AlertDropdown data={this.state.users} ref="user"/></TableRowColumn>
-                <TableRowColumn><RaisedButton label="ADD"
-                                              default={true}
-                                              onClick={this.saveAlert.bind(this, this.props)}/>
+                <TableRowColumn>
+                    <CustomButton label="Save" icon="add" onClick={this.saveAlert.bind(this, this.props)}/>
                 </TableRowColumn>
                 <TableRowColumn>N/A</TableRowColumn>
                 <TableRowColumn>N/A</TableRowColumn>

@@ -66,7 +66,7 @@ class ExceptionPanel extends React.Component {
         }
 
         return (
-            <MaterialPanel title={ `${this.props.appName} Exceptions`}>
+            <MaterialPanel title={ `${this.props.appName} Exceptions (${this.state.exceptions.length})`} icon="warning">
                 <Table selectable={false}>
                     <TableHeader displaySelectAll={false}
                                  adjustForCheckbox={false}>

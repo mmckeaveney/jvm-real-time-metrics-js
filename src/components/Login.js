@@ -12,7 +12,9 @@ class Login extends React.Component {
     }
 
     componentWillMount() {
+        // Sets up all ajax calls to send the JSON Web Token
         AuthService.setupAjax();
+        // Show the login widget
         this.lock.show({
             socialBigButtons: true,
             icon: "https://www.linode.com/media/images/common/longview_icon.png",
@@ -26,6 +28,7 @@ class Login extends React.Component {
                 console.log("There was an error :/", err);
                 return;
             }
+            // Sign in with the user and set the JSON Web Token in LocalStorage
             console.log("New Sign In with profile : ", profile);
             localStorage.setItem('userToken', token);
             localStorage.setItem('userProfile', JSON.stringify(profile));
@@ -33,9 +36,6 @@ class Login extends React.Component {
             hashHistory.push("/");
         });
 
-        //this.lock.once('close', function() {
-        //    hashHistory.push("/"); // redirect to home on close
-        //});
     }
 
     render() {

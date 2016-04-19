@@ -148,7 +148,7 @@ class Settings extends React.Component {
 
     render() {
         return (
-            <MaterialPanel title={ `Settings for User ${this.state.username}`}>
+            <MaterialPanel title={ `Settings for user ${this.state.username}`} icon="build">
                 <Stepper activeStep={this.state.activeStep} onStepHeaderTouch={this.selectStep.bind(this)}
                     updateCompletedStatus={this.updateCompletedSteps.bind(this, this.props)}
                     createIcon={this.createIcon}
