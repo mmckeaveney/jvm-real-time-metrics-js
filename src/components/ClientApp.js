@@ -1,23 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router';
 import AppActions from '../actions/AppActions';
-import AppBar from 'material-ui/lib/app-bar';
 import CustomButton from './CustomButton';
-import RaisedButton from 'material-ui/lib/raised-button';
-import NavigationClose from 'material-ui/lib/svg-icons/navigation/close';
-import Tabs from 'material-ui/lib/tabs/tabs';
-import Tab from 'material-ui/lib/tabs/tab';
-import Colors from 'material-ui/lib/styles/colors';
+import RaisedButton from 'material-ui/RaisedButton';
+import NavigationClose from 'material-ui/svg-icons/navigation/close';
+import Colors from 'material-ui/styles/colors';
 import Chart from './Chart';
 import _ from 'underscore';
 import MaterialPanel from './MaterialPanel';
-import Table from 'material-ui/lib/table/table';
-import TableHeaderColumn from 'material-ui/lib/table/table-header-column';
-import TableRow from 'material-ui/lib/table/table-row';
-import TableHeader from 'material-ui/lib/table/table-header';
-import TableRowColumn from 'material-ui/lib/table/table-row-column';
-import TableBody from 'material-ui/lib/table/table-body';
-import CardActions from 'material-ui/lib/card/card-actions';
+import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
+import CardActions from 'material-ui/Card/CardActions';
 import $ from 'jquery';
 import NotificationSnackbar from './NotificationSnackbar';
 import { hashHistory } from 'react-router'

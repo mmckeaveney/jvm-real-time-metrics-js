@@ -1,5 +1,4 @@
 import React from 'react';
-import AppBar from 'material-ui/lib/app-bar';
 import WhatsNew from './WhatsNew';
 import Favourites from './Favourites';
 import $ from 'jquery';

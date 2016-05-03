@@ -1,15 +1,10 @@
 require('highcharts-release/themes/dark-unica.js');
 import React from 'react';
-import AppBar from 'material-ui/lib/app-bar';
-import IconButton from 'material-ui/lib/icon-button';
-import RaisedButton from 'material-ui/lib/raised-button';
-import FontIcon from 'material-ui/lib/font-icon';
-import NavigationClose from 'material-ui/lib/svg-icons/navigation/close';
-import Tabs from 'material-ui/lib/tabs/tabs';
-import Tab from 'material-ui/lib/tabs/tab';
-import Colors from 'material-ui/lib/styles/colors';
+import RaisedButton from 'material-ui/RaisedButton';
+import FontIcon from 'material-ui/IconButton';
+import NavigationClose from 'material-ui/svg-icons/navigation/close';
 import ReactHighcharts from 'react-highcharts/bundle/highcharts';
-import CircularProgress from 'material-ui/lib/circular-progress';
+import CircularProgress from 'material-ui/CircularProgress';
 import _ from 'underscore';
 
 // CSS

@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router';
 import connectToStores from 'alt/utils/connectToStores';
-import RaisedButton from 'material-ui/lib/raised-button';
-import IconButton from 'material-ui/lib/icon-button';
-import ArrowBack from 'material-ui/lib/svg-icons/navigation/arrow-back';
+import RaisedButton from 'material-ui/RaisedButton';
+import IconButton from 'material-ui/IconButton';
+import ArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
 import Chart from './Chart';
 import ClientApplicationStore from '../stores/ClientApplicationStore';
 import _ from 'underscore';
@@ -14,9 +14,8 @@ import EventPanel from './EventPanel';
 import ExceptionPanel from './ExceptionPanel';
 import AlertPanel from './AlertPanel';
 import QueryTimePanel from './QueryTimePanel';
-import Divider from 'material-ui/lib/divider';
-import List from 'material-ui/lib/lists/list';
-import ListItem from 'material-ui/lib/lists/list-item';
+import Divider from 'material-ui/Divider';
+import { List, ListItem } from 'material-ui/List';
 
 @connectToStores
 class EnvironmentInfo extends React.Component {

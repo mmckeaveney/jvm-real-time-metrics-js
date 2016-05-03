@@ -1,7 +1,7 @@
 import React from 'react';
-import Snackbar from 'material-ui/lib/snackbar';
-import FlatButton from 'material-ui/lib/flat-button';
-import Dialog from 'material-ui/lib/dialog';
+import Snackbar from 'material-ui/Snackbar';
+import FlatButton from 'material-ui/FlatButton';
+import Dialog from 'material-ui/Dialog';
 import WebSocket from '../utils/WebSocket';
 import { browserHistory } from 'react-router'
 import AppActions from '../actions/AppActions';

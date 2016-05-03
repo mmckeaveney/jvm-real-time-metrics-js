@@ -1,7 +1,7 @@
 import React from 'react';
-import RaisedButton from 'material-ui/lib/raised-button';
-import SelectField from 'material-ui/lib/select-field';
-import MenuItem from 'material-ui/lib/menus/menu-item';
+import RaisedButton from 'material-ui/RaisedButton';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
 
 
 class AlertDropdown extends React.Component {

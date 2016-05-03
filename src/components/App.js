@@ -1,27 +1,24 @@
 import React from 'react';
 import { Router, Link, hashHistory } from 'react-router';
-import FontIcon from 'material-ui/lib/font-icon';
-import AppBar from 'material-ui/lib/app-bar';
-import IconButton from 'material-ui/lib/icon-button';
-import Cancel from 'material-ui/lib/svg-icons/navigation/cancel';
-import Avatar from 'material-ui/lib/avatar';
+import FontIcon from 'material-ui/FontIcon';
+import AppBar from 'material-ui/AppBar';
+import Avatar from 'material-ui/Avatar';
 import Login from './Login';
 import $ from 'jquery';
-import IconMenu from 'material-ui/lib/menus/icon-menu';
-import MenuItem from 'material-ui/lib/menus/menu-item';
+import MenuItem from 'material-ui/MenuItem';
 import AuthService from '../utils/AuthService';
 import AlertNotificationDialog from './AlertNotificationDialog';
 import AppActions from '../actions/AppActions';
 import NavTabs from './NavTabs';
 import UserAvatarWidget from './UserAvatarWidget';
-import LeftNav from 'material-ui/lib/left-nav';
-import Home from 'material-ui/lib/svg-icons/action/home';
-import Poll from 'material-ui/lib/svg-icons/social/poll';
-import Notifications from 'material-ui/lib/svg-icons/social/notifications';
-import Settings from 'material-ui/lib/svg-icons/action/settings';
+import LeftNav from 'material-ui/Drawer';
+import Home from 'material-ui/svg-icons/action/home';
+import Poll from 'material-ui/svg-icons/social/poll';
+import Notifications from 'material-ui/svg-icons/social/notifications';
+import Settings from 'material-ui/svg-icons/action/settings';
 import customBaseTheme from '../themes/customTheme';
-import MuiThemeProvider from 'material-ui/lib/MuiThemeProvider';
-import getMuiTheme from 'material-ui/lib/styles/getMuiTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 // CSS
 require('../styles/main.scss');

@@ -1,12 +1,12 @@
 import React from 'react';
 import connectToStores from 'alt/utils/connectToStores';
-import FlatButton from 'material-ui/lib/flat-button';
+import FlatButton from 'material-ui/FlatButton';
 import AppActions from '../actions/AppActions';
 import ClientApp from './ClientApp';
 import WebSocket from '../utils/WebSocket';
 import ClientApplicationStore from '../stores/ClientApplicationStore';
 import MaterialPanel from './MaterialPanel';
-import CircularProgress from 'material-ui/lib/circular-progress';
+import CircularProgress from 'material-ui/CircularProgress';
 
 
 // CSS

@@ -1,15 +1,13 @@
 import React from 'react';
-import RaisedButton from 'material-ui/lib/raised-button';
+import RaisedButton from 'material-ui/RaisedButton';
 import CustomButton from './CustomButton';
-import TableRow from 'material-ui/lib/table/table-row';
-import TableHeader from 'material-ui/lib/table/table-header';
-import TableRowColumn from 'material-ui/lib/table/table-row-column';
-import Toggle from 'material-ui/lib/toggle';
+import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
+import Toggle from 'material-ui/Toggle';
 import $ from 'jquery';
 import AppActions from '../actions/AppActions';
 import TimeDelta from '../utils/TimeDelta';
-import Dialog from 'material-ui/lib/dialog';
-import FlatButton from 'material-ui/lib/flat-button';
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
 import NotificationSnackbar from './NotificationSnackbar';
 
 class Alert extends React.Component {

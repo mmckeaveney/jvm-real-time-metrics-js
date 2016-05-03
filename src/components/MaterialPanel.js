@@ -1,10 +1,6 @@
 import React from 'react';
-import Card from 'material-ui/lib/card/card';
-import CardActions from 'material-ui/lib/card/card-actions';
-import CardMedia from 'material-ui/lib/card/card-media';
-import CardText from 'material-ui/lib/card/card-text';
-import CardTitle from 'material-ui/lib/card/card-title';
-import FontIcon from 'material-ui/lib/font-icon';
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import FontIcon from 'material-ui/FontIcon';
 
 class MaterialPanel extends React.Component {
     constructor(props) {

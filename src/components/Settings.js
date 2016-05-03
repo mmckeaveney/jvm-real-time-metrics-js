@@ -1,19 +1,18 @@
 import React from 'react';
 import _ from 'underscore';
 import MaterialPanel from './MaterialPanel';
-import TextField from 'material-ui/lib/text-field';
+import TextField from 'material-ui/TextField';
 import Actions from '../actions/AppActions';
-import CircularProgress from 'material-ui/lib/circular-progress';
+import CircularProgress from 'material-ui/CircularProgress';
 import $ from 'jquery';
-import SelectField from 'material-ui/lib/select-field';
-import MenuItem from 'material-ui/lib/menus/menu-item';
-import RaisedButton from 'material-ui/lib/raised-button';
-import FlatButton from 'material-ui/lib/flat-button';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
+import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
 import AuthService from '../utils/AuthService';
 import UserStore from '../stores/UserStore';
-import Stepper from 'material-ui/lib/Stepper/Stepper';
-import Step from 'material-ui/lib/Stepper/VerticalStep';
-import FontIcon from 'material-ui/lib/font-icon';
+import { Step, Stepper, StepLabel, } from 'material-ui/Stepper';
+import FontIcon from 'material-ui/FontIcon';
 import connectToStores from 'alt/utils/connectToStores';
 import NotificationSnackbar from './NotificationSnackbar';
 

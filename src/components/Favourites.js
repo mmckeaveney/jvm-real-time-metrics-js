@@ -1,15 +1,14 @@
 import React from 'react';
-import AppBar from 'material-ui/lib/app-bar';
 import connectToStores from 'alt/utils/connectToStores';
-import IconButton from 'material-ui/lib/icon-button';
-import RaisedButton from 'material-ui/lib/raised-button';
-import FontIcon from 'material-ui/lib/font-icon';
+import FontIcon from 'material-ui/FontIcon';
+import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
 import Chart from "./Chart";
 import MaterialPanel from './MaterialPanel';
 import ClientApplicationStore from '../stores/ClientApplicationStore';
 import UserStore from '../stores/UserStore';
 import ClientApp from './ClientApp';
-import CircularProgress from 'material-ui/lib/circular-progress';
+import CircularProgress from 'material-ui/CircularProgress';
 import _ from 'underscore';
 
 // CSS

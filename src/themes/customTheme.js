@@ -3,8 +3,7 @@ import {
     grey100, grey300, grey400, grey500,
     pinkA200, purple900, purple800, deepPurple800, deepPurple400,
     white, darkBlack, fullBlack,
-} from 'material-ui/lib/styles/colors';
-import ColorManipulator from 'material-ui/lib/utils/color-manipulator';
+} from 'material-ui/styles/colors';
 
 export default {
   spacing: {
@@ -32,9 +31,9 @@ export default {
     alternateTextColor: grey100,
     canvasColor: white,
     borderColor: deepPurple400,
-    disabledColor: ColorManipulator.fade(darkBlack, 0.3),
+    disabledColor: darkBlack,
     pickerHeaderColor: deepPurple800,
-    clockCircleColor: ColorManipulator.fade(darkBlack, 0.07),
+    clockCircleColor: darkBlack,
     shadowColor: fullBlack,
   }
 };

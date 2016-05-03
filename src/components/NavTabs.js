@@ -1,9 +1,8 @@
 import React from 'react';
 import { Router, Link } from 'react-router';
-import Tabs from 'material-ui/lib/tabs/tabs';
-import Tab from 'material-ui/lib/tabs/tab';
+import { Tabs, Tab } from 'material-ui/Tabs';
 import { hashHistory } from 'react-router'
-import FontIcon from 'material-ui/lib/font-icon';
+import FontIcon from 'material-ui/FontIcon';
 
 // CSS
 require('../styles/main.scss');
