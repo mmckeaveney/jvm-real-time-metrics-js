@@ -16,7 +16,7 @@ class CustomButton extends React.Component {
         return (
             <FlatButton label={this.props.label}
                         icon={<FontIcon className="material-icons" color={"white"}>{this.props.icon}</FontIcon>}
-                        backgroundColor={"#4527A0"}
+                        backgroundColor={this.props.backgroundColor ? this.props.backgroundColor : "#4527A0"}
                         hoverColor={"#B39DDB"}
                         style={style}
                         onClick={this.props.onClick}

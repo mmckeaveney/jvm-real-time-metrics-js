@@ -53,9 +53,9 @@ class ExceptionPanel extends React.Component {
             exceptionsMarkup = _.map(this.state.exceptions, (exception, index) => {
                 return (
                     <TableRow key={index}>
-                        <TableRowColumn>{ exception.applicationName  }</TableRowColumn>
+                        <TableRowColumn style={{wordWrap: 'break-word', whiteSpace: 'normal'}}>{ exception.applicationName  }</TableRowColumn>
                         <TableRowColumn>{ exception.exceptionType }</TableRowColumn>
-                        <TableRowColumn>{ exception.exceptionClass }</TableRowColumn>
+                        <TableRowColumn style={{wordWrap: 'break-word', whiteSpace: 'normal'}}>{ exception.exceptionClass }</TableRowColumn>
                         <TableRowColumn>{ exception.exceptionMethod }</TableRowColumn>
                         <TableRowColumn>{ TimeDelta.calculateTimeDelta(exception.time) }</TableRowColumn>
                     </TableRow>

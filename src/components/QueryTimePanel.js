@@ -53,8 +53,8 @@ class QueryTimePanel extends React.Component {
             queryTimesMarkup = _.map(this.state.queryTimes, (queryTime, index) => {
                 return (
                     <TableRow key={index}>
-                        <TableRowColumn>{ queryTime.applicationName  }</TableRowColumn>
-                        <TableRowColumn>{ queryTime.className }</TableRowColumn>
+                        <TableRowColumn style={{wordWrap: 'break-word', whiteSpace: 'normal'}}>{ queryTime.applicationName  }</TableRowColumn>
+                        <TableRowColumn style={{wordWrap: 'break-word', whiteSpace: 'normal'}}>{ queryTime.className }</TableRowColumn>
                         <TableRowColumn>{ queryTime.methodName }</TableRowColumn>
                         <TableRowColumn>{ queryTime.executionTime }ms</TableRowColumn>
                         <TableRowColumn>{ TimeDelta.calculateTimeDelta(queryTime.timeExecuted/1000) }</TableRowColumn>

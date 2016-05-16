@@ -4,6 +4,7 @@ import connectToStores from 'alt/utils/connectToStores';
 import RaisedButton from 'material-ui/lib/raised-button';
 import FlatButton from 'material-ui/lib/flat-button';
 import IconButton from 'material-ui/lib/icon-button';
+import CustomButton from './CustomButton';
 import ArrowBack from 'material-ui/lib/svg-icons/navigation/arrow-back';
 import Chart from './Chart';
 import ClientApplicationStore from '../stores/ClientApplicationStore';
@@ -72,28 +73,29 @@ class ClientAppDrilldown extends React.Component {
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <MaterialPanel title={`${appName} Details `}
                                subtitle={
-                               <FlatButton label="Back" labelPosition="after" primary={true} onClick={this.goBack.bind(this, this.props)}
-                                  icon={<ArrowBack />
-                               } />
+                               <CustomButton label="Back"
+                                      backgroundColor="#000000"
+                                      onClick={this.goBack.bind(this, this.props)}
+                                      icon="arrow_back" />
                 }>
-                    <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                         <EventPanel appName={appName}/>
                     </div>
 
-                    <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    <div className="col-lg-8 col-md-8 col-sm-12 col-xs-12">
                         <ExceptionPanel appName={appName}/>
                     </div>
 
-                    <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    <div className="col-lg-8 col-md-8 col-sm-12 col-xs-12">
                         <AlertPanel appName={appName}/>
                     </div>
 
-                    <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    <div className="col-lg-8 col-md-8 col-sm-12 col-xs-12">
                     <RealTimeMetricsPanel appName={appName}
                                           actuatorMetrics={actuatorMetrics}/>
                         </div>
 
-                    <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    <div className="col-lg-8 col-md-8 col-sm-12 col-xs-12">
                         <QueryTimePanel appName={appName}/>
                     </div>
                     <Chart appName={appName}/>
