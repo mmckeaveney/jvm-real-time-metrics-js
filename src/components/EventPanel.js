@@ -12,6 +12,7 @@ import CircularProgress from 'material-ui/lib/circular-progress';
 import $ from 'jquery';
 import WebSocket from '../utils/WebSocket';
 import TimeDelta from '../utils/TimeDelta';
+import AjaxUrl from '../utils/AjaxUrl';
 
 class EventPanel extends React.Component {
     constructor(props) {
@@ -32,11 +33,11 @@ class EventPanel extends React.Component {
     getLatestEvents(criteria) {
         var url;
         if (criteria == "All") {
-            url = "http://localhost:8090/api/events/all";
+            url = `http://${AjaxUrl.url}:8090/api/events/all`;
         } else if (criteria == "mostRecent") {
-            url = "http://localhost:8090/api/events/mostRecent";
+            url = `http://${AjaxUrl.url}:8090/api/events/mostRecent`;
         } else {
-            url = `http://localhost:8090/api/events/?appName=${criteria}`;
+            url = `http://${AjaxUrl.url}:8090/api/events/?appName=${criteria}`;
         }
         $.getJSON({url: url,
             success: (events) => {

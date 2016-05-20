@@ -12,6 +12,7 @@ import CircularProgress from 'material-ui/lib/circular-progress';
 import $ from 'jquery';
 import WebSocket from '../utils/WebSocket';
 import TimeDelta from '../utils/TimeDelta';
+import AjaxUrl from '../utils/AjaxUrl';
 
 class ExceptionPanel extends React.Component {
     constructor(props) {
@@ -32,11 +33,11 @@ class ExceptionPanel extends React.Component {
     getLatestExceptions(criteria) {
         var url;
         if (criteria == "All") {
-            url = "http://localhost:8090/api/exception/all";
+            url = `http://${AjaxUrl.url}:8090/api/exception/all`;
         } else if (criteria == "mostRecent") {
-            url = "http://localhost:8090/api/exception/mostRecent";
+            url = `http://${AjaxUrl.url}:8090/api/exception/mostRecent`;
         } else {
-            url = `http://localhost:8090/api/exception/?appName=${criteria}`;
+            url = `http://${AjaxUrl.url}:8090/api/exception/?appName=${criteria}`;
         }
         $.getJSON({url: url,
             success: (exceptions) => {

@@ -14,6 +14,7 @@ import AppActions from '../actions/AppActions';
 import NotificationSnackbar from './NotificationSnackbar';
 import FloatingActionButton from 'material-ui/lib/floating-action-button';
 import ContentAdd from 'material-ui/lib/svg-icons/content/add';
+import AjaxUrl from '../utils/AjaxUrl';
 
 class NewAlert extends React.Component {
     constructor(props) {
@@ -36,7 +37,7 @@ class NewAlert extends React.Component {
 
     componentWillMount() {
         $.getJSON({
-            url: "http://localhost:8090/api/users/all",
+            url: `http://${AjaxUrl.url}:8090/api/users/all`,
             success: (users) => {
                 this.setState({
                     users: users
@@ -45,7 +46,7 @@ class NewAlert extends React.Component {
         });
 
         $.getJSON({
-            url: "http://localhost:8090/api/clientapps/names/all",
+            url: `http://${AjaxUrl.url}:8090/api/clientapps/names/all`,
             success: (clientApps) => {
                 this.setState({
                     apps: clientApps
@@ -78,7 +79,7 @@ class NewAlert extends React.Component {
             }
             var snackBar = this.refs.newAlert;
             $.ajax({
-                url: `http://localhost:8090/api/alerts/add`,
+                url: `http://${AjaxUrl.url}:8090/api/alerts/add`,
                 type: "POST",
                 headers: {
                     'Accept': 'application/json',

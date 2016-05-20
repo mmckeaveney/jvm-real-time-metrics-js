@@ -12,6 +12,7 @@ import CircularProgress from 'material-ui/lib/circular-progress';
 import $ from 'jquery';
 import WebSocket from '../utils/WebSocket';
 import TimeDelta from '../utils/TimeDelta';
+import AjaxUrl from '../utils/AjaxUrl';
 
 class QueryTimePanel extends React.Component {
     constructor(props) {
@@ -32,11 +33,11 @@ class QueryTimePanel extends React.Component {
     getLatestQueryTimes(criteria) {
         var url;
         if (criteria == "All") {
-            url = "http://localhost:8090/api/querytime/all";
+            url = `http://${AjaxUrl.url}:8090/api/querytime/all`;
         } else if (criteria == "mostRecent") {
-            url = "http://localhost:8090/api/querytime/mostRecent";
+            url = `http://${AjaxUrl.url}:8090/api/querytime/mostRecent`;
         } else {
-            url = `http://localhost:8090/api/querytime/?appName=${criteria}`;
+            url = `http://${AjaxUrl.url}:8090/api/querytime/?appName=${criteria}`;
         }
         $.getJSON({url: url,
             success: (queryTimes) => {

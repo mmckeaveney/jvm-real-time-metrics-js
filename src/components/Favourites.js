@@ -11,6 +11,7 @@ import UserStore from '../stores/UserStore';
 import ClientApp from './ClientApp';
 import CircularProgress from 'material-ui/lib/circular-progress';
 import _ from 'underscore';
+import AjaxUrl from '../utils/AjaxUrl';
 
 // CSS
 require('../styles/MainDashboard.scss');
@@ -34,7 +35,7 @@ class Favourites extends React.Component {
 
     componentWillMount() {
         var user = JSON.parse(localStorage.getItem("userProfile"));
-        $.get(`http://localhost:8090/api/user/favourites/find/?userId=${user.user_id}`)
+        $.get(`http://${AjaxUrl.url}:8090/api/user/favourites/find/?userId=${user.user_id}`)
             .done((favourites) => {
                 this.setState({
                     favourites: favourites

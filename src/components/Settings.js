@@ -8,6 +8,7 @@ import $ from 'jquery';
 import SelectField from 'material-ui/lib/select-field';
 import MenuItem from 'material-ui/lib/menus/menu-item';
 import RaisedButton from 'material-ui/lib/raised-button';
+import CustomButton from './CustomButton';
 import FlatButton from 'material-ui/lib/flat-button';
 import AuthService from '../utils/AuthService';
 import UserStore from '../stores/UserStore';
@@ -16,6 +17,7 @@ import Step from 'material-ui/lib/Stepper/VerticalStep';
 import FontIcon from 'material-ui/lib/font-icon';
 import connectToStores from 'alt/utils/connectToStores';
 import NotificationSnackbar from './NotificationSnackbar';
+import AjaxUrl from '../utils/AjaxUrl';
 
 const items = [
     <MenuItem key={1} value={1} primaryText="Light Theme"/>,
@@ -92,7 +94,7 @@ class Settings extends React.Component {
     }
 
     saveSettings() {
-        var url = `http://localhost:8090/api/settings/save`;
+        var url = `http://${AjaxUrl.url}:8090/api/settings/save`;
         var snackBar = this.refs.settingsSaved;
         $.ajax({
             url: url,
@@ -119,7 +121,7 @@ class Settings extends React.Component {
 
     getSettings() {
         var profile = this.props.user;
-        var url = `http://localhost:8090/api/settings`;
+        var url = `http://${AjaxUrl.url}:8090/api/settings`;
         $.get({
             url: url,
             success: (settings) => {
@@ -166,14 +168,10 @@ class Settings extends React.Component {
                         />
                     </Step>
 
-                    <Step orderStepLabel="3" stepLabel="Choose a theme.">
-                        <SelectField value={this.state.value} floatingLabelText="Choose your theme.">
-                            { items }
-                        </SelectField>
-                    </Step>
-
-                    <Step orderStepLabel="4" stepLabel="Save Settings" actions={[
-                      <RaisedButton key={0} label="Save" default={true} onClick={this.saveSettings.bind(this, this.props)}/>,
+                    <Step orderStepLabel="3" stepLabel="Save Settings" actions={[
+                    <CustomButton label="Save"
+                                  icon="add"
+                                  onClick={this.saveSettings.bind(this, this.props)}/>
                     ]}>
                         You're all done. Click save to save your settings.
                     </Step>

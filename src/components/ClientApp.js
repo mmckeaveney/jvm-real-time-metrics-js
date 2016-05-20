@@ -23,6 +23,7 @@ import NotificationSnackbar from './NotificationSnackbar';
 import { hashHistory } from 'react-router'
 import AuthService from '../utils/AuthService';
 import UserStore from '../stores/UserStore';
+import AjaxUrl from '../utils/AjaxUrl';
 
 // CSS
 require('../styles/MainDashboard.scss');
@@ -71,7 +72,7 @@ class ClientApp extends React.Component {
     addToFavourites() {
         // Store user data in a store
         var profile = UserStore.getState().user;
-        var url = `http://localhost:8090/api/user/favourites/save/?userId=${profile.user_id}&favourite=${this.props.application.containerId}`;
+        var url = `http://${AjaxUrl.url}:8090/api/user/favourites/save/?userId=${profile.user_id}&favourite=${this.props.application.containerId}`;
         $.post({
             url: url,
         }).done(function () {

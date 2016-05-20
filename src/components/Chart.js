@@ -11,6 +11,7 @@ import Colors from 'material-ui/lib/styles/colors';
 import ReactHighcharts from 'react-highcharts/bundle/highcharts';
 import CircularProgress from 'material-ui/lib/circular-progress';
 import _ from 'underscore';
+import AjaxUrl from '../utils/AjaxUrl';
 
 // CSS
 require('../styles/MainDashboard.scss');
@@ -30,7 +31,7 @@ class Chart extends React.Component {
     }
 
     getTimeSeriesDataFromServer(timeScale) {
-        var timeSeriesUrl = `http://localhost:8090/api/timeseries/?appName=${this.props.appName}&timeScale=${timeScale}`;
+        var timeSeriesUrl = `http://${AjaxUrl.url}:8090/api/timeseries/?appName=${this.props.appName}&timeScale=${timeScale}`;
         $.ajaxSetup({
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('userToken')

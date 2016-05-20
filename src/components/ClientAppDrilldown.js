@@ -25,6 +25,7 @@ import ExceptionPanel from './ExceptionPanel';
 import QueryTimePanel from './QueryTimePanel';
 import AlertPanel from './AlertPanel';
 import AuthService from '../utils/AuthService';
+import AjaxUrl from '../utils/AjaxUrl';
 
 @connectToStores
 class ClientAppDrilldown extends React.Component {
@@ -42,11 +43,11 @@ class ClientAppDrilldown extends React.Component {
 
     addToFavourites() {
             var profile = UserStore.getState().user;
-            var url = `http://localhost:8090/api/settings/?userId=${profile.user_id}`;
+            var url = `http://${AjaxUrl.url}:8090/api/settings/?userId=${profile.user_id}`;
             $.post({
                 url: url,
                 success: () => {
-                    $.post(`http://localhost:8090/user/favourites/save/?userId=${profile.user_id}`)
+                    $.post(`http://${AjaxUrl.url}:8090/user/favourites/save/?userId=${profile.user_id}`)
                         .done(function () {
                             console.log("Saved Favourite Successfully.");
                         })

@@ -38,7 +38,6 @@ class EnvironmentInfo extends React.Component {
                 <MaterialPanel title={`Environment Summary `} icon="apps" >
                         <List>
                             <ListItem insetChildren={true} primaryText={`Number of apps in environment : ${this.props.clientApplications.length}`} />
-                            <ListItem insetChildren={true} primaryText={`Most Problematic Application (Most Exceptions): `} />
                         </List>
                         <EventPanel appName={appName}/>
 
