@@ -49,7 +49,7 @@ class ClientApp extends React.Component {
             .fail(function (error) {
                 console.log("Error when killing docker container", error)
             });
-        this.refs.appKilled.show();
+        AppActions.openSnackbar(`${this.props.application.appName} Killed.`);
     }
 
     restartApp() {
@@ -61,7 +61,7 @@ class ClientApp extends React.Component {
             .fail(function () {
                 console.log("Error when restarting docker container", error)
             });
-        this.refs.appRestarted.show();
+        AppActions.openSnackbar(`${this.props.application.appName} Restarted.`);
     }
 
     goToDrilldown() {
@@ -80,7 +80,7 @@ class ClientApp extends React.Component {
             .fail(function () {
                 console.log("Error saving favourite", error)
             });
-        this.refs.addedToFavourites.show();
+        AppActions.openSnackbar(`${this.props.application.appName} added to favourites.`);
     }
 
     render() {
@@ -119,13 +119,6 @@ class ClientApp extends React.Component {
                                       icon="remove_circle"
                                       onClick={this.killApp.bind(this, this.props)}/>
                     </CardActions>
-                    <NotificationSnackbar ref="appKilled"
-                                          message={`${this.props.application.appName} Killed.`}
-                    />
-                    <NotificationSnackbar ref="appRestarted"
-                                          message={`${this.props.application.appName} Restarted.`}
-                    />
-                    <NotificationSnackbar ref="addedToFavourites" message={`${this.props.application.appName} added to favourites.`} />
                 </MaterialPanel>
         );
     }
