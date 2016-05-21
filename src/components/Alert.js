@@ -46,7 +46,7 @@ class Alert extends React.Component {
 
         var resetButton;
            if (this.props.triggered) {
-               resetButton =   <CustomButton label="Reset"
+               resetButton = <CustomButton label="Reset"
                                              icon="refresh"
                                              onClick={this.resetAlert.bind(this, this.props)}/>
            }

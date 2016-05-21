@@ -55,7 +55,8 @@ class ClientApplications extends React.Component {
         return (
                 <MaterialPanel title="Environment Applications"
                                icon="cloud"
-                               subtitle="All the current applications running in your environment">
+                               subtitle="All the current applications running in your environment"
+                               style={{textAlign:"center"}} >
                     {clientApps}
                 </MaterialPanel>
         );

@@ -50,7 +50,7 @@ class EventPanel extends React.Component {
 
     render() {
         var eventsMarkup;
-        if (this.state.events) {
+        if (this.state.events.length > 0) {
             eventsMarkup = _.map(this.state.events, (event, index) => {
                 return (
                     <TableRow key={index}>
