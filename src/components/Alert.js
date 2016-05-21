@@ -10,7 +10,6 @@ import AppActions from '../actions/AppActions';
 import TimeDelta from '../utils/TimeDelta';
 import Dialog from 'material-ui/lib/dialog';
 import FlatButton from 'material-ui/lib/flat-button';
-import NotificationSnackbar from './NotificationSnackbar';
 import AjaxUrl from '../utils/AjaxUrl';
 
 class Alert extends React.Component {
@@ -31,7 +30,7 @@ class Alert extends React.Component {
     deleteAlert() {
         $.post(`http://${AjaxUrl.url}:8090/api/alerts/delete/${this.props.id}`);
         AppActions.deleteAlert(this.props.id);
-        this.refs.deleteAlert.show;
+        AppActions.openSnackbar("Alert Deleted.");
     }
 
     resetAlert() {
@@ -40,7 +39,7 @@ class Alert extends React.Component {
         this.setState({
           triggered: false
         });
-        this.refs.resetAlert.show;
+        AppActions.openSnackbar("Alert Reset.");
     }
 
     render() {
@@ -67,8 +66,6 @@ class Alert extends React.Component {
                 </TableRowColumn>
                 <TableRowColumn> <Toggle toggled={this.props.triggered} /> </TableRowColumn>
                 <TableRowColumn> {this.props.timeLastTriggered == 0 ? "N/A" : TimeDelta.calculateTimeDelta(this.props.timeLastTriggered/1000)} </TableRowColumn>
-                <NotificationSnackbar ref="deleteAlert" message="Alert Deleted." />
-                <NotificationSnackbar ref="resetAlert" message="Alert Reset." />
             </TableRow>
 
         );

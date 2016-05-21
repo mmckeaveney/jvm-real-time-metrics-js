@@ -54,7 +54,7 @@ class EventPanel extends React.Component {
             eventsMarkup = _.map(this.state.events, (event, index) => {
                 return (
                     <TableRow key={index}>
-                        <TableRowColumn>{ event.image }</TableRowColumn>
+                        <TableRowColumn style={{wordWrap: 'break-word', whiteSpace: 'normal'}}>{ event.image }</TableRowColumn>
                         <TableRowColumn>{ event.status }</TableRowColumn>
                         <TableRowColumn>{ TimeDelta.calculateTimeDelta(event.time) }</TableRowColumn>
                     </TableRow>

@@ -19,7 +19,6 @@ import TableRowColumn from 'material-ui/lib/table/table-row-column';
 import TableBody from 'material-ui/lib/table/table-body';
 import CardActions from 'material-ui/lib/card/card-actions';
 import $ from 'jquery';
-import NotificationSnackbar from './NotificationSnackbar';
 import { hashHistory } from 'react-router'
 import AuthService from '../utils/AuthService';
 import UserStore from '../stores/UserStore';
@@ -81,6 +80,7 @@ class ClientApp extends React.Component {
             .fail(function () {
                 console.log("Error saving favourite", error)
             });
+        this.refs.addedToFavourites.show();
     }
 
     render() {
@@ -125,6 +125,7 @@ class ClientApp extends React.Component {
                     <NotificationSnackbar ref="appRestarted"
                                           message={`${this.props.application.appName} Restarted.`}
                     />
+                    <NotificationSnackbar ref="addedToFavourites" message={`${this.props.application.appName} added to favourites.`} />
                 </MaterialPanel>
         );
     }

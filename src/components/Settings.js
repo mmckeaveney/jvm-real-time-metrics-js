@@ -16,7 +16,6 @@ import Stepper from 'material-ui/lib/Stepper/Stepper';
 import Step from 'material-ui/lib/Stepper/VerticalStep';
 import FontIcon from 'material-ui/lib/font-icon';
 import connectToStores from 'alt/utils/connectToStores';
-import NotificationSnackbar from './NotificationSnackbar';
 import AjaxUrl from '../utils/AjaxUrl';
 
 const items = [
@@ -111,7 +110,7 @@ class Settings extends React.Component {
             success: (alert) => {
                 console.log("settings saved.");
                 console.log(alert)
-                snackBar.show();
+                AppActions.openSnackbar("Settings Saved.");
             },
             error: (error) => {
                 console.log("error when saving settings", error);
@@ -176,7 +175,6 @@ class Settings extends React.Component {
                         You're all done. Click save to save your settings.
                     </Step>
                 </Stepper>
-                <NotificationSnackbar ref="settingsSaved" message="Settings Saved." />
             </MaterialPanel>
         );
     }

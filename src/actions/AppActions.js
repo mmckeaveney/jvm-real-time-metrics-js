@@ -14,6 +14,8 @@ class AppActions {
         this.generateActions('deleteAlert');
         this.generateActions('resetAlert');
         this.generateActions('updateLatestApplicationMetadata');
+        this.generateActions('openSnackbar');
+        this.generateActions('closeSnackbar');
     }
 
     fetchLatestAlerts() {
