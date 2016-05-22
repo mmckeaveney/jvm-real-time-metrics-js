@@ -43,11 +43,11 @@ class RealTimeDrilldown extends React.Component {
 
     addToFavourites() {
         var profile = UserStore.getState().user;
-        var url = `http://${AjaxUrl.url}:8090/api/settings/?userId=${profile.user_id}`;
+        var url = `http://${AjaxUrl.url}/api/settings/?userId=${profile.user_id}`;
         $.post({
             url: url,
             success: () => {
-                $.post(`http://${AjaxUrl.url}:8090/user/favourites/save/?userId=${profile.user_id}`)
+                $.post(`http://${AjaxUrl.url}/user/favourites/save/?userId=${profile.user_id}`)
                     .done(function () {
                         console.log("Saved Favourite Successfully.");
                     })

@@ -34,7 +34,7 @@ class Chart extends React.Component {
             chartConfig: null
         });
 
-        var timeSeriesUrl = `http://${AjaxUrl.url}:8090/api/timeseries/?appName=${this.props.appName}&timeScale=${timeScale}`;
+        var timeSeriesUrl = `http://${AjaxUrl.url}/api/timeseries/?appName=${this.props.appName}&timeScale=${timeScale}`;
         $.ajaxSetup({
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('userToken')

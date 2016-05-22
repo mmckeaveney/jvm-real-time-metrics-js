@@ -93,7 +93,7 @@ class Settings extends React.Component {
     }
 
     saveSettings() {
-        var url = `http://${AjaxUrl.url}:8090/api/settings/save`;
+        var url = `http://${AjaxUrl.url}/api/settings/save`;
         var snackBar = this.refs.settingsSaved;
         $.ajax({
             url: url,
@@ -120,7 +120,7 @@ class Settings extends React.Component {
 
     getSettings() {
         var profile = this.props.user;
-        var url = `http://${AjaxUrl.url}:8090/api/settings`;
+        var url = `http://${AjaxUrl.url}/api/settings`;
         $.get({
             url: url,
             success: (settings) => {

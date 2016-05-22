@@ -22,7 +22,7 @@ class AppActions {
         var self = this;
         $.ajax({
             dataType: "json",
-            url: `http://${AjaxUrl.url}:8090/api/alerts/all`,
+            url: `http://${AjaxUrl.url}/api/alerts/all`,
             success: (alerts) => {
                 self.actions.updateLatestAlerts(alerts);
             },
@@ -34,7 +34,7 @@ class AppActions {
 
     updateCurrentUser(profile) {
         AuthService.setupAjax();
-        $.post({url: `http://${AjaxUrl.url}:8090/api/usercheck?id=${profile.user_id}&uname=${profile.nickname}&email=${profile.email}`})
+        $.post({url: `http://${AjaxUrl.url}/api/usercheck?id=${profile.user_id}&uname=${profile.nickname}&email=${profile.email}`})
             .done((user) => {
                 console.log("User successfully saved : " + user);
             })

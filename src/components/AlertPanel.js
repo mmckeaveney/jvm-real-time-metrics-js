@@ -34,12 +34,12 @@ class AlertPanel extends React.Component {
     getLatestAlerts(appName) {
         var url;
         if (appName == "All") {
-            url = `http://${AjaxUrl.url}:8090/api/alerts/triggered/all`;
+            url = `http://${AjaxUrl.url}/api/alerts/triggered/all`;
         } else if (appName == "mostRecent") {
-            url = `http://${AjaxUrl.url}:8090/api/alerts/triggered/mostRecent`;
+            url = `http://${AjaxUrl.url}/api/alerts/triggered/mostRecent`;
         } else
         {
-            url = `http://${AjaxUrl.url}:8090/api/alerts/triggered/?appName=${appName}`;
+            url = `http://${AjaxUrl.url}/api/alerts/triggered/?appName=${appName}`;
         }
         $.getJSON({url: url,
             success: (alerts) => {

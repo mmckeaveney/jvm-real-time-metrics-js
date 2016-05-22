@@ -42,7 +42,7 @@ class ClientApp extends React.Component {
 
     killApp() {
         var props = this.props;
-        $.post(`http://localhost:8090/api/docker/kill/${props.application.containerId}`)
+        $.post(`http://${AjaxUrl.url}/api/docker/kill/${props.application.containerId}`)
             .done(function () {
                 console.log("Successfully killed docker container " + props.application.containerId)
             })
@@ -54,7 +54,7 @@ class ClientApp extends React.Component {
 
     restartApp() {
         var props = this.props;
-        $.post(`http://localhost:8090/api/docker/restart/${props.application.containerId}`)
+        $.post(`http://${AjaxUrl.url}/api/docker/restart/${props.application.containerId}`)
             .done(function () {
                 console.log("Successfully restarted docker container " + props.application.containerId)
             })
@@ -71,7 +71,7 @@ class ClientApp extends React.Component {
     addToFavourites() {
         // Store user data in a store
         var profile = UserStore.getState().user;
-        var url = `http://${AjaxUrl.url}:8090/api/user/favourites/save/?userId=${profile.user_id}&favourite=${this.props.application.containerId}`;
+        var url = `http://${AjaxUrl.url}/api/user/favourites/save/?userId=${profile.user_id}&favourite=${this.props.application.containerId}`;
         $.post({
             url: url,
         }).done(function () {

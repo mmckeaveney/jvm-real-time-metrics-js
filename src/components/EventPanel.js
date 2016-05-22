@@ -33,11 +33,11 @@ class EventPanel extends React.Component {
     getLatestEvents(criteria) {
         var url;
         if (criteria == "All") {
-            url = `http://${AjaxUrl.url}:8090/api/events/all`;
+            url = `http://${AjaxUrl.url}/api/events/all`;
         } else if (criteria == "mostRecent") {
-            url = `http://${AjaxUrl.url}:8090/api/events/mostRecent`;
+            url = `http://${AjaxUrl.url}/api/events/mostRecent`;
         } else {
-            url = `http://${AjaxUrl.url}:8090/api/events/?appName=${criteria}`;
+            url = `http://${AjaxUrl.url}/api/events/?appName=${criteria}`;
         }
         $.getJSON({url: url,
             success: (events) => {

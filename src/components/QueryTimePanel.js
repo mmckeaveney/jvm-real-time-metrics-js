@@ -33,11 +33,11 @@ class QueryTimePanel extends React.Component {
     getLatestQueryTimes(criteria) {
         var url;
         if (criteria == "All") {
-            url = `http://${AjaxUrl.url}:8090/api/querytime/all`;
+            url = `http://${AjaxUrl.url}/api/querytime/all`;
         } else if (criteria == "mostRecent") {
-            url = `http://${AjaxUrl.url}:8090/api/querytime/mostRecent`;
+            url = `http://${AjaxUrl.url}/api/querytime/mostRecent`;
         } else {
-            url = `http://${AjaxUrl.url}:8090/api/querytime/?appName=${criteria}`;
+            url = `http://${AjaxUrl.url}/api/querytime/?appName=${criteria}`;
         }
         $.getJSON({url: url,
             success: (queryTimes) => {

@@ -28,14 +28,14 @@ class Alert extends React.Component {
     }
 
     deleteAlert() {
-        $.post(`http://${AjaxUrl.url}:8090/api/alerts/delete/${this.props.id}`);
+        $.post(`http://${AjaxUrl.url}/api/alerts/delete/${this.props.id}`);
         AppActions.deleteAlert(this.props.id);
         AppActions.openSnackbar("Alert Deleted.");
     }
 
     resetAlert() {
         AppActions.resetAlert(this.props.id);
-        $.post(`http://${AjaxUrl.url}:8090/api/alerts/reset/${this.props.id}`);
+        $.post(`http://${AjaxUrl.url}/api/alerts/reset/${this.props.id}`);
         this.setState({
           triggered: false
         });

@@ -36,7 +36,7 @@ class NewAlert extends React.Component {
 
     componentWillMount() {
         $.getJSON({
-            url: `http://${AjaxUrl.url}:8090/api/users/all`,
+            url: `http://${AjaxUrl.url}/api/users/all`,
             success: (users) => {
                 this.setState({
                     users: users
@@ -45,7 +45,7 @@ class NewAlert extends React.Component {
         });
 
         $.getJSON({
-            url: `http://${AjaxUrl.url}:8090/api/clientapps/names/all`,
+            url: `http://${AjaxUrl.url}/api/clientapps/names/all`,
             success: (clientApps) => {
                 this.setState({
                     apps: clientApps
@@ -77,7 +77,7 @@ class NewAlert extends React.Component {
                 user: this.refs.user.props.data[this.refs.user.state.value]
             }
             $.ajax({
-                url: `http://${AjaxUrl.url}:8090/api/alerts/add`,
+                url: `http://${AjaxUrl.url}/api/alerts/add`,
                 type: "POST",
                 headers: {
                     'Accept': 'application/json',

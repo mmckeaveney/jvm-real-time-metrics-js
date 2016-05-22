@@ -35,7 +35,7 @@ class Favourites extends React.Component {
 
     componentWillMount() {
         var user = JSON.parse(localStorage.getItem("userProfile"));
-        $.get(`http://${AjaxUrl.url}:8090/api/user/favourites/find/?userId=${user.user_id}`)
+        $.get(`http://${AjaxUrl.url}/api/user/favourites/find/?userId=${user.user_id}`)
             .done((favourites) => {
                 this.setState({
                     favourites: favourites
