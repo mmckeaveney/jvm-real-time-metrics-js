@@ -34,7 +34,7 @@ class UserAvatarWidget extends React.Component {
     render() {
         const userIconMenu = (
             <IconMenu
-                iconButtonElement={ <IconButton><MoreVertIcon /></IconButton> }
+                iconButtonElement={ <IconButton style={{color:"white"}}><MoreVertIcon /></IconButton> }
                 targetOrigin={{horizontal: 'right', vertical: 'top'}}
                 anchorOrigin={{horizontal: 'right', vertical: 'top'}}
             >
@@ -45,7 +45,7 @@ class UserAvatarWidget extends React.Component {
         var currentUser;
         if (this.props.user) {
             currentUser = (
-                <div>
+                <div style={{color: "white"}}>
                     <Avatar src={this.props.user.picture}/> {this.props.user.nickname}
                     {userIconMenu}
                 </div>
@@ -53,7 +53,7 @@ class UserAvatarWidget extends React.Component {
         } else {
             var profile = JSON.parse(localStorage.getItem("userProfile"));
             currentUser = (
-                <div>
+                <div style={{color: "white"}}>
                     Profile Loading..
                     {userIconMenu}
                 </div>

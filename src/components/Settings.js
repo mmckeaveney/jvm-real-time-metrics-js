@@ -110,7 +110,7 @@ class Settings extends React.Component {
             success: (alert) => {
                 console.log("settings saved.");
                 console.log(alert)
-                AppActions.openSnackbar("Settings Saved.");
+                Actions.openSnackbar("Settings Saved.");
             },
             error: (error) => {
                 console.log("error when saving settings", error);
@@ -149,7 +149,7 @@ class Settings extends React.Component {
 
     render() {
         return (
-            <MaterialPanel title={ `Settings for user ${this.state.username}`} icon="build">
+            <MaterialPanel title={ `Settings for user ${this.props.user.nickname}`} icon="build">
                 <Stepper activeStep={this.state.activeStep} onStepHeaderTouch={this.selectStep.bind(this)}
                     updateCompletedStatus={this.updateCompletedSteps.bind(this, this.props)}
                     createIcon={this.createIcon}

@@ -54,8 +54,7 @@ class Chart extends React.Component {
                         line: {
                             dataLabels: {
                                 enabled: true
-                            },
-                            enableMouseTracking: false
+                            }
                         }
                     },
                     xAxis: {
