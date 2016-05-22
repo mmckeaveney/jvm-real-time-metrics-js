@@ -58,7 +58,7 @@ class Alert extends React.Component {
                 <TableRowColumn>{this.props.condition}</TableRowColumn>
                 <TableRowColumn>{this.props.criteria}</TableRowColumn>
                 <TableRowColumn>{this.props.user}</TableRowColumn>
-                <TableRowColumn>
+                <TableRowColumn style={{wordWrap: 'break-word', whiteSpace: 'normal'}}>
                     <CustomButton label="Delete"
                                   icon="clear"
                                   onClick={this.deleteAlert.bind(this, this.props)}/>

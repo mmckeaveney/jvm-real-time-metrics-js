@@ -70,8 +70,9 @@ class RealTimeDrilldown extends React.Component {
         var actuatorMetrics = currentApp.actuatorMetrics;
         var appName = currentApp.appName;
 
-        return (
-            <div>
+        if (currentApp) {
+            return (
+                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                         <EventPanel appName={appName}/>
                     </div>
@@ -84,19 +85,24 @@ class RealTimeDrilldown extends React.Component {
                         <AlertPanel appName={appName}/>
                     </div>
 
-                    <div className="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                    <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                         <RealTimeMetricsPanel appName={appName}
                                               actuatorMetrics={actuatorMetrics}/>
                     </div>
 
-                    <div className="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                    <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                         <QueryTimePanel appName={appName}/>
                     </div>
-                    <CardActions>
-                        <RaisedButton label="Add to Favourites" secondary={true} onClick={this.addToFavourites.bind(this, this.props)}/>
-                    </CardActions>
-            </div>
-        );
+                    </div>
+            );
+        } else {
+            return (
+                <div style={{textAlign:"center"}}>
+                    Application data is loading. Please wait. <br></br>
+                    <CircularProgress mode="indeterminate"/>
+                </div>
+            );
+        }
     }
 }
 

@@ -1,8 +1,7 @@
 require('highcharts-release/themes/dark-unica.js');
 import React from 'react';
 import AppBar from 'material-ui/lib/app-bar';
-import IconButton from 'material-ui/lib/icon-button';
-import RaisedButton from 'material-ui/lib/raised-button';
+import CustomButton from './CustomButton';
 import FontIcon from 'material-ui/lib/font-icon';
 import NavigationClose from 'material-ui/lib/svg-icons/navigation/close';
 import Tabs from 'material-ui/lib/tabs/tabs';
@@ -26,11 +25,15 @@ class Chart extends React.Component {
         }
     }
 
-    componentDidMount() {
+    componentWillMount() {
         this.getTimeSeriesDataFromServer("week");
     }
 
     getTimeSeriesDataFromServer(timeScale) {
+        this.setState({
+            chartConfig: null
+        });
+
         var timeSeriesUrl = `http://${AjaxUrl.url}:8090/api/timeseries/?appName=${this.props.appName}&timeScale=${timeScale}`;
         $.ajaxSetup({
             headers: {
@@ -96,14 +99,18 @@ class Chart extends React.Component {
             return (
                 <div className="chart-container" style={style}>
                     <ReactHighcharts config={this.state.chartConfig}/>
-                    <RaisedButton label="Last Week" secondary={true}/>
-                    <RaisedButton label="Last Month" secondary={true}/>
-                    <RaisedButton label="Last 6 Months" secondary={true}/>
+                    <CustomButton label="Last Week" onClick={this.getTimeSeriesDataFromServer.bind(this, "week")}/>
+                    <CustomButton label="Last Month" onClick={this.getTimeSeriesDataFromServer.bind(this, "sixmonths")}/>
+                    <CustomButton label="Last 6 Months" onClick={this.getTimeSeriesDataFromServer.bind(this, "sixmonths")}/>
                 </div>
 
             );
         } else {
-            return <CircularProgress mode="indeterminate" />
+            return (
+            <div style={{textAlign:"center"}}>
+                Chart data is loading. Please wait. <br></br>
+                <CircularProgress mode="indeterminate" />
+            </div>)
 
         }
     }

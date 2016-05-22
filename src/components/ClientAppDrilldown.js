@@ -28,7 +28,8 @@ class ClientAppDrilldown extends React.Component {
 
         return (
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <MaterialPanel title={`${currentApp.appName} Details `}
+
+                <MaterialPanel title={`${currentApp.appName} TimeSeries Data `}
                                subtitle={
                                <CustomButton label="Back"
                                       backgroundColor="#000000"
@@ -36,12 +37,8 @@ class ClientAppDrilldown extends React.Component {
                                       icon="arrow_back" />
                 }>
                 <RealTimeDrilldown currentApp={currentApp}/>
-                </MaterialPanel>
-                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <MaterialPanel title={`${currentApp.appName} TimeSeries Metrics`}>
                     <Chart appName={currentApp.appName}/>
                 </MaterialPanel>
-                </div>
             </div>
         );
     }
