@@ -11,9 +11,9 @@ import TableBody from 'material-ui/lib/table/table-body';
 import TextField from 'material-ui/lib/text-field';
 import $ from 'jquery';
 import AppActions from '../actions/AppActions';
-import NotificationSnackbar from './NotificationSnackbar';
 import FloatingActionButton from 'material-ui/lib/floating-action-button';
 import ContentAdd from 'material-ui/lib/svg-icons/content/add';
+import AjaxUrl from '../utils/AjaxUrl';
 
 class NewAlert extends React.Component {
     constructor(props) {
@@ -36,7 +36,7 @@ class NewAlert extends React.Component {
 
     componentWillMount() {
         $.getJSON({
-            url: "http://localhost:8090/api/users/all",
+            url: `http://${AjaxUrl.url}:8090/api/users/all`,
             success: (users) => {
                 this.setState({
                     users: users
@@ -45,7 +45,7 @@ class NewAlert extends React.Component {
         });
 
         $.getJSON({
-            url: "http://localhost:8090/api/clientapps/names/all",
+            url: `http://${AjaxUrl.url}:8090/api/clientapps/names/all`,
             success: (clientApps) => {
                 this.setState({
                     apps: clientApps
@@ -76,9 +76,8 @@ class NewAlert extends React.Component {
                 criteria: number,
                 user: this.refs.user.props.data[this.refs.user.state.value]
             }
-            var snackBar = this.refs.newAlert;
             $.ajax({
-                url: `http://localhost:8090/api/alerts/add`,
+                url: `http://${AjaxUrl.url}:8090/api/alerts/add`,
                 type: "POST",
                 headers: {
                     'Accept': 'application/json',
@@ -89,7 +88,7 @@ class NewAlert extends React.Component {
                 success: (alert) => {
                     console.log(alert)
                     AppActions.saveAlert(alert);
-                    snackBar.show();
+                    AppActions.openSnackbar("New Alert Added.");
                 },
                 error: (error) => {
                     console.log("error when saving alert", error);
@@ -118,7 +117,6 @@ class NewAlert extends React.Component {
                 </TableRowColumn>
                 <TableRowColumn>N/A</TableRowColumn>
                 <TableRowColumn>N/A</TableRowColumn>
-                <NotificationSnackbar ref="newAlert" message="New Alert added." />
             </TableRow>
         );
     }

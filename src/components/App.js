@@ -22,6 +22,7 @@ import Settings from 'material-ui/lib/svg-icons/action/settings';
 import customBaseTheme from '../themes/customTheme';
 import MuiThemeProvider from 'material-ui/lib/MuiThemeProvider';
 import getMuiTheme from 'material-ui/lib/styles/getMuiTheme';
+import SnackBars from './SnackBars';
 
 // CSS
 require('../styles/main.scss');
@@ -86,6 +87,7 @@ class App extends React.Component {
                         <MenuItem primaryText="Alerts" leftIcon={<Notifications/>}  linkButton containerElement={<Link to="/alerts" />}/>
                         <MenuItem primaryText="Settings" leftIcon={<Settings/>} linkButton containerElement={<Link to="/settings" />}/>
                     </LeftNav>
+                    <SnackBars/>
                 </div>
                 </MuiThemeProvider>
             );

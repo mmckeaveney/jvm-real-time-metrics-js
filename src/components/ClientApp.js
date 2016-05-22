@@ -19,10 +19,10 @@ import TableRowColumn from 'material-ui/lib/table/table-row-column';
 import TableBody from 'material-ui/lib/table/table-body';
 import CardActions from 'material-ui/lib/card/card-actions';
 import $ from 'jquery';
-import NotificationSnackbar from './NotificationSnackbar';
 import { hashHistory } from 'react-router'
 import AuthService from '../utils/AuthService';
 import UserStore from '../stores/UserStore';
+import AjaxUrl from '../utils/AjaxUrl';
 
 // CSS
 require('../styles/MainDashboard.scss');
@@ -49,7 +49,7 @@ class ClientApp extends React.Component {
             .fail(function (error) {
                 console.log("Error when killing docker container", error)
             });
-        this.refs.appKilled.show();
+        AppActions.openSnackbar(`${this.props.application.appName} Killed.`);
     }
 
     restartApp() {
@@ -61,7 +61,7 @@ class ClientApp extends React.Component {
             .fail(function () {
                 console.log("Error when restarting docker container", error)
             });
-        this.refs.appRestarted.show();
+        AppActions.openSnackbar(`${this.props.application.appName} Restarted.`);
     }
 
     goToDrilldown() {
@@ -71,7 +71,7 @@ class ClientApp extends React.Component {
     addToFavourites() {
         // Store user data in a store
         var profile = UserStore.getState().user;
-        var url = `http://localhost:8090/api/user/favourites/save/?userId=${profile.user_id}&favourite=${this.props.application.containerId}`;
+        var url = `http://${AjaxUrl.url}:8090/api/user/favourites/save/?userId=${profile.user_id}&favourite=${this.props.application.containerId}`;
         $.post({
             url: url,
         }).done(function () {
@@ -80,6 +80,7 @@ class ClientApp extends React.Component {
             .fail(function () {
                 console.log("Error saving favourite", error)
             });
+        AppActions.openSnackbar(`${this.props.application.appName} added to favourites.`);
     }
 
     render() {
@@ -118,12 +119,6 @@ class ClientApp extends React.Component {
                                       icon="remove_circle"
                                       onClick={this.killApp.bind(this, this.props)}/>
                     </CardActions>
-                    <NotificationSnackbar ref="appKilled"
-                                          message={`${this.props.application.appName} Killed.`}
-                    />
-                    <NotificationSnackbar ref="appRestarted"
-                                          message={`${this.props.application.appName} Restarted.`}
-                    />
                 </MaterialPanel>
         );
     }

@@ -11,6 +11,7 @@ import UserStore from '../stores/UserStore';
 import ClientApp from './ClientApp';
 import CircularProgress from 'material-ui/lib/circular-progress';
 import _ from 'underscore';
+import AjaxUrl from '../utils/AjaxUrl';
 
 // CSS
 require('../styles/MainDashboard.scss');
@@ -34,7 +35,7 @@ class Favourites extends React.Component {
 
     componentWillMount() {
         var user = JSON.parse(localStorage.getItem("userProfile"));
-        $.get(`http://localhost:8090/api/user/favourites/find/?userId=${user.user_id}`)
+        $.get(`http://${AjaxUrl.url}:8090/api/user/favourites/find/?userId=${user.user_id}`)
             .done((favourites) => {
                 this.setState({
                     favourites: favourites
@@ -69,7 +70,7 @@ class Favourites extends React.Component {
 
 
         return (
-            <div className="col-lg-7 col-md-7 col-sm-7 col-xs-7" id="article-panel-container" style={{marginTop:"10px"}}>
+            <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12" id="article-panel-container" style={{marginTop:"10px"}}>
                 <MaterialPanel title="Favourites" subtitle="Applications added to your favourites" icon="star">
                     { favourites }
                 </MaterialPanel>

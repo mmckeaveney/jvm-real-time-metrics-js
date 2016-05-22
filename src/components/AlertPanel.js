@@ -13,6 +13,7 @@ import CircularProgress from 'material-ui/lib/circular-progress';
 import $ from 'jquery';
 import WebSocket from '../utils/WebSocket';
 import TimeDelta from '../utils/TimeDelta';
+import AjaxUrl from '../utils/AjaxUrl';
 
 class AlertPanel extends React.Component {
     constructor(props) {
@@ -33,12 +34,12 @@ class AlertPanel extends React.Component {
     getLatestAlerts(appName) {
         var url;
         if (appName == "All") {
-            url = "http://localhost:8090/api/alerts/triggered/all";
+            url = `http://${AjaxUrl.url}:8090/api/alerts/triggered/all`;
         } else if (appName == "mostRecent") {
-            url = "http://localhost:8090/api/alerts/triggered/mostRecent";
+            url = `http://${AjaxUrl.url}:8090/api/alerts/triggered/mostRecent`;
         } else
         {
-            url = `http://localhost:8090/api/alerts/triggered/?appName=${appName}`;
+            url = `http://${AjaxUrl.url}:8090/api/alerts/triggered/?appName=${appName}`;
         }
         $.getJSON({url: url,
             success: (alerts) => {
@@ -58,7 +59,7 @@ class AlertPanel extends React.Component {
                 return (
                     <TableRow key={index}>
                         <TableRowColumn>{ alert.appName }</TableRowColumn>
-                        <TableRowColumn>{ `${alert.metric} ${alert.condition} ${alert.criteria} ` }</TableRowColumn>
+                        <TableRowColumn style={{wordWrap: 'break-word', whiteSpace: 'normal'}}>{ `${alert.metric} ${alert.condition} ${alert.criteria} ` }</TableRowColumn>
                         <TableRowColumn>{ TimeDelta.calculateTimeDelta(alert.timeLastTriggered/1000) }</TableRowColumn>
                     </TableRow>
                 )

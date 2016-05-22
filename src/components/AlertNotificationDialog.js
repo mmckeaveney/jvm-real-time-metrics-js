@@ -3,7 +3,7 @@ import Snackbar from 'material-ui/lib/snackbar';
 import FlatButton from 'material-ui/lib/flat-button';
 import Dialog from 'material-ui/lib/dialog';
 import WebSocket from '../utils/WebSocket';
-import { browserHistory } from 'react-router'
+import { hashHistory } from 'react-router'
 import AppActions from '../actions/AppActions';
 
 class AlertNotificationDialog extends React.Component {
@@ -44,7 +44,7 @@ class AlertNotificationDialog extends React.Component {
     };
 
     goToAlerts = () => {
-        browserHistory.push("/alerts");
+        hashHistory.push("/alerts");
     };
 
     render() {
@@ -52,12 +52,12 @@ class AlertNotificationDialog extends React.Component {
             <FlatButton
                 label="OK"
                 secondary={true}
-                onTouchTap={this.handleClose}
+                onTouchTap={this.handleClose.bind(this, this.props)}
             />,
             <FlatButton
                 label="GO TO ALERTS PAGE"
                 secondary={true}
-                onTouchTap={this.goToAlerts}
+                onTouchTap={this.goToAlerts.bind(this, this.props)}
             />
         ];
 

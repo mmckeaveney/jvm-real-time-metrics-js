@@ -16,7 +16,6 @@ let routes = (
         <Route path="/" component={App}>
             <IndexRoute component={HomeDashboard} />
             <Route path="/environment" component={EnvironmentDashboard}/>
-            // TODO: This is a routing hack, fix it
             <Route path="/appdetail/:containerId" component={ClientAppDrilldown}/>
             <Route path="/alerts" component={AlertsDashboard}/>
             <Route path="/settings" component={Settings}/>

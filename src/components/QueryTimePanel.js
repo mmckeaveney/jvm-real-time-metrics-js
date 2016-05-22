@@ -12,6 +12,7 @@ import CircularProgress from 'material-ui/lib/circular-progress';
 import $ from 'jquery';
 import WebSocket from '../utils/WebSocket';
 import TimeDelta from '../utils/TimeDelta';
+import AjaxUrl from '../utils/AjaxUrl';
 
 class QueryTimePanel extends React.Component {
     constructor(props) {
@@ -32,11 +33,11 @@ class QueryTimePanel extends React.Component {
     getLatestQueryTimes(criteria) {
         var url;
         if (criteria == "All") {
-            url = "http://localhost:8090/api/querytime/all";
+            url = `http://${AjaxUrl.url}:8090/api/querytime/all`;
         } else if (criteria == "mostRecent") {
-            url = "http://localhost:8090/api/querytime/mostRecent";
+            url = `http://${AjaxUrl.url}:8090/api/querytime/mostRecent`;
         } else {
-            url = `http://localhost:8090/api/querytime/?appName=${criteria}`;
+            url = `http://${AjaxUrl.url}:8090/api/querytime/?appName=${criteria}`;
         }
         $.getJSON({url: url,
             success: (queryTimes) => {
@@ -53,8 +54,8 @@ class QueryTimePanel extends React.Component {
             queryTimesMarkup = _.map(this.state.queryTimes, (queryTime, index) => {
                 return (
                     <TableRow key={index}>
-                        <TableRowColumn>{ queryTime.applicationName  }</TableRowColumn>
-                        <TableRowColumn>{ queryTime.className }</TableRowColumn>
+                        <TableRowColumn style={{wordWrap: 'break-word', whiteSpace: 'normal'}}>{ queryTime.applicationName  }</TableRowColumn>
+                        <TableRowColumn style={{wordWrap: 'break-word', whiteSpace: 'normal'}}>{ queryTime.className }</TableRowColumn>
                         <TableRowColumn>{ queryTime.methodName }</TableRowColumn>
                         <TableRowColumn>{ queryTime.executionTime }ms</TableRowColumn>
                         <TableRowColumn>{ TimeDelta.calculateTimeDelta(queryTime.timeExecuted/1000) }</TableRowColumn>

@@ -41,7 +41,7 @@ class MaterialPanel extends React.Component {
                                 subtitleColor={"white"}
                                 showExpandableButton={true}
                                 textStyle={styles.textStyles}/>
-                    <CardText children={this.props.children} expandable={true}/>
+                    <CardText children={this.props.children} expandable={true} style={this.props.style}/>
 
                 </Card>
         );
